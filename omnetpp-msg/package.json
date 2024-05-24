@@ -1,0 +1,43 @@
+{
+  "name": "tree-sitter-omnetpp-msg",
+  "version": "0.0.1",
+  "description": "Tree-sitter grammar for OMNeT++ MSG files",
+  "main": "index.js",
+  "types": "bindings/node",
+  "scripts": {
+    "test": "tree-sitter test",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
+  },
+  "author": "Rudolf Hornig",
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.0"
+  },
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
+  "tree-sitter": [
+    {
+      "scope": "source.omnetpp_msg",
+      "injection-regex": "^omnetpp_msg$"
+    }
+  ]
+}
