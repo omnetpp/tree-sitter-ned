@@ -10,7 +10,7 @@ module.exports = grammar({
     rules: {
 
       msg_file: $ => repeat(choice(
-        $.comment,
+        $.comment_block,
         $.namespace_decl,
         $.fileproperty,
         $.cplusplus,
@@ -28,6 +28,16 @@ module.exports = grammar({
       )),
 
       comment: $ => token(seq('//', /[^\n]*/)),
+
+      // comment_block: $ => repeat1($.comment),
+      comment_block: $ => prec.right(seq(
+        $.comment,
+        repeat(seq(
+          '\n',
+          $.comment
+        )),
+        optional('\n')
+      )),
   
       namespace_decl: $ => seq('namespace', optional($.qname), ';'),  // FIXME qname is optional???
   
