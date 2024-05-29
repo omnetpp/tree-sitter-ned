@@ -2,7 +2,7 @@
   "name": "tree-sitter-omnetpp-msg",
   "version": "0.0.1",
   "description": "Tree-sitter grammar for OMNeT++ MSG files",
-  "main": "index.js",
+  "main": "bindings/node",
   "types": "bindings/node",
   "scripts": {
     "test": "tree-sitter test",

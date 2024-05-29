@@ -41,21 +41,23 @@ module.exports = grammar({
   
       namespace_decl: $ => seq('namespace', optional($.qname), ';'),  // FIXME qname is optional???
   
-      qname: $ => seq(optional('::'), $.NAME, repeat(seq('::', $.NAME))),
+      qname: $ => seq(optional('::'), $._NAME, repeat(seq('::', $._NAME))),
     
       fileproperty: $ => seq($.property_namevalue, ';'),
   
-      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), $.CPLUSPLUSBODY, optional(';')),
+      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), $.cplusplusbody, optional(';')),
+
+      cplusplusbody: $ => $._CPLUSPLUSBODY,
   
       targetspec: $ => seq($.targetitem, repeat($.targetitem)),
   
-      targetitem: $ => choice($.NAME, '::', $.INTCONSTANT, ':', '.', ',', '~', '=', '&'),
+      targetitem: $ => choice($._NAME, '::', $.INTCONSTANT, ':', '.', ',', '~', '=', '&'),
   
       import: $ => seq('import', $.importspec, ';'),
   
       importspec: $ => seq($.importname, repeat(seq('.', $.importname))),
   
-      importname: $ => choice($.NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
+      importname: $ => choice($._NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
   
       struct_decl: $ => seq('struct', $.qname, ';'),
   
@@ -71,9 +73,9 @@ module.exports = grammar({
     
       enumfield_or_property: $ => choice($.enumfield, $.property),
   
-      enumfield: $ => seq($.NAME, optional(seq('=', $.enumvalue)), ';'),
+      enumfield: $ => seq($._NAME, optional(seq('=', $.enumvalue)), ';'),
   
-      enumvalue: $ => choice($.INTCONSTANT, seq('-', $.INTCONSTANT), $.NAME),
+      enumvalue: $ => choice($.INTCONSTANT, seq('-', $.INTCONSTANT), $._NAME),
   
       message: $ => seq($.message_header, $.body),
   
@@ -98,7 +100,7 @@ module.exports = grammar({
         seq($.fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), '=', $.fieldvalue, optional($.inline_properties), ';')
       ),
   
-      fieldtypename: $ => seq(optional('abstract'), optional($.fielddatatype), $.NAME),
+      fieldtypename: $ => seq(optional('abstract'), optional($.fielddatatype), $._NAME),
     
       fielddatatype: $ => choice(
         $.fieldsimpledatatype,
@@ -132,7 +134,7 @@ module.exports = grammar({
         $.REALCONSTANT,
         'true',
         'false',
-        $.NAME,
+        $._NAME,
         '::',
         '?', ':', '&&', '||', '##', '==', '!=', '>', '>=', '<', '<=',
         '&', '|', '#', '<<', '>>',
@@ -147,7 +149,7 @@ module.exports = grammar({
       property_namevalue: $ => choice(
         $.property_name,
         seq($.property_name, '(', optional($.property_keys), ')'),
-        seq('enum', '(', $.NAME, ')')
+        seq('enum', '(', $._NAME, ')')
       ),
   
       property_name: $ => choice(
@@ -171,7 +173,7 @@ module.exports = grammar({
         $.REALCONSTANT,
         'true',
         'false',
-        $.NAME
+        $._NAME
       ),
   
       property_literal: $ => repeat1(choice(
@@ -179,13 +181,13 @@ module.exports = grammar({
         $.STRINGCONSTANT
       )),
   
-      NAME: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+      _NAME: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
       INTCONSTANT: $ => /0[xX][0-9a-fA-F]+|[0-9]+/,
       REALCONSTANT: $ => /[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?/,
       CHARCONSTANT: $ => /'[^']'/,
       STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
-      CPLUSPLUSBODY: $ => /\{\{[^\}]*\}\}/,
+      _CPLUSPLUSBODY: $ => /\{\{[^\}]*\}\}/,
       COMMONCHAR: $ => /[^\{\}=,;]/
     }
   });
