@@ -2,16 +2,15 @@
 module.exports = grammar({
     name: 'msg',
 
-/*    
     extras: $ => [
         /\s/,
         $.comment
     ],
-*/    
+    
     rules: {
-      // comment: $ => token(seq('//', /[^\n]*/)),
 
       msg_file: $ => repeat(choice(
+        $.comment,
         $.namespace_decl,
         $.fileproperty,
         $.cplusplus,
@@ -27,6 +26,8 @@ module.exports = grammar({
         $.class,
         $.struct
       )),
+
+      comment: $ => token(seq('//', /[^\n]*/)),
   
       namespace_decl: $ => seq('namespace', optional($.qname), ';'),  // FIXME qname is optional???
   
