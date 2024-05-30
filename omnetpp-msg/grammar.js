@@ -2,10 +2,10 @@
 module.exports = grammar({
     name: 'msg',
 
-    extras: $ => [
-        /\s/,
-        $.comment
-    ],
+    // extras: $ => [
+    //     /\s/,
+    //     // $.comment
+    // ],
     
     rules: {
 
@@ -27,17 +27,19 @@ module.exports = grammar({
         $.struct
       )),
 
-      comment: $ => token(seq('//', /[^\n]*/)),
+      // comment: $ => token(seq('//', /[^\n]*/)),
 
-      // comment_block: $ => repeat1($.comment),
-      comment_block: $ => prec.right(seq(
-        $.comment,
-        repeat(seq(
-          '\n',
-          $.comment
-        )),
-        optional('\n')
-      )),
+      // comment_block: $ => prec.right(seq(repeat1($.COMMENTLINE), optional('\n'))),   works
+      // comment_block: $ => prec.right(seq(repeat1(seq($.COMMENTLINE, '\n')), $.COMMENTLINE)),   works kind of
+      comment_block: $ => prec.right(repeat1($.COMMENTLINE)),   // best so far
+      // comment_block: $ => prec.right(seq(
+      //   $.comment,
+      //   repeat(seq(
+      //     '\n',
+      //     $.comment
+      //   )),
+      //   optional('\n')
+      // )),
   
       namespace_decl: $ => seq('namespace', optional($.qname), ';'),  // FIXME qname is optional???
   
@@ -192,7 +194,10 @@ module.exports = grammar({
       STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       _CPLUSPLUSBODY: $ => /\{\{[^\}]*\}\}/,
-      COMMONCHAR: $ => /[^\{\}=,;]/
+      COMMONCHAR: $ => /[^\{\}=,;]/,
+      // COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
+      COMMENTLINE: $ => /\/\/[^\n]*/
+      // EMPTYLINE: $ => /\s/
     }
   });
   
