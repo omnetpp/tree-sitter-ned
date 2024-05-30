@@ -89,7 +89,11 @@ module.exports = grammar({
   
       packet_header: $ => seq('packet', $.qname, optional(seq('extends', $.qname))),
   
-      class_header: $ => seq('class', $.qname, optional(seq('extends', $.qname))),
+      class_header: $ => seq('class', $.class_name, optional(seq('extends', $.class_extend_name))),
+
+      class_name: $ => prec.left($.qname),
+
+      class_extend_name: $ => $.qname,
   
       struct_header: $ => seq('struct', $.qname, optional(seq('extends', $.qname))),
   
