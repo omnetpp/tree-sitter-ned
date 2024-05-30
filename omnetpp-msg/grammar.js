@@ -29,9 +29,9 @@ module.exports = grammar({
 
       // comment: $ => token(seq('//', /[^\n]*/)),
 
-      // comment_block: $ => prec.right(seq(repeat1($.COMMENTLINE), optional('\n'))),   works
-      // comment_block: $ => prec.right(seq(repeat1(seq($.COMMENTLINE, '\n')), $.COMMENTLINE)),   works kind of
-      comment_block: $ => prec.right(repeat1($.COMMENTLINE)),   // best so far
+      // comment_block: $ => prec.right(seq(repeat1($._COMMENTLINE), optional('\n'))),   works
+      // comment_block: $ => prec.right(seq(repeat1(seq($._COMMENTLINE, '\n')), $._COMMENTLINE)),   works kind of
+      comment_block: $ => prec.right(repeat1($._COMMENTLINE)),   // best so far
       // comment_block: $ => prec.right(seq(
       //   $.comment,
       //   repeat(seq(
@@ -47,9 +47,13 @@ module.exports = grammar({
     
       fileproperty: $ => seq($.property_namevalue, ';'),
   
-      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), $.cplusplusbody, optional(';')),
+      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), '{{', $.cplusplusbody, '}}', optional(';')),
 
-      cplusplusbody: $ => $._CPLUSPLUSBODY,
+      // cplusplusbody: $ => $._CPLUSPLUSBODY,
+
+      cplusplusbody: $ => repeat1(choice(/[^{}]+/, $.cplusplusbracedblock)),
+
+      cplusplusbracedblock: $ => seq('{', repeat(choice(/[^{}]+/)), '}'),
   
       targetspec: $ => seq($.targetitem, repeat($.targetitem)),
   
@@ -71,9 +75,9 @@ module.exports = grammar({
   
       enum_decl: $ => seq('enum', $.qname, ';'),
   
-      enum: $ => seq('enum', $.qname, '{', repeat($.enumfield_or_property), '}', optional(';')),
+      enum: $ => seq('enum', $.qname, '{', repeat(choice($.enumfield_or_property, $.comment_block)), '}', optional(';')),
     
-      enumfield_or_property: $ => choice($.enumfield, $.property),
+      enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment_block))),
   
       enumfield: $ => seq($._NAME, optional(seq('=', $.enumvalue)), ';'),
   
@@ -99,7 +103,7 @@ module.exports = grammar({
   
       struct_header: $ => seq('struct', $.qname, optional(seq('extends', $.qname))),
   
-      body: $ => seq('{', repeat(choice($.field, $.property)), '}', optional(';')),
+      body: $ => seq('{', repeat(seq(choice($.field, $.property), optional($.comment_block))), '}', optional(';')),
   
       field: $ => choice(
         seq($.fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';'),
@@ -193,10 +197,12 @@ module.exports = grammar({
       CHARCONSTANT: $ => /'[^']'/,
       STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
-      _CPLUSPLUSBODY: $ => /\{\{[^\}]*\}\}/,
+      _CPLUSPLUSBODY: $ => /\{\{[^\}\}]*\}\}/,
+      _CPLUSPLUSBODYWITHOUTBRACES: $ => /[^\n;]*/,
+      // _CPLUSPLUSBODY: $ => /\{\{(\s|\S)*?\}\}/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
-      // COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
-      COMMENTLINE: $ => /\/\/[^\n]*/
+      // _COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
+      _COMMENTLINE: $ => /\/\/[^\n]*/
       // EMPTYLINE: $ => /\s/
     }
   });
