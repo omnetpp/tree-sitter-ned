@@ -103,7 +103,7 @@ module.exports = grammar({
   
       struct_header: $ => seq('struct', $.qname, optional(seq('extends', $.qname))),
   
-      body: $ => seq('{', repeat(seq(choice($.field, $.property), optional($.comment_block))), '}', optional(';')),
+      body: $ => seq('{', repeat(seq(choice($.field, $.property, $.comment_block), optional($.comment_block))), '}', optional(';')),
   
       field: $ => choice(
         seq($.fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';'),
