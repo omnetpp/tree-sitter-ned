@@ -159,8 +159,11 @@ module.exports = grammar({
       property_namevalue: $ => choice(
         $.property_name,
         seq($.property_name, '(', optional($.property_keys), ')'),
-        seq('enum', '(', $._NAME, ')')
+        seq('enum', '(', $._NAME, ')'),
+        seq($.property_name, '(', optional(choice($.PROPERTYPARAMETER, optional($.propertyparameter_parenthesizedblock))), ')')
       ),
+
+      propertyparameter_parenthesizedblock: $ => seq('(', optional($.PROPERTYPARAMETER), ')'),
   
       property_name: $ => choice(
         seq('@', $.PROPNAME),
@@ -197,6 +200,7 @@ module.exports = grammar({
       CHARCONSTANT: $ => /'[^']'/,
       STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
+      PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       _CPLUSPLUSBODY: $ => /\{\{[^\}\}]*\}\}/,
       _CPLUSPLUSBODYWITHOUTBRACES: $ => /[^\n;]*/,
       // _CPLUSPLUSBODY: $ => /\{\{(\s|\S)*?\}\}/,
