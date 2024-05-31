@@ -11,6 +11,7 @@ module.exports = grammar({
 
       msg_file: $ => repeat(choice(
         $.comment_block,
+        $._EMPTYLINE,
         $.namespace_decl,
         $.fileproperty,
         $.cplusplus,
@@ -160,10 +161,10 @@ module.exports = grammar({
         $.property_name,
         seq($.property_name, '(', optional($.property_keys), ')'),
         seq('enum', '(', $._NAME, ')'),
-        seq($.property_name, '(', optional(choice($.PROPERTYPARAMETER, optional($.propertyparameter_parenthesizedblock))), ')')
+        // seq($.property_name, '(', optional(choice($.PROPERTYPARAMETER, optional($.propertyparameter_parenthesizedblock))), ')')
       ),
 
-      propertyparameter_parenthesizedblock: $ => seq('(', optional($.PROPERTYPARAMETER), ')'),
+      // propertyparameter_parenthesizedblock: $ => seq('(', optional($.PROPERTYPARAMETER), ')'),
   
       property_name: $ => choice(
         seq('@', $.PROPNAME),
@@ -206,8 +207,8 @@ module.exports = grammar({
       // _CPLUSPLUSBODY: $ => /\{\{(\s|\S)*?\}\}/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
-      _COMMENTLINE: $ => /\/\/[^\n]*/
-      // EMPTYLINE: $ => /\s/
+      _COMMENTLINE: $ => /\/\/[^\n]*/,
+      _EMPTYLINE: $ => /\r?\n\s*\r?\n/
     }
   });
   
