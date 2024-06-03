@@ -2,12 +2,12 @@
 module.exports = grammar({
     name: 'msg',
 
-    // extras: $ => [
-    //     /\s/,
-    //     // $.comment
-    // ],
+    extras: $ => [
+        /\s/,
+        $._comment
+    ],
 
-    extras: $ => [],
+    // extras: $ => [],
     
     rules: {
 
@@ -34,7 +34,7 @@ module.exports = grammar({
 
       // comment_block: $ => prec.right(seq(repeat1($._COMMENTLINE), optional('\n'))),   works
       // comment_block: $ => prec.right(seq(repeat1(seq($._COMMENTLINE, '\n')), $._COMMENTLINE)),   works kind of
-      comment_block: $ => prec.right(repeat1($._COMMENTLINE)),   // best so far
+      comment_block: $ => prec.right(repeat1($._comment)),   // best so far
       // comment_block: $ => prec.right(seq(
       //   $.comment,
       //   repeat(seq(
@@ -43,6 +43,15 @@ module.exports = grammar({
       //   )),
       //   optional('\n')
       // )),
+
+      _comment: _ => token(choice(
+        seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
+        seq(
+          '/*',
+          /[^*]*\*+([^/*][^*]*\*+)*/,
+          '/',
+        ),    // TODO is that needed in msg files?
+      )),
   
       namespace_decl: $ => seq('namespace', optional($.qname), ';'),  // FIXME qname is optional???
   
