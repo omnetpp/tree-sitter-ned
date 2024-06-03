@@ -59,19 +59,17 @@ module.exports = grammar({
     
       fileproperty: $ => seq($.property_namevalue, ';'),
   
-      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), $.cplusplusbody, optional(';')),
+      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), '{{', $.cplusplusbody, '}}', optional(';')),
 
       // cplusplustext: $ => /[\s|\S]*?/,
 
       // cplusplustext: $ => repeat1(/[^\n]*?/),
 
-      cplusplustext: $ => /[^\}\}].*?/,
+      // cplusplustext: $ => /[^\}\}].*?/,
 
-      cplusplusbody: $ => prec.right(seq(prec(10, $.opening_delimiter), prec(1, repeat($.cplusplustext)), prec(10, $.closing_delimiter), optional($._EMPTYLINE))),
+      cplusplusbody: $ => repeat1(choice(/[^{}]+/, $._cplusplusbracedblock)),
 
-      opening_delimiter: $ => token(prec(2, /\{\{/)),
-
-      closing_delimiter: $ => token(prec(2, /\}\}/)),
+      _cplusplusbracedblock: $ => seq('{', repeat(choice(/[^{}]+/, $._cplusplusbracedblock)), '}'),
   
       targetspec: $ => seq($.targetitem, repeat($.targetitem)),
   
@@ -219,8 +217,8 @@ module.exports = grammar({
       STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
-      _CPLUSPLUSBODY: $ => /\{\{[^\}\}]*\}\}/,
-      _CPLUSPLUSBODYWITHOUTBRACES: $ => /[^\n;]*/,
+      // _CPLUSPLUSBODY: $ => /\{\{[^\}]*\}\}/,
+      // _CPLUSPLUSBODYWITHOUTBRACES: $ => /[^\n;]*/,
       // _CPLUSPLUSBODY: $ => /\{\{(\s|\S)*?\}\}/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
