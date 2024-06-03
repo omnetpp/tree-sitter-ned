@@ -6,6 +6,8 @@ module.exports = grammar({
     //     /\s/,
     //     // $.comment
     // ],
+
+    extras: $ => [],
     
     rules: {
 
@@ -48,13 +50,19 @@ module.exports = grammar({
     
       fileproperty: $ => seq($.property_namevalue, ';'),
   
-      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), '{{', $.cplusplusbody, '}}', optional(';')),
+      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), $.cplusplusbody, optional(';')),
 
-      // cplusplusbody: $ => $._CPLUSPLUSBODY,
+      // cplusplustext: $ => /[\s|\S]*?/,
 
-      cplusplusbody: $ => repeat1(choice(/[^{}]+/, $.cplusplusbracedblock)),
+      // cplusplustext: $ => repeat1(/[^\n]*?/),
 
-      cplusplusbracedblock: $ => seq('{', repeat(choice(/[^{}]+/)), '}'),
+      cplusplustext: $ => /[^\}\}].*?/,
+
+      cplusplusbody: $ => prec.right(seq(prec(10, $.opening_delimiter), prec(1, repeat($.cplusplustext)), prec(10, $.closing_delimiter), optional($._EMPTYLINE))),
+
+      opening_delimiter: $ => token(prec(2, /\{\{/)),
+
+      closing_delimiter: $ => token(prec(2, /\}\}/)),
   
       targetspec: $ => seq($.targetitem, repeat($.targetitem)),
   
@@ -208,7 +216,7 @@ module.exports = grammar({
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
       _COMMENTLINE: $ => /\/\/[^\n]*/,
-      _EMPTYLINE: $ => /\r?\n\s*\r?\n/
+      _EMPTYLINE: $ => /\r?\n\s*\r?\n/,
     }
   });
   
