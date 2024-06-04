@@ -7,16 +7,21 @@ module.exports = grammar({
         $._comment
     ],
 
+    // externals: $ => [
+    //   $.cplusplus_block
+    // ],
+
     // extras: $ => [],
     
     rules: {
 
       msg_file: $ => repeat(choice(
+        $.cplusplus_block,
         $.comment_block,
-        $._EMPTYLINE,
+        $.EMPTYLINE,
         $.namespace_decl,
         $.fileproperty,
-        $.cplusplus,
+        // $.cplusplus,
         $.import,
         $.struct_decl,
         $.class_decl,
@@ -29,6 +34,34 @@ module.exports = grammar({
         $.class,
         $.struct
       )),
+
+      // cplusplus_block: $ => $.cplusplus_block,
+
+      cplusplus_block: $ => seq(
+        'cplusplus',
+        '{{',
+        repeat(choice(
+          $.braced_content,
+          $.string_literal,
+          /[^{}]/
+        )),
+        '}}'
+      ),
+  
+      braced_content: $ => seq(
+        '{',
+        repeat(choice(
+          $.braced_content,
+          $.string_literal,
+          /[^{}]/
+        )),
+        '}'
+      ),
+  
+      string_literal: $ => choice(
+        seq('"', repeat(choice(/[^"\\]/, /\\./)), '"'),
+        seq("'", repeat(choice(/[^'\\]/, /\\./)), "'")
+      ),
 
       // comment: $ => token(seq('//', /[^\n]*/)),
 
@@ -59,7 +92,7 @@ module.exports = grammar({
     
       fileproperty: $ => seq($.property_namevalue, ';'),
   
-      cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), '{{', $.cplusplusbody, '}}', optional(';')),
+      // cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), '{{', $.cplusplusbody, '}}', optional(';')),
 
       // cplusplustext: $ => /[\s|\S]*?/,
 
@@ -67,9 +100,9 @@ module.exports = grammar({
 
       // cplusplustext: $ => /[^\}\}].*?/,
 
-      cplusplusbody: $ => repeat1(choice(/[^{}]+/, $._cplusplusbracedblock)),
+      // cplusplusbody: $ => repeat1(choice(/[^{}]+/, $._cplusplusbracedblock)),
 
-      _cplusplusbracedblock: $ => seq('{', repeat(choice(/[^{}]+/, $._cplusplusbracedblock)), '}'),
+      // _cplusplusbracedblock: $ => seq('{', repeat(choice(/[^{}]+/, $._cplusplusbracedblock)), '}'),
   
       targetspec: $ => seq($.targetitem, repeat($.targetitem)),
   
@@ -223,7 +256,7 @@ module.exports = grammar({
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
       _COMMENTLINE: $ => /\/\/[^\n]*/,
-      _EMPTYLINE: $ => /\r?\n\s*\r?\n/,
+      EMPTYLINE: $ => /\r?\n\s*\r?\n/,
     }
   });
   
