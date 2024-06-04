@@ -4,7 +4,7 @@ module.exports = grammar({
 
     extras: $ => [
         /\s/,
-        $._comment
+        $._commentline
     ],
 
     // externals: $ => [
@@ -16,12 +16,12 @@ module.exports = grammar({
     rules: {
 
       msg_file: $ => repeat(choice(
-        $.cplusplus_block,
-        $.comment_block,
+        // $.cplusplus_block,
+        $.comment,
         $.EMPTYLINE,
-        $.namespace_decl,
-        $.fileproperty,
-        // $.cplusplus,
+        $.namespace,
+        $.property,
+        $.cplusplus,
         $.import,
         $.struct_decl,
         $.class_decl,
@@ -37,38 +37,40 @@ module.exports = grammar({
 
       // cplusplus_block: $ => $.cplusplus_block,
 
-      cplusplus_block: $ => seq(
+      cplusplus: $ => seq(
         'cplusplus',
+        optional(seq('(', alias($.targetspec, $.cplusplus_target), ')')),
         '{{',
-        repeat(choice(
-          $.braced_content,
-          $.string_literal,
+        alias(repeat(choice(
+          $.cplusplus_braced_content,
+          $.cplusplus_string_literal,
           /[^{}]/
-        )),
-        '}}'
+        )), $.cplusplus_body),
+        '}}',
+        optional(';')
       ),
   
-      braced_content: $ => seq(
+      cplusplus_braced_content: $ => seq(
         '{',
         repeat(choice(
-          $.braced_content,
-          $.string_literal,
+          $.cplusplus_braced_content,
+          $.cplusplus_string_literal,
           /[^{}]/
         )),
         '}'
       ),
   
-      string_literal: $ => choice(
+      cplusplus_string_literal: $ => choice(
         seq('"', repeat(choice(/[^"\\]/, /\\./)), '"'),
         seq("'", repeat(choice(/[^'\\]/, /\\./)), "'")
       ),
 
       // comment: $ => token(seq('//', /[^\n]*/)),
 
-      // comment_block: $ => prec.right(seq(repeat1($._COMMENTLINE), optional('\n'))),   works
-      // comment_block: $ => prec.right(seq(repeat1(seq($._COMMENTLINE, '\n')), $._COMMENTLINE)),   works kind of
-      comment_block: $ => prec.right(repeat1($._comment)),   // best so far
-      // comment_block: $ => prec.right(seq(
+      // comment: $ => prec.right(seq(repeat1($._commentlineLINE), optional('\n'))),   works
+      // comment: $ => prec.right(seq(repeat1(seq($._commentlineLINE, '\n')), $._commentlineLINE)),   works kind of
+      comment: $ => prec.right(repeat1($._commentline)),   // best so far
+      // comment: $ => prec.right(seq(
       //   $.comment,
       //   repeat(seq(
       //     '\n',
@@ -77,7 +79,7 @@ module.exports = grammar({
       //   optional('\n')
       // )),
 
-      _comment: _ => token(choice(
+      _commentline: _ => token(choice(
         seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
         seq(
           '/*',
@@ -86,11 +88,11 @@ module.exports = grammar({
         ),    // TODO is that needed in msg files?
       )),
   
-      namespace_decl: $ => seq('namespace', optional($.qname), ';'),  // FIXME qname is optional???
+      namespace: $ => seq('namespace', optional(alias($.qname, $.namespace_name)), ';'),  // FIXME qname is optional???
   
       qname: $ => seq(optional('::'), $._NAME, repeat(seq('::', $._NAME))),
     
-      fileproperty: $ => seq($.property_namevalue, ';'),
+      property: $ => seq($.property_namevalue, ';'),
   
       // cplusplus: $ => seq('cplusplus', optional(seq('(', $.targetspec, ')')), '{{', $.cplusplusbody, '}}', optional(';')),
 
@@ -114,45 +116,41 @@ module.exports = grammar({
   
       importname: $ => choice($._NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
   
-      struct_decl: $ => seq('struct', $.qname, ';'),
+      struct_decl: $ => seq('struct', alias($.qname, $.struct_name), ';'),
   
-      class_decl: $ => seq('class', optional('noncobject'), $.qname, optional(seq('extends', $.qname)), ';'),
+      class_decl: $ => seq('class', optional('noncobject'), alias($.qname, $.class_name), optional(seq('extends', alias($.qname, $.class_extends_name))), ';'),
           
-      message_decl: $ => seq('message', $.qname, ';'),
+      message_decl: $ => seq('message', alias($.qname, $.message_name), ';'),
   
-      packet_decl: $ => seq('packet', $.qname, ';'),
+      packet_decl: $ => seq('packet', alias($.qname, $.packet_name), ';'),
   
-      enum_decl: $ => seq('enum', $.qname, ';'),
+      enum_decl: $ => seq('enum', alias($.qname, $.enum_name), ';'),
   
-      enum: $ => seq('enum', $.qname, '{', repeat(choice($.enumfield_or_property, $.comment_block)), '}', optional(';')),
+      enum: $ => seq('enum', alias($.qname, $.enum_name), '{', alias(repeat(choice($.enumfield_or_property, $.comment)), $.enum_source_code), '}', optional(';')),
     
-      enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment_block))),
+      enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property_namevalues), optional($.comment))),
   
       enumfield: $ => seq($._NAME, optional(seq('=', $.enumvalue)), ';'),
   
       enumvalue: $ => choice($.INTCONSTANT, seq('-', $.INTCONSTANT), $._NAME),
   
-      message: $ => seq($.message_header, $.body),
+      message: $ => seq($._message_header, alias($.body, $.message_source_code)),
   
-      packet: $ => seq($.packet_header, $.body),
+      packet: $ => seq($._packet_header, alias($.body, $.packet_source_code)),
   
-      class: $ => seq($.class_header, $.body),
+      class: $ => seq($._class_header, alias($.body, $.class_source_code)),
   
-      struct: $ => seq($.struct_header, $.body),
+      struct: $ => seq($._struct_header, alias($.body, $.struct_source_code)),
   
-      message_header: $ => seq('message', $.qname, optional(seq('extends', $.qname))),
+      _message_header: $ => seq('message', alias($.qname, $.message_name), optional(seq('extends', alias($.qname, $.message_extends_name)))),
   
-      packet_header: $ => seq('packet', $.qname, optional(seq('extends', $.qname))),
+      _packet_header: $ => seq('packet', $.qname, optional(seq('extends', $.qname))),
   
-      class_header: $ => seq('class', $.class_name, optional(seq('extends', $.class_extend_name))),
-
-      class_name: $ => prec.left($.qname),
-
-      class_extend_name: $ => $.qname,
+      _class_header: $ => seq('class', alias(prec.left($.qname), $.class_name), optional(seq('extends', alias($.qname, $.class_extends_name)))),
   
-      struct_header: $ => seq('struct', $.qname, optional(seq('extends', $.qname))),
+      _struct_header: $ => seq('struct', alias($.qname, $.struct_name), optional(seq('extends', alias($.qname, $.struct_extends_name)))),
   
-      body: $ => seq('{', repeat(seq(choice($.field, $.property, $.comment_block), optional($.comment_block))), '}', optional(';')),
+      body: $ => seq('{', repeat(seq(choice($.field, $.property_namevalues, $.comment), optional($.comment))), '}', optional(';')),
   
       field: $ => choice(
         seq($.fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';'),
@@ -203,7 +201,7 @@ module.exports = grammar({
   
       inline_properties: $ => repeat1($.property_namevalue),
   
-      property: $ => seq($.property_namevalue, ';'),
+      property_namevalues: $ => seq($.property_namevalue, ';'),
   
       property_namevalue: $ => choice(
         $.property_name,
@@ -254,8 +252,8 @@ module.exports = grammar({
       // _CPLUSPLUSBODYWITHOUTBRACES: $ => /[^\n;]*/,
       // _CPLUSPLUSBODY: $ => /\{\{(\s|\S)*?\}\}/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
-      // _COMMENTLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
-      _COMMENTLINE: $ => /\/\/[^\n]*/,
+      // _commentlineLINE: $ => /\/\/[^\n]*\n?/    works but contains a \n
+      _commentlineLINE: $ => /\/\/[^\n]*/,
       EMPTYLINE: $ => /\r?\n\s*\r?\n/,
     }
   });
