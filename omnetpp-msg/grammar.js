@@ -204,7 +204,16 @@ module.exports = grammar({
 
       prop_body: $ => seq($._NAME, optional(seq('[', $._NAME,']')), optional($.prop_parenthesized), ';'),
 
-      prop_parenthesized: $ => seq('(', /[^\(\)]*/, ')'),
+      prop_parenthesized: $ => seq('(', $.prop_content, ')'),
+
+      // prop_content: $ => /[^\(\)]*/,
+      
+      prop_content: $ => seq($.prop_content_item, repeat(seq(';', $.prop_content_item))),
+
+      prop_content_item: $ => choice(
+        $._NAME,
+        seq($._NAME, '=', /[^;\(\)]*/),
+      ),
   
       inline_properties: $ => repeat1($.prop),
   
