@@ -200,9 +200,9 @@ module.exports = grammar({
         '.', ',', '(', ')', '[', ']'
       ),
 
-      prop: $ => seq('@', $.prop_body),
+      prop: $ => seq('@', $.prop_body, optional(';')),
 
-      prop_body: $ => seq($._NAME, optional(seq('[', $._NAME,']')), optional($.prop_parenthesized), ';'),
+      prop_body: $ => seq(alias($._NAME, $.prop_name), optional(seq('[', alias($._NAME, $.prop_index),']')), optional($.prop_parenthesized)),
 
       prop_parenthesized: $ => seq('(', $.prop_content, ')'),
 
@@ -210,12 +210,34 @@ module.exports = grammar({
       
       prop_content: $ => seq($.prop_content_item, repeat(seq(';', $.prop_content_item))),
 
-      prop_content_item: $ => choice(
-        $._NAME,
-        seq($._NAME, '=', /[^;\(\)]*/),
+      prop_cpp: $ => alias(repeat1(choice(
+        // $.cplusplus_braced_content,
+        // $.cplusplus_string_literal,
+        /[^\(\);]+/,
+        $.cplusplus_parenthesized,
+      )), $.cplusplus_body),
+
+      cplusplus_parenthesized: $ => seq(
+        '(',
+        repeat(choice(
+          // $.cplusplus_braced_content,
+          // $.cplusplus_string_literal,
+          $.cplusplus_parenthesized,
+          /[^\(\);]/
+        )),
+        ')'
       ),
+
+      prop_content_item: $ => choice(
+        alias($._NAME, $.prop_value),
+        $.prop_keyvaluepair,
+        $.prop_cpp,
+        $.INTCONSTANT
+      ),
+
+      prop_keyvaluepair: $ => seq(alias($._NAME, $.prop_key), '=', alias(/[^@;\(\)]*/, $.prop_value)),
   
-      inline_properties: $ => repeat1($.prop),
+      inline_properties: $ => repeat1(seq('@', $.prop_body)),
   
       // property_namevalues: $ => seq($.property_namevalue, ';'),
 
