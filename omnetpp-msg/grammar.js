@@ -123,9 +123,11 @@ module.exports = grammar({
       _body: $ => seq('{', alias(repeat(seq(choice($.field, $.property, $.comment), optional($.comment))), $.source_code), '}', optional(';')),
   
       field: $ => choice(
-        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';'),
-        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), '=', alias($.fieldvalue, $.value), optional($.inline_properties), ';')
+        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';', optional($.inline_comment)),
+        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), '=', alias($.fieldvalue, $.value), optional($.inline_properties), ';', optional($.inline_comment))
       ),
+
+      inline_comment: $ => token.immediate((seq(/[^\n\/]*/, '//', /[^\n]*/))),
   
       _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.data_type), alias($._NAME, $.name)),
     
