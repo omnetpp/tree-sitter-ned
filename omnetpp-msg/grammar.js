@@ -11,7 +11,7 @@ module.exports = grammar({
 
       msg_file: $ => repeat(choice(
         $.comment,
-        $._EMPTYLINE,
+        $.EMPTYLINE,
         $.namespace,
         $.property,
         $.cplusplus,
@@ -96,21 +96,21 @@ module.exports = grammar({
   
       enum_decl: $ => seq('enum', alias($.qname, $.name), ';'),
   
-      enum: $ => seq('enum', alias($.qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment)), $.source_code), '}', optional(';')),
+      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($.qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $.EMPTYLINE)), $.source_code), '}', optional(';'))),
     
       _enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment))),
   
-      enumfield: $ => seq(alias($._NAME, $.name), optional(seq('=', alias($.enumvalue, $.value))), ';'),
+      enumfield: $ => seq(alias($._NAME, $.name), optional(seq('=', alias($.enumvalue, $.value))), ';', optional($.inline_comment)),
   
       enumvalue: $ => choice($._INTCONSTANT, seq('-', $._INTCONSTANT), $._NAME),
   
-      message: $ => seq($._message_header, alias($._body, $.source_code)),
+      message: $ => prec(10, seq(optional($.comment), $._message_header, alias($._body, $.source_code))),
   
-      packet: $ => seq($._packet_header, alias($._body, $.source_code)),
+      packet: $ => prec(10, seq(optional($.comment), $._packet_header, alias($._body, $.source_code))),
   
-      class: $ => seq($._class_header, $._body),
+      class: $ => prec(10, seq(optional($.comment), $._class_header, $._body)),
   
-      struct: $ => seq($._struct_header, alias($._body, $.source_code)),
+      struct: $ => prec(10, seq(optional($.comment), $._struct_header, alias($._body, $.source_code))),
   
       _message_header: $ => seq('message', alias($.qname, $.name), optional(seq('extends', alias($.qname, $.extends_name)))),
   
@@ -124,7 +124,7 @@ module.exports = grammar({
   
       field: $ => choice(
         seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';', optional($.inline_comment)),
-        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), '=', alias($.fieldvalue, $.value), optional($.inline_properties), ';', optional($.inline_comment))
+        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), '=', alias($.fieldvalue, $.value), optional($.inline_properties), ';', optional($.inline_comment)),
       ),
 
       inline_comment: $ => token.immediate((seq(/[^\n\/]*/, '//', /[^\n]*/))),
@@ -171,7 +171,7 @@ module.exports = grammar({
         '.', ',', '(', ')', '[', ']'
       ),
 
-      property: $ => seq('@', $.prop__body, optional(';')),
+      property: $ => seq('@', $.prop__body, ';', optional($.inline_comment)),
 
       prop__body: $ => seq(alias($._NAME, $.prop_name), optional(seq('[', alias($._NAME, $.prop_index),']')), optional($.prop_parenthesized)),
 
@@ -264,8 +264,8 @@ module.exports = grammar({
       PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
-      _commentlineLINE: $ => /\/\/[^\n]*/,
-      _EMPTYLINE: $ => /\r?\n\s*\r?\n/,
+      // _commentlineLINE: $ => /\/\/[^\n]*/,
+      EMPTYLINE: $ => /\r?\n\s*\r?\n/,
     }
   });
   
