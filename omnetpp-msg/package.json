@@ -38,7 +38,8 @@
   "tree-sitter": [
     {
       "scope": "source.omnetpp_msg",
-      "injection-regex": "^omnetpp_msg$"
+      "injection-regex": "^omnetpp_msg$",
+      "file-types": ["msg"]
     }
   ]
 }
