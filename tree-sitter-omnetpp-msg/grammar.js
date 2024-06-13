@@ -6,12 +6,16 @@ module.exports = grammar({
         /\s/,
         $._commentline
     ],
+
+    supertypes: $ => [
+      $._targetitem
+    ],
     
     rules: {
 
       msg_file: $ => repeat(choice(
         $.comment,
-        $.EMPTYLINE,
+        $._EMPTYLINE,
         $.namespace,
         $.property,
         $.cplusplus,
@@ -96,7 +100,7 @@ module.exports = grammar({
   
       enum_decl: $ => seq('enum', alias($.qname, $.name), ';'),
   
-      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($.qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $.EMPTYLINE)), $.source_code), '}', optional(';'))),
+      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($.qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $._EMPTYLINE)), $.source_code), '}', optional(';'))),
     
       _enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment))),
   
@@ -171,13 +175,13 @@ module.exports = grammar({
         '.', ',', '(', ')', '[', ']'
       ),
 
-      property: $ => seq('@', $.prop__body, ';', optional($.inline_comment)),
+      property: $ => seq('@', $._prop_body, ';', optional($.inline_comment)),
 
-      prop__body: $ => seq(alias($._NAME, $.prop_name), optional(seq('[', alias($._NAME, $.prop_index),']')), optional($.prop_parenthesized)),
+      _prop_body: $ => seq(alias($._NAME, $.name), optional(seq('[', alias($._NAME, $.index),']')), optional($._prop_parenthesized)),
 
-      prop_parenthesized: $ => seq('(', $.prop_content, ')'),
+      _prop_parenthesized: $ => seq('(', alias($.prop_value, $.value), ')'),
       
-      prop_content: $ => seq($.prop_content_item, repeat(seq(';', $.prop_content_item))),
+      prop_value: $ => seq($.property_tag, repeat(seq(';', $.property_tag))),
 
       prop_cpp: $ => alias(repeat1(choice(
         // $._cplusplus_braced_content,
@@ -197,16 +201,16 @@ module.exports = grammar({
         ')'
       ),
 
-      prop_content_item: $ => choice(
-        alias($._NAME, $.prop_value),
+      property_tag: $ => choice(
+        alias($._NAME, $.value),
         $.prop_keyvaluepair,
         $.prop_cpp,
         $._INTCONSTANT
       ),
 
-      prop_keyvaluepair: $ => seq(alias($._NAME, $.prop_key), '=', alias(/[^@;\(\)]*/, $.prop_value)),
+      prop_keyvaluepair: $ => seq(alias($._NAME, $.prop_key), '=', alias(/[^@;\(\)]*/, $.value)),
   
-      inline_properties: $ => repeat1(seq('@', $.prop__body)),
+      inline_properties: $ => repeat1(seq('@', $._prop_body)),
   
       // property_namevalues: $ => seq($.property_namevalue, ';'),
 
@@ -265,7 +269,7 @@ module.exports = grammar({
       PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _commentlineLINE: $ => /\/\/[^\n]*/,
-      EMPTYLINE: $ => /\r?\n\s*\r?\n/,
+      _EMPTYLINE: $ => /\r?\n\s*\r?\n/,
     }
   });
   
