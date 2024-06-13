@@ -12,8 +12,8 @@
   "author": "Rudolf Hornig",
   "license": "MIT",
   "dependencies": {
-    "node-gyp-build": "^4.8.0",
-    "node-addon-api": "^7.1.0"
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
   },
   "peerDependencies": {
     "tree-sitter": "^0.21.0"
@@ -39,7 +39,9 @@
     {
       "scope": "source.omnetpp_msg",
       "injection-regex": "^omnetpp_msg$",
-      "file-types": ["msg"]
+      "file-types": [
+        "msg"
+      ]
     }
   ]
 }
