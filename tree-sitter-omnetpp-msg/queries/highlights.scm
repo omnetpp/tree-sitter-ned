@@ -18,4 +18,4 @@
 (importspec) @comment
 (data_type) @type
 (_targetitem) @variable.parameter
-(prop_name) @prop
+(name) @prop

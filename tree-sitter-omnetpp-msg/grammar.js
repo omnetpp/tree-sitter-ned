@@ -186,7 +186,7 @@ module.exports = grammar({
       prop_cpp: $ => alias(repeat1(choice(
         // $._cplusplus_braced_content,
         // $._cplusplus_string_literal,
-        /[^\(\);]+/,
+        /[^\(\)=;]+/,
         $.cplusplus_parenthesized,
       )), $.cplusplus__body),
 
@@ -208,7 +208,7 @@ module.exports = grammar({
         $._INTCONSTANT
       ),
 
-      prop_keyvaluepair: $ => seq(alias($._NAME, $.prop_key), '=', alias(/[^@;\(\)]*/, $.value)),
+      prop_keyvaluepair: $ => seq(alias($._NAME, $.name), '=', alias(/[^@;\(\)=]*/, $.value)),
   
       inline_properties: $ => repeat1(seq('@', $._prop_body)),
   
