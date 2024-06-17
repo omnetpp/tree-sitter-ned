@@ -4,22 +4,22 @@ module.exports = grammar({
 
     extras: $ => [
         /\s/,
-        $._commentline
+        $._commentline,
     ],
 
     supertypes: $ => [
       $._targetitem
     ],
 
-    conflicts: $ => [
-      [$.prop_cpp, $.prop_keyvaluepair, $.prop_value]
-    ],
+    // conflicts: $ => [
+    //   [$.prop_cpp, $.prop_keyvaluepair, $._prop_value]
+    // ],
     
     rules: {
 
       msg_file: $ => repeat(choice(
         $.comment,
-        $._EMPTYLINE,
+        $.EMPTYLINE,
         $.namespace,
         $.property,
         $.cplusplus,
@@ -75,69 +75,69 @@ module.exports = grammar({
         ),    // TODO is that needed in msg files?
       )),
   
-      namespace: $ => seq('namespace', optional(alias($.qname, $.name)), ';'),  // FIXME qname is optional???
+      namespace: $ => seq('namespace', optional(alias($._qname, $.name)), ';'),  // FIXME _qname is optional???
   
-      qname: $ => seq(optional('::'), $.NAME, repeat(seq('::', $.NAME))),
+      _qname: $ => seq(optional('::'), $._NAME, repeat(seq('::', $._NAME))),
   
   
       targetspec: $ => seq($._targetitem, repeat($._targetitem)),
   
-      _targetitem: $ => choice($.NAME, '::', $._INTCONSTANT, ':', '.', ',', '~', '=', '&'),
+      _targetitem: $ => choice($._NAME, '::', $._INTCONSTANT, ':', '.', ',', '~', '=', '&'),
   
       import: $ => seq('import', $.importspec, ';'),
   
       // importspec: $ => seq($._importname, repeat(seq('.', $._importname))),
 
-      importspec: $ => choice($.import_unqname, seq(repeat(seq($._importname, '.')), $.import_unqname)),
+      importspec: $ => choice($.import_un_qname, seq(repeat(seq($._importname, '.')), $.import_un_qname)),
 
-      import_unqname: $ => $._importname,
+      import_un_qname: $ => $._importname,
   
-      _importname: $ => choice($.NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
+      _importname: $ => choice($._NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
   
-      struct_decl: $ => seq('struct', alias($.qname, $.name), ';'),
+      struct_decl: $ => seq('struct', alias($._qname, $.name), ';'),
   
-      class_decl: $ => seq('class', optional('noncobject'), alias($.qname, $.name), optional(seq('extends', alias($.qname, $.extendsNAME))), ';'),
+      class_decl: $ => seq('class', optional('noncobject'), alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name))), ';'),
           
-      message_decl: $ => seq('message', alias($.qname, $.name), ';'),
+      message_decl: $ => seq('message', alias($._qname, $.name), ';'),
   
-      packet_decl: $ => seq('packet', alias($.qname, $.name), ';'),
+      packet_decl: $ => seq('packet', alias($._qname, $.name), ';'),
   
-      enum_decl: $ => seq('enum', alias($.qname, $.name), ';'),
+      enum_decl: $ => seq('enum', alias($._qname, $.name), ';'),
   
-      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($.qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $._EMPTYLINE)), $.source_code), '}', optional(';'))),
+      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($._qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $.EMPTYLINE)), $.source_code), '}', optional(';'))),
     
       _enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment))),
   
-      enumfield: $ => seq(alias($.NAME, $.name), optional(seq('=', alias($.enumvalue, $.value))), ';', optional($.inline_comment)),
+      enumfield: $ => seq(alias($._NAME, $.name), optional(seq('=', alias($.enumvalue, $.value))), ';'),
   
-      enumvalue: $ => choice($._INTCONSTANT, seq('-', $._INTCONSTANT), $.NAME),
+      enumvalue: $ => choice($._INTCONSTANT, seq('-', $._INTCONSTANT), $._NAME),
   
-      message: $ => prec(10, seq(optional($.comment), $._message_header, alias($._body, $.source_code))),
+      message: $ => prec(10, seq(optional($.comment), $._message_header, $._body)),
   
-      packet: $ => prec(10, seq(optional($.comment), $._packet_header, alias($._body, $.source_code))),
+      packet: $ => prec(10, seq(optional($.comment), $._packet_header, $._body)),
   
       class: $ => prec(10, seq(optional($.comment), $._class_header, $._body)),
   
-      struct: $ => prec(10, seq(optional($.comment), $._struct_header, alias($._body, $.source_code))),
+      struct: $ => prec(10, seq(optional($.comment), $._struct_header, $._body)),
   
-      _message_header: $ => seq('message', alias($.qname, $.name), optional(seq('extends', alias($.qname, $.extendsNAME)))),
+      _message_header: $ => seq('message', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
   
-      _packet_header: $ => seq('packet', $.qname, optional(seq('extends', $.qname))),
+      _packet_header: $ => seq('packet', $._qname, optional(seq('extends', $._qname))),
   
-      _class_header: $ => seq('class', alias(prec.left($.qname), $.name), optional(seq('extends', alias($.qname, $.extendsNAME)))),
+      _class_header: $ => seq('class', alias(prec.left($._qname), $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
   
-      _struct_header: $ => seq('struct', alias($.qname, $.name), optional(seq('extends', alias($.qname, $.extendsNAME)))),
+      _struct_header: $ => seq('struct', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
   
-      _body: $ => seq('{', alias(repeat(seq(choice($.field, $.property, $.comment), optional($.comment))), $.source_code), '}', optional(';')),
+      _body: $ => seq('{', optional(/\s/), alias(repeat(seq(choice($.field, $.property, $.comment, $.EMPTYLINE), optional($.comment))), $.source_code), '}', optional(';')),
   
       field: $ => choice(
-        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), ';', optional($.inline_comment)),
-        seq($._fieldtypename, optional($.opt_fieldvector), optional($.inline_properties), '=', alias($.fieldvalue, $.value), optional($.inline_properties), ';', optional($.inline_comment)),
+        seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), ';'),
+        seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), '=', alias($.fieldvalue, $.value), optional(alias($.inline_properties, $.property)), ';'),
       ),
 
       inline_comment: $ => token.immediate((seq(/[^\n\/]*/, '//', /[^\n]*/))),
   
-      _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.data_type), alias($.NAME, $.name)),
+      _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.data_type), alias($._NAME, $.name)),
     
       _fielddatatype: $ => choice(
         $._fieldsimpledatatype,
@@ -147,7 +147,7 @@ module.exports = grammar({
       ),
   
       _fieldsimpledatatype: $ => choice(
-        $.qname,
+        $._qname,
         'char', 'short', 'int', 'long',
         seq('unsigned', 'char'),
         seq('unsigned', 'short'),
@@ -158,7 +158,7 @@ module.exports = grammar({
   
       opt_fieldvector: $ => choice(
         seq('[', $._INTCONSTANT, ']'),
-        seq('[', $.qname, ']'),
+        seq('[', $._qname, ']'),
         seq('[', ']')
       ),
   
@@ -171,7 +171,7 @@ module.exports = grammar({
         $._REALCONSTANT,
         'true',
         'false',
-        $.NAME,
+        $._NAME,
         '::',
         '?', ':', '&&', '||', '##', '==', '!=', '>', '>=', '<', '<=',
         '&', '|', '#', '<<', '>>',
@@ -179,20 +179,25 @@ module.exports = grammar({
         '.', ',', '(', ')', '[', ']'
       ),
 
-      property: $ => seq('@', $.prop_body, ';', optional($.inline_comment)),
+      property: $ => seq('@', $._prop_body, ';'),
 
-      prop_body: $ => seq(alias($.NAME, $.name), optional(seq('[', alias($.NAME, $.index),']')), optional($.prop_parenthesized)),
+      _prop_body: $ => seq(alias($._NAME, $.name), optional(seq('[', alias($._NAME, $.index),']')), optional($._prop_parenthesized)),
 
-      prop_parenthesized: $ => prec.right(seq('(', alias($.prop_value, $.value), ')')),
+      _prop_parenthesized: $ => prec.right(seq('(', alias(repeat1($._prop_value), $.value), ')')),
       
-      prop_value: $ => prec.right(seq($.property_tag, repeat(seq(';', $.property_tag)))),
+      _prop_value: $ => choice(
+        $._prop_value_parenthesized,
+        /[^\(\)]+/
+      ),
 
-      prop_cpp: $ => alias(repeat1(choice(
-        // $._cplusplus_braced_content,
-        // $._cplusplus_string_literal,
-        /[^\(\)=;]+/,
-        $.cplusplus_parenthesized_prop,
-      )), $.cplusplus__body),
+      _prop_value_parenthesized: $ => prec.right(seq('(', repeat($._prop_value), ')')),
+
+      // prop_cpp: $ => alias(repeat1(choice(
+      //   // $._cplusplus_braced_content,
+      //   // $._cplusplus_string_literal,
+      //   /[^\(\)=;]+/,
+      //   $.cplusplus_parenthesized_prop,
+      // )), $.cplusplus__body),
 
       cplusplus_parenthesized: $ => seq(
         '(',
@@ -205,44 +210,44 @@ module.exports = grammar({
         ')'
       ),
 
-      cplusplus_parenthesized_prop: $ => seq(
-        '(',
-        repeat(choice(
-          // $._cplusplus_braced_content,
-          // $._cplusplus_string_literal,
-          $.cplusplus_parenthesized_prop,
-          /[^\(\);=]/
-        )),
-        ')'
-      ),
+      // cplusplus_parenthesized_prop: $ => seq(
+      //   '(',
+      //   repeat(choice(
+      //     // $._cplusplus_braced_content,
+      //     // $._cplusplus_string_literal,
+      //     $.cplusplus_parenthesized_prop,
+      //     /[^\(\);=]/
+      //   )),
+      //   ')'
+      // ),
 
-      property_tag: $ => choice(
-        prec(10, alias($.NAME, $.prop_value)),
-        prec(100, $.prop_keyvaluepair),
-        prec(0, $.prop_cpp),
-        prec(10, $._INTCONSTANT)
-      ),
+      // property_tag: $ => choice(
+      //   prec(10, alias($._NAME, $._prop_value)),
+      //   prec(100, $.prop_keyvaluepair),
+      //   prec(0, $.prop_cpp),
+      //   prec(10, $._INTCONSTANT)
+      // ),
 
-      prop_keyvaluepair: $ => seq(alias($.NAME, $.name), '=', alias(/[^@;\(\)=]*/, $.value)),
+      // prop_keyvaluepair: $ => seq(alias($._NAME, $.name), '=', alias(/[^@;\(\)=]*/, $.value)),
   
-      inline_properties: $ => repeat1(seq('@', $.prop_body)),
+      inline_properties: $ => repeat1(seq('@', $._prop_body)),
   
-      // propertyNAMEvalues: $ => seq($.propertyNAMEvalue, ';'),
+      // property_NAMEvalues: $ => seq($.property_NAMEvalue, ';'),
 
-      // propertyNAMEvalues: $ => prec.right(seq($.propertyNAMEvalue, repeat(seq(';', $.propertyNAMEvalue)))),
+      // property_NAMEvalues: $ => prec.right(seq($.property_NAMEvalue, repeat(seq(';', $.property_NAMEvalue)))),
   
-      // propertyNAMEvalue: $ => choice(
-      //   $.propertyNAME,
-      //   seq($.propertyNAME, '(', optional($.property_keys), ')'),
-      //   seq('enum', '(', $.NAME, ')'),
-      //   // seq($.propertyNAME, '(', optional(choice($.PROPERTYPARAMETER, optional($.propertyparameter_parenthesizedblock))), ')')
+      // property_NAMEvalue: $ => choice(
+      //   $.property_NAME,
+      //   seq($.property_NAME, '(', optional($.property_keys), ')'),
+      //   seq('enum', '(', $._NAME, ')'),
+      //   // seq($.property_NAME, '(', optional(choice($.PROPERTYPARAMETER, optional($.propertyparameter_parenthesizedblock))), ')')
       // ),
 
       // // propertyparameter_parenthesizedblock: $ => seq('(', optional($.PROPERTYPARAMETER), ')'),
   
-      // propertyNAME: $ => choice(
-      //   seq('@', $.PROPNAME),
-      //   seq('@', $.PROPNAME, '[', $.PROPNAME, ']')
+      // property_NAME: $ => choice(
+      //   seq('@', $.PROP_NAME),
+      //   seq('@', $.PROP_NAME, '[', $.PROP_NAME, ']')
       // ),
   
       // property_keys: $ => repeat1($.property_key),
@@ -265,7 +270,7 @@ module.exports = grammar({
       //   $._REALCONSTANT,
       //   'true',
       //   'false',
-      //   $.NAME
+      //   $._NAME
       // ),
   
       // property_literal: $ => repeat1(choice(
@@ -273,18 +278,18 @@ module.exports = grammar({
       //   $._STRINGCONSTANTWITHOUTEQ
       // )),
   
-      NAME: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+      _NAME: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
       _INTCONSTANT: $ => /0[xX][0-9a-fA-F]+|[0-9]+/,
       _REALCONSTANT: $ => /[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?/,
       _CHARCONSTANT: $ => /'[^']'/,
       _CHARCONSTANTWOEQ: $ => /'[^=']'/,
       _STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       _STRINGCONSTANTWITHOUTEQ: $ => /"([^="\\]|\\.)*"/,
-      PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
+      PROP_NAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _commentlineLINE: $ => /\/\/[^\n]*/,
-      _EMPTYLINE: $ => /\r?\n\s*\r?\n/,
+      EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     }
   });
   
