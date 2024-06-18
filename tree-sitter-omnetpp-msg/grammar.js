@@ -19,7 +19,7 @@ module.exports = grammar({
 
       msg_file: $ => repeat(choice(
         $.comment,
-        $.EMPTYLINE,
+        $._EMPTYLINE,
         $.namespace,
         $.property,
         $.cplusplus,
@@ -104,7 +104,7 @@ module.exports = grammar({
   
       enum_decl: $ => seq('enum', alias($._qname, $.name), ';'),
   
-      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($._qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $.EMPTYLINE)), $.source_code), '}', optional(';'))),
+      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($._qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $._EMPTYLINE)), $.source_code), '}', optional(';'))),
     
       _enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment))),
   
@@ -128,14 +128,14 @@ module.exports = grammar({
   
       _struct_header: $ => seq('struct', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
   
-      _body: $ => seq('{', optional(/\s/), alias(repeat(seq(choice($.field, $.property, $.comment, $.EMPTYLINE), optional($.comment))), $.source_code), '}', optional(';')),
+      _body: $ => seq('{', optional(/\s/), alias(repeat(seq(choice($.field, $.property, $.comment, $._EMPTYLINE), optional($.comment))), $.source_code), '}', optional(';')),
   
       field: $ => choice(
         seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), ';'),
         seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), '=', alias($.fieldvalue, $.value), optional(alias($.inline_properties, $.property)), ';'),
       ),
 
-      inline_comment: $ => token.immediate((seq(/[^\n\/]*/, '//', /[^\n]*/))),
+      // inline_comment: $ => token.immediate((seq(/[^\n\/]*/, '//', /[^\n]*/))),
   
       _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.data_type), alias($._NAME, $.name)),
     
@@ -289,7 +289,7 @@ module.exports = grammar({
       PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
       COMMONCHAR: $ => /[^\{\}=,;]/,
       // _commentlineLINE: $ => /\/\/[^\n]*/,
-      EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
+      _EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     }
   });
   
