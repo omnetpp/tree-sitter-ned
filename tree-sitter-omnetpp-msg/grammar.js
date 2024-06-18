@@ -285,9 +285,9 @@ module.exports = grammar({
       _CHARCONSTANTWOEQ: $ => /'[^=']'/,
       _STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
       _STRINGCONSTANTWITHOUTEQ: $ => /"([^="\\]|\\.)*"/,
-      PROP_NAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
-      PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
-      COMMONCHAR: $ => /[^\{\}=,;]/,
+      // PROP_NAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
+      // PROPERTYPARAMETER: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
+      // COMMONCHAR: $ => /[^\{\}=,;]/,
       // _commentlineLINE: $ => /\/\/[^\n]*/,
       _EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     }
