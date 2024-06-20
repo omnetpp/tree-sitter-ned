@@ -42,6 +42,11 @@ class GptpTlv extends cObject {
     uint16_t lengthField @bit(16);
 }
 
+class ITransmission { @existingClass; }
+class IArrival { @existingClass; }
+class IListening { @existingClass; }
+class IReception { @existingClass; }
+
 ---
 
 (msg_file
@@ -168,4 +173,24 @@ class GptpTlv extends cObject {
         (name)
         (property
           (name)
-          (value))))))
+          (value)))))
+  (class
+    (name)
+    (body
+      (property
+        (name))))
+  (class
+    (name)
+    (body
+      (property
+        (name))))
+  (class
+    (name)
+    (body
+      (property
+        (name))))
+  (class
+    (name)
+    (body
+      (property
+        (name)))))

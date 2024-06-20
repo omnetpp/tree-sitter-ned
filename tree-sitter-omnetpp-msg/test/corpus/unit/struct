@@ -1,14 +1,35 @@
 ==================
-namespace
+struct
 ==================
 
-namespace inet::tcp;
-namespace inet;
+//struct ExtendedTimestamp
+//{
+//    UInteger48 seconds;
+//    UInteger48 fractionalNanoseconds;
+//};
+
+//typedef Octet8 ClockIdentity;
+
+struct PortIdentity
+{
+    @packetData;
+    uint64_t clockIdentity;
+    uint16_t portNumber;
+};
 
 ---
 
 (msg_file
-    (namespace
+  (comment)
+  (comment)
+  (struct
+    (name)
+    (body
+      (property
         (name))
-    (namespace
-        (name)))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)))))

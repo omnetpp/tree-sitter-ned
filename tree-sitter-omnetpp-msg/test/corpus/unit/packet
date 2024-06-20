@@ -2,9 +2,35 @@
 packet
 ==================
 
-// TODO
+packet WirelessSignal extends Signal
+{
+    @existingClass;
+    @descriptor(readonly);
+    const ITransmission *transmission;
+    const IArrival *arrival;
+    const IListening *listening;
+    const IReception *reception;
+}
 
 ---
 
 (msg_file
-  (comment))
+  (packet
+    (body
+      (property
+        (name))
+      (property
+        (name)
+        (value))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)))))

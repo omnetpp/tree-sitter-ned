@@ -10,6 +10,15 @@ message GptpReqAnswerEvent extends ClockEvent
     uint16_t sequenceId;
 }
 
+message ClockEvent
+{
+    @customize;
+    IClock *clock;
+    bool relative = false;
+    clocktime_t arrivalClockTime = -1;
+    OverdueClockEventHandlingMode overdueClockEventHandlingMode = UNSPECIFIED;
+}
+
 ---
 
 (msg_file
@@ -28,4 +37,24 @@ message GptpReqAnswerEvent extends ClockEvent
         (name))
       (field
         (type)
-        (name)))))
+        (name))))
+  (message
+    (name)
+    (body
+      (property
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)
+        (value))
+      (field
+        (type)
+        (name)
+        (value))
+      (field
+        (type)
+        (name)
+        (value)))))
