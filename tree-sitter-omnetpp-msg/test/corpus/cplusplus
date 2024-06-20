@@ -1,0 +1,39 @@
+==================
+cplusplus
+==================
+
+cplusplus {{
+typedef std::list<Sack> SackList;
+}}
+
+cplusplus {{
+#include "inet/common/Units.h"
+#include "inet/clock/common/ClockEvent.h"
+}}
+
+cplusplus {{
+namespace inet {
+
+using namespace inet::units::values;
+const B GPTP_HEADER_SIZE = B(34);
+}
+
+}}
+
+cplusplus(GptpFollowUpInformationTlv) {{
+    void setCumulativeScaledRateOffset(int32_t x) { setRateRatio(1.0 + (double)(x) / (double)((uint64_t)1<<41)); }
+    int32_t getCumulativeScaledRateOffset() const { return (int32_t)ceil((getRateRatio() - 1.0) * (double)((uint64_t)1<<41)); }
+}}
+
+---
+
+(msg_file
+    (cplusplus
+        (body))
+    (cplusplus
+        (body))
+    (cplusplus
+        (body))
+    (cplusplus
+        (target)
+        (body)))
