@@ -1,0 +1,31 @@
+==================
+message
+==================
+
+message GptpReqAnswerEvent extends ClockEvent
+{
+    int portId;
+    clocktime_t ingressTimestamp;
+    PortIdentity sourcePortIdentity;
+    uint16_t sequenceId;
+}
+
+---
+
+(msg_file
+  (message
+    (name)
+    (extends)
+    (body
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)))))

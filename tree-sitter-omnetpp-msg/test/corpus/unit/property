@@ -1,0 +1,88 @@
+==================
+property
+==================
+
+@property[bit](type=int; usage=field; desc="define stored size in bits");
+
+struct PortIdentity
+{
+    @packetData;
+    uint64_t clockIdentity;
+    uint16_t portNumber;
+};
+
+class GptpBase extends FieldsChunk
+{
+    uint8_t majorSdoId @bit(4); // The value is specified in 8.1 for all transmitted PTP messages of a gPTP domain. The value is specified in
+                                // 11.2.17 for all transmitted PTP messages of the Common Mean Link Delay Service. Any PTP message
+                                // received for which the value is not one of the values specified in those subclauses shall be ignored.
+    GptpMessageType messageType @bit(4);
+}
+
+class BitVector
+{
+    @existingClass;
+    @opaque;
+    @toString(.toString());
+}
+
+struct TcpStateVariables
+{
+    @implements(cObject);
+    @descriptor(readonly);
+}
+
+---
+
+(msg_file
+  (property
+    (name)
+    (index)
+    (value))
+  (struct
+    (name)
+    (body
+      (property
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))))
+  (class
+    (name)
+    (extends)
+    (body
+      (field
+        (type)
+        (name)
+        (property
+          (name)
+          (value)))
+      (comment)
+      (field
+        (type)
+        (name)
+        (property
+          (name)
+          (value)))))
+  (class
+    (name)
+    (body
+      (property
+        (name))
+      (property
+        (name))
+      (property
+        (name)
+        (value))))
+  (struct
+    (name)
+    (body
+      (property
+        (name)
+        (value))
+      (property
+        (name)
+        (value)))))
