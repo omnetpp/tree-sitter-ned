@@ -84,7 +84,7 @@ module.exports = grammar({
   
       _targetitem: $ => choice($._NAME, '::', $._INTCONSTANT, ':', '.', ',', '~', '=', '&'),
   
-      import: $ => seq('import', $.importspec, ';'),
+      import: $ => seq('import', alias($.importspec, $.import_qname), ';'),
   
       // importspec: $ => seq($._importname, repeat(seq('.', $._importname))),
 
@@ -96,7 +96,7 @@ module.exports = grammar({
   
       struct_decl: $ => seq('struct', alias($._qname, $.name), ';'),
   
-      class_decl: $ => seq('class', optional('noncobject'), alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name))), ';'),
+      class_decl: $ => seq('class', optional('noncobject'), alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends))), ';'),
           
       message_decl: $ => seq('message', alias($._qname, $.name), ';'),
   
@@ -104,9 +104,9 @@ module.exports = grammar({
   
       enum_decl: $ => seq('enum', alias($._qname, $.name), ';'),
   
-      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($._qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $._EMPTYLINE)), $.source_code), '}', optional(';'))),
+      enum: $ => prec(10, seq(optional($.comment), 'enum', alias($._qname, $.name), '{', alias(repeat(choice($._enumfield_or_property, $.comment, $._EMPTYLINE)), $.body), '}', optional(';'))),
     
-      _enumfield_or_property: $ => prec.right(seq(choice($.enumfield, $.property), optional($.comment))),
+      _enumfield_or_property: $ => prec.right(seq(choice(alias($.enumfield, $.field), $.property), optional($.comment))),
   
       enumfield: $ => seq(alias($._NAME, $.name), optional(seq('=', alias($.enumvalue, $.value))), ';'),
   
@@ -120,15 +120,15 @@ module.exports = grammar({
   
       struct: $ => prec(10, seq(optional($.comment), $._struct_header, $._body)),
   
-      _message_header: $ => seq('message', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
+      _message_header: $ => seq('message', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends)))),
   
       _packet_header: $ => seq('packet', $._qname, optional(seq('extends', $._qname))),
   
-      _class_header: $ => seq('class', alias(prec.left($._qname), $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
+      _class_header: $ => seq('class', alias(prec.left($._qname), $.name), optional(seq('extends', alias($._qname, $.extends)))),
   
-      _struct_header: $ => seq('struct', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends_name)))),
+      _struct_header: $ => seq('struct', alias($._qname, $.name), optional(seq('extends', alias($._qname, $.extends)))),
   
-      _body: $ => seq('{', optional(/\s/), alias(repeat(seq(choice($.field, $.property, $.comment, $._EMPTYLINE), optional($.comment))), $.source_code), '}', optional(';')),
+      _body: $ => seq('{', optional(/\s/), alias(repeat(seq(choice($.field, $.property, $.comment, $._EMPTYLINE), optional($.comment))), $.body), '}', optional(';')),
   
       field: $ => choice(
         seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), ';'),
@@ -137,7 +137,7 @@ module.exports = grammar({
 
       // inline_comment: $ => token.immediate((seq(/[^\n\/]*/, '//', /[^\n]*/))),
   
-      _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.data_type), alias($._NAME, $.name)),
+      _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.type), alias($._NAME, $.name)),
     
       _fielddatatype: $ => choice(
         $._fieldsimpledatatype,
