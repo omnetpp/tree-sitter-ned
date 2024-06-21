@@ -124,8 +124,8 @@ module.exports = grammar({
       _body: $ => seq('{', optional(/\s/), alias(repeat(seq(choice($.field, $.property, $.comment, $._EMPTYLINE), optional($.comment))), $.body), '}', optional(';')),
   
       field: $ => choice(
-        seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), ';'),
-        seq($._fieldtypename, optional($.opt_fieldvector), optional(alias($.inline_properties, $.property)), '=', alias($.fieldvalue, $.value), optional(alias($.inline_properties, $.property)), ';'),
+        seq($._fieldtypename, optional(alias($.opt_fieldvector, $.vector)), optional($._inline_properties), ';'),
+        seq($._fieldtypename, optional(alias($.opt_fieldvector, $.vector)), optional($._inline_properties), '=', alias($.fieldvalue, $.value), optional($._inline_properties), ';'),
       ),
   
       _fieldtypename: $ => seq(optional('abstract'), alias(optional($._fielddatatype), $.type), alias($._NAME, $.name)),
@@ -148,8 +148,8 @@ module.exports = grammar({
       ),
   
       opt_fieldvector: $ => choice(
-        seq('[', $._INTCONSTANT, ']'),
-        seq('[', $._qname, ']'),
+        seq('[', alias($._INTCONSTANT, $.size), ']'),
+        seq('[', alias($._qname, $.name), ']'), // TODO can this be a name?
         seq('[', ']')
       ),
   
@@ -192,7 +192,9 @@ module.exports = grammar({
         ')'
       ),
   
-      inline_properties: $ => repeat1(seq('@', $._prop_body)),
+      _inline_properties: $ => repeat1(alias($.inline_property, $.property)),
+
+      inline_property: $ => seq('@', $._prop_body),
   
       _NAME: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
       _INTCONSTANT: $ => /0[xX][0-9a-fA-F]+|[0-9]+/,
