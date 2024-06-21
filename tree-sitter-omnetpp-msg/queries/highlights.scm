@@ -14,11 +14,12 @@
 "extends" @keyword
 "cplusplus" @keyword
 (comment) @comment
-; (inline_comment) @comment
-(import_qname) @comment
+(import_qname) @value
 (type) @type
-; (_targetitem) @variable.parameter
-(property (name) @prop)
-(cplusplus (body) @variable.parameter)
+(property (name) @prop_name)
+(cplusplus (body) @cpp_body)
 (cplusplus (target) @target)
-(value) @variable.parameter
+(value) @value
+
+; (_targetitem) @variable.parameter
+; (inline_comment) @comment

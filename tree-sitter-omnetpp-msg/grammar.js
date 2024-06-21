@@ -75,7 +75,7 @@ module.exports = grammar({
   
       _qname: $ => seq(optional('::'), $._NAME, repeat(seq('::', $._NAME))),
   
-        targetspec: $ => seq($._targetitem, repeat($._targetitem)),
+      targetspec: $ => seq($._targetitem, repeat($._targetitem)),
   
       _targetitem: $ => choice($._NAME, '::', $._INTCONSTANT, ':', '.', ',', '~', '=', '&'),
   
