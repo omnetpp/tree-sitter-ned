@@ -47,6 +47,20 @@ class IArrival { @existingClass; }
 class IListening { @existingClass; }
 class IReception { @existingClass; }
 
+class Location {
+    double lat;
+    double lon;
+    @str("(" + std::to_string(getLat()) + "," + std::to_string(getLon()) + ")");
+}
+
+class IPAddress
+{
+    @existingClass;
+    @opaque;
+    @toString(.str());  // use IPAddress::str() to produce a string
+    @fromString(IPAddress($));  // use constructor; '$' will be replaced by the string
+}
+
 ---
 
 (msg_file
@@ -193,4 +207,31 @@ class IReception { @existingClass; }
     (name)
     (body
       (property
-        (name)))))
+        (name))))
+  (class
+    (name)
+    (body
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (property
+        (name)
+        (value))))
+  (class
+    (name)
+    (body
+      (property
+        (name))
+      (property
+        (name))
+      (property
+        (name)
+        (value))
+      (comment)
+      (property
+        (name)
+        (value))
+      (comment))))
