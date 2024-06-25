@@ -10,15 +10,37 @@ module.exports = grammar({
     source_file: $ => repeat($._definition),
 
     _definition: $ => prec.left(choice(
-      $.module_definition,
-      $.simple_module_definition,
-      $.network_definition,
+      $.package_decl,
+      $.import,
+      // $.property_decl,
+      // $.fileproperty,
       $.channel_definition,
-      $.parameters_block,
-      $.gates_block,
-      $.submodules_block,
-      $.connections_block,
+      // $.channelinterface_definition,
+      $.simple_module_definition,
+      $.module_definition,
+      $.network_definition,
+      // $.moduleinterface_definition,
     )),
+
+    package_decl: $ => seq('package', alias($.package_spec, $.qname), ';'),
+
+    package_spec: $ => seq($.identifier, repeat(seq('.', $.identifier))),
+
+    import: $ => seq('import', alias($.importspec, $.import_qname), ';'),
+
+    importspec: $ => choice($.import_un_qname, seq(repeat(seq($._importname, '.')), $.import_un_qname)),
+
+    import_un_qname: $ => $._importname,
+  
+    _importname: $ => choice($.identifier),
+
+    // block: $ => choice(
+    //   $.opt_paramblock,
+    //   $.opt_gateblock,
+    //   $.submodules_block,
+    //   $.connections_block,
+    //   $.types_block
+    // ),
 
     module_definition: $ => seq(
       'module', alias($.identifier, $.name), optional(seq('like', alias($.identifier, $.like_name))), '{', 
@@ -44,16 +66,23 @@ module.exports = grammar({
       '}'
     ),
 
-    parameters_block: $ => seq(
+    parameters_block: $ => prec.left(seq(
       'parameters:', 
-      repeat(choice($.parameter, $.property))
-    ),
+      repeat(choice($.parameter, $.parameter_decl, $.property))
+    )),
+
+    types_block: $ => prec.left(seq(
+      'types:', 
+      repeat(choice($.channel_definition, $.simple_module_definition, $.module_definition, $.network_definition)) // TODO channelinterfacedefinition moduleinterfacedefinition ;
+    )),
 
     // parameter: $ => seq(
     //   $.identifier, '=', $.expression, ';'
     // ),
 
-    parameter: $ => seq(optional(alias($.identifier, $.type)), $.identifier, optional(seq('=', $.expression)), ';'),
+    parameter: $ => prec.left(10, seq(repeat(seq($.parameter_id, '.')), $.parameter_id, seq('=', $.expression), ';')),
+
+    parameter_decl: $ => prec.left(seq((alias($.identifier, $.type), $.identifier, ';'))),
 
     property: $ => seq('@', $.identifier, optional(seq('(', $.string_constant, ')')), ';'),
 
@@ -73,7 +102,7 @@ module.exports = grammar({
 
     _submodule: $ => seq(
       $.identifier, ':', $.identifier, '{', 
-      optional($.parameters_block), 
+      // optional($.opt_paramblock), 
       '}'
     ),
 
@@ -100,6 +129,7 @@ module.exports = grammar({
     )),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    parameter_id: $ => /[a-zA-Z0-9_*]*/,
     int_constant: $ => /\d+/,
     real_constant: $ => /\d+\.\d+/,
     string_constant: $ => /"([^"\\;]|\\.)*"/,
