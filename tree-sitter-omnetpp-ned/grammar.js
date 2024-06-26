@@ -81,7 +81,7 @@ module.exports = grammar({
     // )),
 
     opt_paramblock: $ => choice(
-      optional($.params),
+      $.params,
       seq('parameters', ':', optional($.params))
     ),
 
@@ -189,7 +189,7 @@ module.exports = grammar({
 
     property: $ => seq('@', $.identifier, optional(seq('(', $.string_constant, ')')), ';'),
 
-    gates_block: $ => seq(
+    gate_block: $ => seq(
       'gates:',
       repeat($._gate)
     ),
@@ -211,13 +211,22 @@ module.exports = grammar({
 
     // submodule: $ => choice(seq($.submoduleheader, ';'), seq($.submoduleheader, $.opt_paramblock, $.opt_gateblock, '}', optional(';'), ';')),
 
+    dottedname: $ => choice(
+      seq($.dottedname, '.', $.identifier),
+      $.identifier
+    ),
+
+    condition: $ => seq('if', $.expression),
+
+    vector: $ => seq('[', $.expression, ']'),
+
     submodule: $ => choice(
       seq($.submoduleheader, ';'),
       seq(
         $.submoduleheader,
         '{',
         $.opt_paramblock,
-        $.opt_gateblock,
+        optional($.gate_block),
         '}',
         optional(';'),
       )
@@ -228,7 +237,7 @@ module.exports = grammar({
         $.submodulename,
         ':',
         $.dottedname,
-        $.opt_condition
+        optional($.condition)
       ),
       seq(
         $.submodulename,
@@ -236,13 +245,13 @@ module.exports = grammar({
         $.likeexpr,
         'like',
         $.dottedname,
-        $.opt_condition
+        optional($.condition)
       )
     ),
 
     submodulename: $ => choice(
       $.identifier,
-      seq($.NAME, $.vector)
+      seq($.identifier, $.vector)
     ),
 
     likeexpr: $ => choice(
