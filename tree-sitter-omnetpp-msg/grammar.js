@@ -36,29 +36,25 @@ module.exports = grammar({
         'cplusplus',
         optional(seq('(', alias($.targetspec, $.target), ')')),
         '{{',
-        alias(repeat(choice(
-          $._cplusplus_braced_content,
-          $._cplusplus_string_literal,
-          /[^{}]/
-        )), $.body),
+        alias(/([^}}]|[}][^}])*/, $.body),
         '}}',
         optional(';')
       ),
   
-      _cplusplus_braced_content: $ => seq(
-        '{',
-        repeat(choice(
-          $._cplusplus_braced_content,
-          $._cplusplus_string_literal,
-          /[^{}]/
-        )),
-        '}'
-      ),
+      // _cplusplus_braced_content: $ => seq(
+      //   '{',
+      //   repeat(choice(
+      //     $._cplusplus_braced_content,
+      //     $._cplusplus_string_literal,
+      //     /[^{}]/
+      //   )),
+      //   '}'
+      // ),
   
-      _cplusplus_string_literal: $ => choice(
-        seq('"', repeat(choice(/[^"\\]/, /\\./)), '"'),
-        seq("'", repeat(choice(/[^'\\]/, /\\./)), "'")
-      ),
+      // _cplusplus_string_literal: $ => choice(
+      //   seq('"', repeat(choice(/[^"\\]/, /\\./)), '"'),
+      //   seq("'", repeat(choice(/[^'\\]/, /\\./)), "'")
+      // ),
 
       comment: $ => prec.right(repeat1($._commentline)),
 
