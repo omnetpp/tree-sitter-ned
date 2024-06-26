@@ -32,7 +32,16 @@ module.exports = grammar({
 
     import_un_qname: $ => $._importname,
   
-    _importname: $ => choice($.identifier),
+    _importname: $ => choice($.identifier, '*', '**'),
+
+    // recursive definition (without unqname)
+    // import: $ => seq('import', alias($.importspec, $.import_qname), ';'),
+
+    // importspec: $ => choice(seq($.importspec, '.', $._importname), $._importname),
+
+    // // import_un_qname: $ => $._importname,
+  
+    // _importname: $ => choice(seq($._importname, $.identifier), seq($._importname, '*'), seq($._importname, '**'), $.identifier, '*', '**'),
 
     // block: $ => choice(
     //   $.opt_paramblock,
@@ -66,10 +75,104 @@ module.exports = grammar({
       '}'
     ),
 
-    parameters_block: $ => prec.left(seq(
-      'parameters:', 
-      repeat(choice($.parameter, $.parameter_decl, $.property))
-    )),
+    // parameters_block: $ => prec.left(seq(
+    //   'parameters:', 
+    //   repeat(choice($.parameter, $.parameter_decl, $.property))
+    // )),
+
+    opt_paramblock: $ => choice(
+      optional($.params),
+      seq('parameters', ':', optional($.params))
+    ),
+
+    params: $ => choice(
+      seq($.params, $.paramsitem),
+      $.paramsitem
+    ),
+
+    paramsitem: $ => choice(
+      $.param,
+      $.property
+    ),
+
+    param: $ => choice(
+      $.param_typenamevalue,
+      $.pattern_value
+    ),
+
+    param_typenamevalue: $ => choice(
+      seq($.param_typename, optional($.inline_properties), ';'),
+      seq($.param_typename, optional($.inline_properties), '=', $.paramvalue, optional($.inline_properties), ';')
+    ),
+
+    param_typename: $ => choice(
+      seq(optional('volatile'), $.paramtype, $.identifier),
+      $.identifier
+    ),
+
+    pattern_value: $ => seq(
+      $.pattern,
+      '=',
+      $.paramvalue,
+      ';'
+    ),
+
+    paramtype: $ => choice(
+      'double',
+      'int',
+      'string',
+      'bool',
+      'object',
+      'xml'
+    ),
+
+    paramvalue: $ => choice(
+      $.expression,
+      seq('default', '(', $.expression, ')'),
+      'default',
+      'ask'
+    ),
+
+    inline_properties: $ => choice(
+      // seq($.inline_properties, $.property_namevalue),
+      // $.property_namevalue
+      $.property
+    ),
+    
+    pattern: $ => choice(
+      seq($.pattern2, '.', $.pattern_elem),
+      seq($.pattern2, '.', 'typename')
+    ),
+    
+    pattern2: $ => choice(
+      seq($.pattern2, '.', $.pattern_elem),
+      $.pattern_elem
+    ),
+    
+    pattern_elem: $ => choice(
+      seq($.pattern_name, '[', $.pattern_index, ']'),
+      seq($.pattern_name, '[', '*', ']'),
+      '**',
+      $.pattern_name
+    ),
+    
+    pattern_name: $ => choice(
+      seq($.identifier, '$', $.identifier),
+      $.identifier,
+      'channel',
+      seq('{', $.pattern_index, '}'),
+      '*',
+      seq($.pattern_name, $.identifier),
+      seq($.pattern_name, '{', $.pattern_index, '}'),
+      seq($.pattern_name, '*')
+    ),
+    
+    pattern_index: $ => choice(
+      $.int_constant,
+      seq($.int_constant, '..', $.int_constant),
+      seq('..', $.int_constant),
+      seq($.int_constant, '..')
+    ),
 
     types_block: $ => prec.left(seq(
       'types:', 
@@ -80,9 +183,9 @@ module.exports = grammar({
     //   $.identifier, '=', $.expression, ';'
     // ),
 
-    parameter: $ => prec.left(10, seq(repeat(seq($.parameter_id, '.')), $.parameter_id, seq('=', $.expression), ';')),
+    // parameter: $ => prec.left(10, seq(repeat(seq($.parameter_id, '.')), $.parameter_id, seq('=', $.expression), ';')),
 
-    parameter_decl: $ => prec.left(seq((alias($.identifier, $.type), $.identifier, ';'))),
+    // parameter_decl: $ => prec.left(seq((alias($.identifier, $.type), $.identifier, ';'))),
 
     property: $ => seq('@', $.identifier, optional(seq('(', $.string_constant, ')')), ';'),
 
@@ -97,13 +200,55 @@ module.exports = grammar({
 
     submodules_block: $ => seq(
       'submodules:', 
-      repeat($._submodule)
+      repeat($.submodule)
     ),
 
-    _submodule: $ => seq(
-      $.identifier, ':', $.identifier, '{', 
-      // optional($.opt_paramblock), 
-      '}'
+    // _submodule: $ => seq(
+    //   $.identifier, ':', $.identifier, '{', 
+    //   // optional($.opt_paramblock), 
+    //   '}'
+    // ),
+
+    // submodule: $ => choice(seq($.submoduleheader, ';'), seq($.submoduleheader, $.opt_paramblock, $.opt_gateblock, '}', optional(';'), ';')),
+
+    submodule: $ => choice(
+      seq($.submoduleheader, ';'),
+      seq(
+        $.submoduleheader,
+        '{',
+        $.opt_paramblock,
+        $.opt_gateblock,
+        '}',
+        optional(';'),
+      )
+    ),
+
+    submoduleheader: $ => choice(
+      seq(
+        $.submodulename,
+        ':',
+        $.dottedname,
+        $.opt_condition
+      ),
+      seq(
+        $.submodulename,
+        ':',
+        $.likeexpr,
+        'like',
+        $.dottedname,
+        $.opt_condition
+      )
+    ),
+
+    submodulename: $ => choice(
+      $.identifier,
+      seq($.NAME, $.vector)
+    ),
+
+    likeexpr: $ => choice(
+      seq('<', '>'),
+      seq('<', $.expression, '>'),
+      seq('<', 'default', '(', $.expression, ')', '>')
     ),
 
     connections_block: $ => seq(
