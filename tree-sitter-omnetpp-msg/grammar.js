@@ -56,7 +56,7 @@ module.exports = grammar({
       //   seq("'", repeat(choice(/[^'\\]/, /\\./)), "'")
       // ),
 
-      comment: $ => prec.right(repeat1($._commentline)),
+      comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
 
       _commentline: _ => token(choice(
         seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
@@ -75,11 +75,11 @@ module.exports = grammar({
   
       _targetitem: $ => choice($._NAME, '::', $._INTCONSTANT, ':', '.', ',', '~', '=', '&'),
   
-      import: $ => seq('import', alias($.importspec, $.import_qname), ';'),
+      import: $ => seq('import', $.importspec, ';'),
 
-      importspec: $ => choice($.import_un_qname, seq(repeat(seq($._importname, '.')), $.import_un_qname)),
+      importspec: $ => choice($._import_un_qname, seq(repeat(seq($._importname, '.')), $._import_un_qname)),
 
-      import_un_qname: $ => $._importname,
+      _import_un_qname: $ => $._importname,
   
       _importname: $ => choice($._NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
   
@@ -170,7 +170,7 @@ module.exports = grammar({
 
       _prop_body: $ => seq(alias($._NAME, $.name), optional(seq('[', alias($._NAME, $.index),']')), optional($._prop_parenthesized)),
 
-      _prop_parenthesized: $ => prec.right(seq('(', alias(repeat1($._prop_value), $.value), ')')),
+      _prop_parenthesized: $ => prec.right(seq('(', alias(repeat1($._prop_value), $.property_key), ')')),
       
       _prop_value: $ => choice(
         $._prop_value_parenthesized,

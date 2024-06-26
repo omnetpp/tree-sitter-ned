@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-omnetpp-msg",
+  "name": "msg",
   "version": "0.0.1",
   "description": "Tree-sitter grammar for OMNeT++ MSG files",
   "main": "bindings/node",
