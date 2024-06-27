@@ -20,7 +20,7 @@ module.exports = grammar({
       $.simple_module_definition,
       $.module_definition,
       $.network_definition,
-      // $.moduleinterface_definition,
+      $.moduleinterface_definition,
     )),
 
     package_decl: $ => seq('package', alias($.package_spec, $.qname), ';'),
@@ -53,7 +53,15 @@ module.exports = grammar({
     ),
 
     module_definition: $ => prec.right(seq(
-      'module', alias($.identifier, $.name), optional(seq('like', alias($.identifier, $.like_name))), '{', 
+      'module', alias($.identifier, $.name), optional(seq('extends', $.identifier)), optional(seq('like', alias($.identifier, $.like_name))), '{', 
+      // optional($.module_body),
+      // repeat(choice($.definition, $.block)),
+      repeat($._block), 
+      '}'
+    )),
+
+    moduleinterface_definition: $ => prec.right(seq(
+      'moduleinterface', alias($.identifier, $.name), optional(seq('extends', $.identifier)), optional(seq('like', alias($.identifier, $.like_name))), '{', 
       // optional($.module_body),
       // repeat(choice($.definition, $.block)),
       repeat($._block), 
@@ -62,21 +70,21 @@ module.exports = grammar({
 
     // module_body: $ => repeat1(choice($.definition, $.block)),
 
-    simple_module_definition: $ => seq(
-      'simple', $.identifier, '{', 
-      repeat($.definition), 
+    simple_module_definition: $ => prec.right(seq(
+      'simple', $.identifier, optional(seq('extends', $.identifier)), optional(seq('like', alias($.identifier, $.like_name))), '{', 
+      repeat($._block), 
       '}'
-    ),
+    )),
 
     network_definition: $ => seq(
-      'network', $.identifier, '{', 
-      repeat($.definition), 
+      'network', $.identifier, optional(seq('extends', $.identifier)), '{', 
+      repeat($._block), 
       '}'
     ),
 
     channel_definition: $ => seq(
       'channel', $.identifier, '{', 
-      repeat($.definition), 
+      repeat($._block), 
       '}'
     ),
 
@@ -85,9 +93,14 @@ module.exports = grammar({
     //   repeat(choice($.parameter, $.parameter_decl, $.property))
     // )),
 
-    paramblock: $ => prec.right( 
-      seq(optional('parameters:'), $.params)
-    ),
+    // paramblock: $ => prec.right( 
+    //   seq(optional('parameters:'), $.params)
+    // ),
+
+    paramblock: $ => prec.right(choice( 
+      seq('parameters:', optional($.params)),
+      $.params
+    )),
 
     params: $ => choice(
       seq($.params, $.paramsitem, ';'),
@@ -136,11 +149,11 @@ module.exports = grammar({
       'ask'
     ),
 
-    inline_properties: $ => prec(10, choice(
-      // seq($.inline_properties, $.property_namevalue),
-      // $.property_namevalue
-      seq('@', $.identifier, optional(seq('(', $.string_constant, ')'))),
-    )),
+    // inline_properties: $ => prec(10, choice(
+    //   // seq($.inline_properties, $.property_namevalue),
+    //   // $.property_namevalue
+    //   seq('@', $.identifier, optional(seq('(', $.string_constant, ')'))),
+    // )),
     
     pattern: $ => choice(
       seq($.pattern2, '.', $.pattern_elem),
@@ -190,7 +203,24 @@ module.exports = grammar({
 
     // parameter_decl: $ => prec.left(seq((alias($.identifier, $.type), $.identifier, ';'))),
 
-    property: $ => seq('@', $.identifier, optional(seq('(', $.string_constant, ')')), ';'),
+    // property: $ => seq('@', $.identifier, optional(seq('(', $.string_constant, ')')), ';'),
+
+    property: $ => seq('@', $._prop_body, ';'),
+
+    _prop_body: $ => seq(alias($.identifier, $.name), optional(seq('[', alias($.identifier, $.index),']')), optional($._prop_parenthesized)),
+
+    _prop_parenthesized: $ => prec.right(seq('(', alias(repeat1($._prop_value), $.property_key), ')')),
+    
+    _prop_value: $ => choice(
+      $._prop_value_parenthesized,
+      /[^\(\)]+/
+    ),
+
+    _prop_value_parenthesized: $ => prec.right(seq('(', repeat($._prop_value), ')')),
+    
+    inline_properties: $ => repeat1(alias($.inline_property, $.property)),
+
+    inline_property: $ => seq('@', $._prop_body),
 
     gate_block: $ => prec.right(seq(
       'gates:',
@@ -198,7 +228,7 @@ module.exports = grammar({
     )),
 
     gate: $ => seq(
-      $.identifier, $.identifier, ';'
+      $.identifier, $.identifier, optional($.inline_properties), ';'
     ),
 
     submodules_block: $ => prec.right(seq(
@@ -268,31 +298,48 @@ module.exports = grammar({
     connections_block: $ => prec.right(seq(
       'connections',
       optional('allowunconnected'),
-      ':', 
-      repeat($.connection), 
+      ':',
+      repeat($.connection),
     )),
 
     connection: $ => seq(
-      $.dottedname, '-->', $.dottedname, optional($.condition), ';'
+      $.connectionname, seq($.conn_direction, optional(seq($.identifier, $.conn_direction))), $.connectionname, optional($.condition), ';'
+    ),
+
+    // link: $ => prec.right(seq($.conn_direction, optional(seq($.identifier, $.conn_direction)))),
+
+    conn_direction: $ => choice('-->', '<--', '<-->'),
+
+    connectionname: $ => choice(
+      seq($.dottedname, '.', $.identifier, optional('++')),
+      $.identifier
     ),
 
     expression: $ => prec.left(choice(
-      $.identifier,
-      $.int_constant,
-      $.real_constant,
+      // $.identifier,
+      $.dottedname,
+      // $.connectionname,
+      seq($.int_constant, optional($.unit)),
+      seq($.real_constant, optional($.unit)),
       $.string_constant,
       $.char_constant,
+      seq('[', optional($.int_constant), ']'),
       seq('(', $.expression, ')'),
-      seq($.expression, '(', $.expression, ')'),
+      seq($.expression, '(', optional($.expression), ')'),
+      seq($.expression, '([', optional($.expression), '])'),
       seq($.expression, '+', $.expression),
       seq($.expression, '-', $.expression),
       seq($.expression, '*', $.expression),
       seq($.expression, '/', $.expression)
     )),
 
+    unit: $ => $.identifier,
+
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    conn_identifier: $ => /[a-zA-Z_][a-zA-Z0-9_+\]\]]*/,
     parameter_id: $ => /[a-zA-Z0-9_*]*/,
-    int_constant: $ => /\d+/,
+    // int_constant: $ => /\d+/,
+    int_constant: $ => /[0-9\-]+/,
     real_constant: $ => /\d+\.\d+/,
     string_constant: $ => /"([^"\\;]|\\.)*"/,
     char_constant: $ => /'([^'\\;]|\\.)'/,
