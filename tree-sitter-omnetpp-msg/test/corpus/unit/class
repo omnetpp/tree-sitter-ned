@@ -65,7 +65,8 @@ class IPAddress
 
 (msg_file
   (class
-    (comment)
+    (comment
+      (content))
     (name)
     (extends)
     (body
@@ -74,102 +75,115 @@ class IPAddress
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
+          (property_key)))
       (field
         (type)
         (name)
         (property
           (name)
-          (value))
+          (property_key))
         (value))
-      (comment)
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value))
+          (property_key))
         (value))
-      (comment)
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value))
+          (property_key))
         (value))
-      (comment)
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value))
+          (property_key))
         (value))
-      (comment)
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))
-      (comment)))
+          (property_key)))
+      (comment
+        (content))))
   (class
     (name)
     (extends)
@@ -181,13 +195,13 @@ class IPAddress
         (name)
         (property
           (name)
-          (value)))
+          (property_key)))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))))
+          (property_key)))))
   (class
     (name)
     (body
@@ -219,7 +233,7 @@ class IPAddress
         (name))
       (property
         (name)
-        (value))))
+        (property_key))))
   (class
     (name)
     (body
@@ -229,9 +243,11 @@ class IPAddress
         (name))
       (property
         (name)
-        (value))
-      (comment)
+        (property_key))
+      (comment
+        (content))
       (property
         (name)
-        (value))
-      (comment))))
+        (property_key))
+      (comment
+        (content)))))

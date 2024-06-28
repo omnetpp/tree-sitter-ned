@@ -12,17 +12,12 @@ import inet.common.packet.Packet;
 
 (msg_file
   (import
-    (import_qname
-      (import_un_qname)))
+    (importspec))
   (import
-    (import_qname
-      (import_un_qname)))
+    (importspec))
   (import
-    (import_qname
-      (import_un_qname)))
+    (importspec))
   (import
-    (import_qname
-      (import_un_qname)))
+    (importspec))
   (import
-    (import_qname
-      (import_un_qname))))
+    (importspec)))

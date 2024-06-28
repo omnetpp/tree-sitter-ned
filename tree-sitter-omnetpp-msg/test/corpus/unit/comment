@@ -13,5 +13,7 @@ comment
 ---
 
 (msg_file
-    (comment)
-    (comment))
+  (comment
+    (content))
+  (comment
+    (content)))

@@ -38,7 +38,7 @@ struct TcpStateVariables
   (property
     (name)
     (index)
-    (value))
+    (property_key))
   (struct
     (name)
     (body
@@ -59,14 +59,15 @@ struct TcpStateVariables
         (name)
         (property
           (name)
-          (value)))
-      (comment)
+          (property_key)))
+      (comment
+        (content))
       (field
         (type)
         (name)
         (property
           (name)
-          (value)))))
+          (property_key)))))
   (class
     (name)
     (body
@@ -76,13 +77,13 @@ struct TcpStateVariables
         (name))
       (property
         (name)
-        (value))))
+        (property_key))))
   (struct
     (name)
     (body
       (property
         (name)
-        (value))
+        (property_key))
       (property
         (name)
-        (value)))))
+        (property_key)))))

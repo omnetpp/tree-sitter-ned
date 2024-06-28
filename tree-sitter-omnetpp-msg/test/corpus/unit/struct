@@ -20,8 +20,10 @@ struct PortIdentity
 ---
 
 (msg_file
-  (comment)
-  (comment)
+  (comment
+    (content))
+  (comment
+    (content))
   (struct
     (name)
     (body
