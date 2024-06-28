@@ -14,7 +14,7 @@
 "extends" @keyword
 "cplusplus" @keyword
 (comment) @comment
-(import_qname) @value
+(importspec) @value
 (type) @type
 (property (name) @prop_name)
 (cplusplus (body) @cpp_body)
