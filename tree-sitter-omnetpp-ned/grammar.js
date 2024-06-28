@@ -53,7 +53,7 @@ module.exports = grammar({
     ),
 
     module_definition: $ => prec.right(seq(
-      'module', alias($.identifier, $.name), optional(seq('extends', $.identifier)), optional(seq('like', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.like_name))), '{', 
+      'module', alias($.identifier, $.name), optional(seq('extends', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.extends_name))), optional(seq('like', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.like_name))), '{', 
       // optional($.module_body),
       // repeat(choice($.definition, $.block)),
       repeat($._block), 
@@ -61,7 +61,7 @@ module.exports = grammar({
     )),
 
     moduleinterface_definition: $ => prec.right(seq(
-      'moduleinterface', alias($.identifier, $.name), optional(seq('extends', $.identifier)), optional(seq('like', alias($.identifier, $.like_name))), '{', 
+      'moduleinterface', alias($.identifier, $.name), optional(seq('extends', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.extends_name))), optional(seq('like', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.like_name))), '{', 
       // optional($.module_body),
       // repeat(choice($.definition, $.block)),
       repeat($._block), 
@@ -83,7 +83,7 @@ module.exports = grammar({
     ),
 
     channel_definition: $ => seq(
-      'channel', $.identifier, '{', 
+      'channel', $.identifier, optional(seq('extends', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.extends_name))), optional(seq('like', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.like_name))), '{', 
       repeat($._block), 
       '}'
     ),
@@ -144,7 +144,9 @@ module.exports = grammar({
 
     paramvalue: $ => choice(
       $.expression,
-      seq('default', '(', $.expression, ')'),
+      seq('default', '(', $.expression, ')'),  // TODO
+      // seq('default', '(', /[^;]*[^\);]/, ')'),
+      seq('default', /[^;]*/),
       'default',
       'ask'
     ),
@@ -228,7 +230,7 @@ module.exports = grammar({
     )),
 
     gate: $ => seq(
-      $.identifier, $.identifier, optional($.inline_properties), ';'
+      $.identifier, $.identifier, optional($.vector), optional($.expression), optional($.inline_properties), ';'
     ),
 
     submodules_block: $ => prec.right(seq(
@@ -246,10 +248,14 @@ module.exports = grammar({
 
     dottedname: $ => choice(
       seq($.dottedname, '.', $.identifier),
-      $.identifier
+      seq($.identifier, optional($.vector))
     ),
 
     condition: $ => seq('if', $.expression, optional(seq($.operator, $.expression))),
+
+    // ifblock: $ => seq('if', $.expression, '{', /[^{}}]*/, '}'),
+
+    ifblock: $ => prec.left(seq('if', /[^{}}]*/, '{', repeat1($.connection), '}')),
 
     operator: $ => /[=!<>][=!<>]/,
 
@@ -295,11 +301,13 @@ module.exports = grammar({
       seq('<', 'default', '(', $.expression, optional(seq('?', $.expression, ':', $.expression)), ')', '>')
     ),
 
+    forloop: $ => prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}')),
+
     connections_block: $ => prec.right(seq(
       'connections',
       optional('allowunconnected'),
       ':',
-      repeat($.connection),
+      repeat(choice($.connection, $.forloop, $.ifblock)),
     )),
 
     connection: $ => seq(
@@ -311,8 +319,8 @@ module.exports = grammar({
     conn_direction: $ => choice('-->', '<--', '<-->'),
 
     connectionname: $ => choice(
-      seq($.dottedname, '.', $.identifier, optional('++')),
-      $.identifier
+      seq($.dottedname, '.', $.identifier, optional(choice('$i', '$o')), optional('++')),
+      seq($.identifier, optional(choice('$i', '$o'))),
     ),
 
     expression: $ => prec.left(choice(
@@ -322,6 +330,7 @@ module.exports = grammar({
       seq($.int_constant, optional($.unit)),
       seq($.real_constant, optional($.unit)),
       seq('nan', optional($.unit)),
+      seq('inf', optional($.unit)),
       $.string_constant,
       $.char_constant,
       seq('[', optional($.int_constant), ']'),
