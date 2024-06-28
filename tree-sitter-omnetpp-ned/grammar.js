@@ -255,7 +255,7 @@ module.exports = grammar({
 
     vector: $ => seq('[', $.expression, ']'),
 
-    submodule: $ => prec.right(choice(
+    submodule: $ => choice(
       seq($.submoduleheader, ';'),
       seq(
         $.submoduleheader,
@@ -265,9 +265,9 @@ module.exports = grammar({
         '}',
         optional(';'),
       )
-    )),
+    ),
 
-    submoduleheader: $ => prec.left(choice(
+    submoduleheader: $ => choice(
       seq(
         $.submodulename,
         ':',
@@ -282,18 +282,18 @@ module.exports = grammar({
         $.dottedname,
         optional($.condition)
       )
-    )),
+    ),
 
     submodulename: $ => choice(
       $.identifier,
       seq($.identifier, $.vector)
     ),
 
-    likeexpr: $ => prec.right(choice(
+    likeexpr: $ => choice(
       seq('<', '>'),
       seq('<', $.expression, '>'),
       seq('<', 'default', '(', $.expression, optional(seq('?', $.expression, ':', $.expression)), ')', '>')
-    )),
+    ),
 
     connections_block: $ => prec.right(seq(
       'connections',
