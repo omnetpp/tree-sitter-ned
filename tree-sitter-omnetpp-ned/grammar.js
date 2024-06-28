@@ -303,7 +303,7 @@ module.exports = grammar({
     )),
 
     connection: $ => seq(
-      $.connectionname, seq($.conn_direction, optional(seq($.identifier, $.conn_direction))), $.connectionname, optional($.condition), ';'
+      $.connectionname, seq($.conn_direction, optional(seq(optional($.identifier), optional(seq('{', repeat1(seq(choice($.param, $.inline_property), ';')), '}')), $.conn_direction))), $.connectionname, optional($.condition), ';'
     ),
 
     // link: $ => prec.right(seq($.conn_direction, optional(seq($.identifier, $.conn_direction)))),
@@ -321,9 +321,11 @@ module.exports = grammar({
       // $.connectionname,
       seq($.int_constant, optional($.unit)),
       seq($.real_constant, optional($.unit)),
+      seq('nan', optional($.unit)),
       $.string_constant,
       $.char_constant,
       seq('[', optional($.int_constant), ']'),
+      seq('{', optional($.int_constant), '}'),
       seq('(', $.expression, ')'),
       seq($.expression, '(', optional($.expression), ')'),
       seq($.expression, '([', optional($.expression), '])'),
