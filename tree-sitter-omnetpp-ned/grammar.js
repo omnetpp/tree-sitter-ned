@@ -53,7 +53,7 @@ module.exports = grammar({
     ),
 
     module_definition: $ => prec.right(seq(
-      'module', alias($.identifier, $.name), optional(seq('extends', $.identifier)), optional(seq('like', alias($.identifier, $.like_name))), '{', 
+      'module', alias($.identifier, $.name), optional(seq('extends', $.identifier)), optional(seq('like', alias(seq($.identifier, repeat(seq(',', $.identifier))), $.like_name))), '{', 
       // optional($.module_body),
       // repeat(choice($.definition, $.block)),
       repeat($._block), 
