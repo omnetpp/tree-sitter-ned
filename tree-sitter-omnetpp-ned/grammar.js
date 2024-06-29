@@ -323,26 +323,73 @@ module.exports = grammar({
       seq($.identifier, optional(choice('$i', '$o'))),
     ),
 
-    expression: $ => prec.left(choice(
-      // $.identifier,
-      $.dottedname,
-      // $.connectionname,
-      seq($.int_constant, optional($.unit)),
-      seq($.real_constant, optional($.unit)),
-      seq('nan', optional($.unit)),
-      seq('inf', optional($.unit)),
-      $.string_constant,
-      $.char_constant,
-      seq('[', optional($.int_constant), ']'),
-      seq('{', optional($.int_constant), '}'),
+    // expression: $ => prec.left(choice(
+    //   // $.identifier,
+    //   $.dottedname,
+    //   // $.connectionname,
+    //   seq($.int_constant, optional($.unit)),
+    //   seq($.real_constant, optional($.unit)),
+    //   seq('nan', optional($.unit)),
+    //   seq('inf', optional($.unit)),
+    //   $.string_constant,
+    //   $.char_constant,
+    //   seq('[', optional($.int_constant), ']'),
+    //   seq('{', optional($.int_constant), '}'),
+    //   seq('(', $.expression, ')'),
+    //   seq($.expression, '(', optional($.expression), ')'),
+    //   seq($.expression, '([', optional($.expression), '])'),
+    //   seq($.expression, '+', $.expression),
+    //   seq($.expression, '-', $.expression),
+    //   seq($.expression, '*', $.expression),
+    //   seq($.expression, '/', $.expression),
+    //   seq($.expression, '?', $.expression, ':', $.expression)
+    // )),
+
+    expression: $ => choice(
+      $.simple_expr,
+      $.functioncall,
+      seq($.expression, '.', $.functioncall),
+      $.object,
+      $.array,
       seq('(', $.expression, ')'),
-      seq($.expression, '(', optional($.expression), ')'),
-      seq($.expression, '([', optional($.expression), '])'),
+    
       seq($.expression, '+', $.expression),
       seq($.expression, '-', $.expression),
       seq($.expression, '*', $.expression),
-      seq($.expression, '/', $.expression)
-    )),
+      seq($.expression, '/', $.expression),
+      seq($.expression, '%', $.expression),
+      seq($.expression, '^', $.expression),
+      prec('UMIN_', seq('-', $.expression)),
+    
+      seq($.expression, '==', $.expression),
+      seq($.expression, '!=', $.expression),
+      seq($.expression, '>', $.expression),
+      seq($.expression, '>=', $.expression),
+      seq($.expression, '<', $.expression),
+      seq($.expression, '<=', $.expression),
+      seq($.expression, '<=>', $.expression),
+      seq($.expression, 'match', $.expression),
+    
+      seq($.expression, '&&', $.expression),
+      seq($.expression, '||', $.expression),
+      seq($.expression, 'xor', $.expression),
+    
+      prec('NOT_', seq('!', $.expression)),
+    
+      seq($.expression, '&', $.expression),
+      seq($.expression, '|', $.expression),
+      seq($.expression, '#', $.expression),
+    
+      prec('NEG_', seq('~', $.expression)),
+      seq($.expression, '<<', $.expression),
+      seq($.expression, '>>', $.expression),
+      seq($.expression, '?', $.expression, ':', $.expression)
+    ),
+
+    functioncall: $ => seq($.identifier, '(', optional($.exprlist), ')'),
+
+    exprlist: $ => seq($.expression, optional(seq(',', $.expression))),
+    
 
     unit: $ => $.identifier,
 
