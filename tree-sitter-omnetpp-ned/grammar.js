@@ -27,6 +27,17 @@ module.exports = grammar({
       $.moduleinterfacedefinition,
       ';'
     ),
+
+    comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
+
+    _commentline: _ => token(choice(
+      seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
+      seq(
+        '/*',
+        /[^*]*\*+([^/*][^*]*\*+)*/,
+        '/',
+      ),    // TODO is that needed in msg files?
+    )),
     
 
     packagedeclaration: $ => seq(
@@ -134,7 +145,7 @@ module.exports = grammar({
     ),
 
     opt_interfaceinheritance: $ => choice(
-      seq('EXTENDS', $.extendsnames),
+      seq('extends', $.extendsnames),
       // %empty rule can be represented by an empty sequence or omitted entirely
       // depending on how you structure your grammar rules.
       // In Tree-sitter, absence of a rule implies optional nature.
@@ -191,7 +202,7 @@ module.exports = grammar({
     ),
 
     networkheader: $ => seq(
-      'NETWORK',
+      'network',
       $.NAME,
       $.opt_inheritance
     ),
@@ -346,15 +357,8 @@ module.exports = grammar({
     
     property_name: $ =>
       choice(
-        seq('@', $.PROPNAME, {
-          // Action to handle adding property based on parsed data
-          // ps.property = addProperty(...)
-        }),
-        seq('@', $.PROPNAME, '[', $.PROPNAME, ']', {
-          // Action to handle adding indexed property based on parsed data
-          // ps.property = addProperty(...)
-          // ps.property->setIndex(...)
-        })
+        seq('@', $.PROPNAME),
+        seq('@', $.PROPNAME, '[', $.PROPNAME, ']')
     ),
 
     // optional($.property_keys)
@@ -370,51 +374,20 @@ module.exports = grammar({
         seq(
           $.property_literal,
           '=',
-          $.property_values,
-          {
-            // Action to create and manipulate PropertyKeyElement based on parsed data
-            // ps.propkey = createNedElementWithTag(...)
-            // ps.propkey->setName(...)
-            // ps.propkey->appendChild(...)
-            // storePos(...)
-          }
+          $.property_value
         ),
         seq(
           $.property_values,
-          {
-            // Action to create and manipulate PropertyKeyElement based on parsed data
-            // ps.propkey = createNedElementWithTag(...)
-            // ps.propkey->appendChild(...)
-            // storePos(...)
-          }
         )
       ),
 
       property_values: $ =>
         choice(
-          seq($.property_values, ',', $.property_value, {
-            // Action to handle pushing the parsed property value to ps.propvals
-            // ps.propvals.push_back(...)
-          }),
-          $.property_value, {
-            // Action to handle pushing the parsed property value to ps.propvals
-            // ps.propvals.push_back(...)
-          }
+          seq($.property_values, optional(seq(',', $.property_value))),
+          $.property_value
       ),
 
-      property_value: $ =>
-        choice(
-          $.property_literal, {
-            // Action to create a PropertyValueElement based on parsed data
-            // $$ = createPropertyValue(np, @$);
-          },
-          '%empty', {
-            // Action to create an empty LiteralElement
-            // LiteralElement *node = (LiteralElement *)createNedElementWithTag(np, NED_LITERAL);
-            // node->setType(LIT_SPEC);
-            // $$ = node;
-          }
-      ),
+      property_value: $ => $.property_literal,
 
       property_literal: $ =>
         choice(
@@ -454,7 +427,7 @@ module.exports = grammar({
       typeblock: $ =>
         seq(
           'types', ':',
-          $.opt_localtypes
+          repeat($.localtypes)
       ),
       
       // opt_localtypes
@@ -482,7 +455,7 @@ module.exports = grammar({
         seq(
           'submodules',
           ':',
-          $.opt_submodules
+          repeat($.submodules)
       ),
 
       // opt_submodules
@@ -498,13 +471,13 @@ module.exports = grammar({
           optional($.opt_paramblock),
           optional(optional($.gateblock)),
           '}',
-          optional($.opt_semicolon)
+          optional(';')
         )
       ),
 
       submoduleheader: $ => choice(
-        seq($.submodulename, ':', $.dottedname, optional($.opt_condition)),
-        seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.opt_condition))
+        seq($.submodulename, ':', $.dottedname, optional($.condition)),
+        seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.condition))
       ),
 
       submodulename: $ => choice($.NAME, seq($.NAME, $.vector)),
@@ -520,8 +493,8 @@ module.exports = grammar({
       // opt_connblock
 
       connblock: $ => choice(
-        seq('connections', 'allowunconnected', ':', $.opt_connections),
-        seq('connections', ':', $.opt_connections)
+        seq('connections', 'allowunconnected', ':', optional($.connections)),
+        seq('connections', ':', optional($.connections))
       ),
 
       // opt_connections
@@ -531,17 +504,17 @@ module.exports = grammar({
         $.connectionitem
       ),
 
-      connectionsitem: $ => choice(
+      connectionitem: $ => choice(
         $.connectiongroup,
-        seq($.connection, $.opt_loops_and_conditions, ';')
+        seq($.connection, optional($.loops_and_conditions), ';')
       ),
 
       connectiongroup: $ => seq(
-        $.opt_loops_and_conditions,
+        optional($.loops_and_conditions),
         '{',
         $.connections,
         '}',
-        $.opt_semicolon
+        optional(';')
       ),
 
       // opt_loops_and_conditions
@@ -582,20 +555,25 @@ module.exports = grammar({
       ),
 
       leftgate: $ => choice(
-        seq($.NAME, $.opt_subgate),
-        seq($.NAME, $.opt_subgate, $.vector),
-        seq($.NAME, $.opt_subgate, '++')
+        seq($.NAME, optional($.subgate)),
+        seq($.NAME, optional($.subgate), $.vector),
+        seq($.NAME, optional($.subgate), '++')
       ),
 
       parentleftgate: $ => choice(
-        seq($.NAME, $.opt_subgate),
-        seq($.NAME, $.opt_subgate, $.vector),
-        seq($.NAME, $.opt_subgate, '++')
+        seq($.NAME, optional($.subgate)),
+        seq($.NAME, optional($.subgate), $.vector),
+        seq($.NAME, optional($.subgate), '++')
       ),
 
       rightgatespec: $ => choice(
         seq($.rightmod, '.', $.rightgate),
         $.parentrightgate
+      ),
+
+      rightmod: $ => choice(
+        $.NAME,
+        seq($.NAME, $.vector)
       ),
 
       rightgate: $ => choice(
@@ -621,8 +599,8 @@ module.exports = grammar({
 
       channelspec_header: $ => choice(
         optional($.channelname),
-        seq($.opt_channelname, $.dottedname),
-        seq($.opt_channelname, $.likeexpr, LIKE, $.dottedname)
+        seq(optional($.channelname), $.dottedname),
+        seq(optional($.channelname), $.likeexpr, 'like', $.dottedname)
       ),
       
 
@@ -680,21 +658,26 @@ module.exports = grammar({
 
       array: $ => choice(
         seq('[', ']'),
-        seq('[', $.explist, ']'),
-        seq('[', $.explist, ',', ']'),
+        seq('[', $.exprlist, ']'),
+        seq('[', $.exprlist, ',', ']'),
+      ),
+
+      exprlist: $ => choice(
+        seq($.exprlist, ',', $.expression),
+        $.expression
       ),
 
       object: $ => choice(
-        seq('{', $.opt_keyvaluelist, '}'),
-        seq($.NAME, '{', $.opt_keyvaluelist, '}'),
-        seq($.NAME, '::', $.NAME, '{', $.opt_keyvaluelist, '}'),
-        seq($.NAME, '::', $.NAME, '::', $.NAME, '{', $.opt_keyvaluelist, '}'),
-        seq($.NAME, '::', $.NAME, '::', $.NAME, '::', $.NAME, '{', $.opt_keyvaluelist, '}')
+        seq('{', optional($.keyvaluelist), '}'),
+        seq($.NAME, '{', optional($.keyvaluelist), '}'),
+        seq($.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}'),
+        seq($.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}'),
+        seq($.NAME, '::', $.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}')
       ),
 
       exprlist: $ => seq($.expression, repeat(seq(',', $.expression))),
 
-      keyvaluelist: $ => seq($.keyvalue, repeat(',', $.keyvalue)),
+      keyvaluelist: $ => seq($.keyvalue, repeat(seq(',', $.keyvalue))),
 
       keyvalue: $ => seq($.key, ':', $.expression),
 
@@ -731,7 +714,7 @@ module.exports = grammar({
 
       qname_elem: $ => choice(
         $.NAME,
-        seq($.NAME, '[', $.expr, ']'),
+        seq($.NAME, '[', $.expression, ']'),
         'this',
         'parent'
       ),
