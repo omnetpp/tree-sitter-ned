@@ -1,10 +1,10 @@
 module.exports = grammar({
   name: 'ned',
 
-  extras: $ => [
-    /\s/,
-    $.comment,
-  ],
+  // extras: $ => [
+  //   /\s/,
+  //   $.comment,
+  // ],
 
   rules: {
     nedfile: $ => optional($.definitions),
@@ -46,7 +46,7 @@ module.exports = grammar({
       ';'
     ),
 
-    dottedname: $ => seq($.NAME, repeat1(seq('.', $.NAME))),
+    dottedname: $ => prec.right(seq($.NAME, repeat(seq('.', $.NAME)))),
 
     import: $ => seq(
       'import',
@@ -172,7 +172,7 @@ module.exports = grammar({
       optional($.gateblock),
       optional($.typeblock),
       optional($.submodblock),
-      optional($.connblock),
+      optional($.connections_block),
       '}'
     ),
 
@@ -189,7 +189,7 @@ module.exports = grammar({
       optional($.gateblock),
       optional($.typeblock),
       optional($.submodblock),
-      optional($.connblock),
+      optional($.connections_block),
       '}'
     ),
 
@@ -231,12 +231,12 @@ module.exports = grammar({
     //   )
     // ),
 
-    // paramblock: $ => choice(
-    //   $.params,
-    //   seq('parameters:', $.params)
-    // ),
+    paramblock: $ => choice(
+      $.params,
+      seq('parameters:', $.params)
+    ),
 
-    paramblock: $ => seq(optional('parameters:'), $.params),
+    // paramblock: $ => seq(optional('parameters:'), $.params),
 
     params: $ => choice(
       seq($.params, $.paramsitem),
@@ -375,9 +375,7 @@ module.exports = grammar({
           '=',
           $.property_value
         ),
-        seq(
           $.property_values,
-        )
       )),
 
     property_values: $ =>
@@ -491,29 +489,25 @@ module.exports = grammar({
 
     // opt_connblock
 
-    connblock: $ => choice(
-      seq('connections', 'allowunconnected', ':', optional($.connections)),
-      seq('connections', ':', optional($.connections))
+    connections_block: $ => prec.right(seq(
+      'connections',
+      optional('allowunconnected'),
+      ':',
+      repeat(choice($.connection, $.loop_or_condition)),
+    )),
+
+    connection: $ => seq(
+      $.connectionname, seq($.conn_direction, optional(seq(optional($.NAME), optional(seq('{', repeat1(seq(choice($.param, $.property), ';')), '}')), $.conn_direction))), $.connectionname, optional($.condition), ';'
     ),
 
-    // opt_connections
+    // link: $ => prec.right(seq($.conn_direction, optional(seq($.identifier, $.conn_direction)))),
 
-    connections: $ => choice(
-      seq($.connections, $.connectionitem),
-      $.connectionitem
-    ),
+    conn_direction: $ => choice('-->', '<--', '<-->'),
 
-    connectionitem: $ => choice(
-      $.connectiongroup,
-      seq($.connection, optional($.loops_and_conditions), ';')
-    ),
-
-    connectiongroup: $ => seq(
-      optional($.loops_and_conditions),
-      '{',
-      $.connections,
-      '}',
-      optional(';')
+    connectionname: $ => choice(
+      seq($.dottedname, '.', $.NAME, optional(choice('$i', '$o')), optional('++')),
+      $.NAME,
+      seq($.NAME, choice('$i', '$o')),
     ),
 
     // opt_loops_and_conditions
@@ -534,30 +528,30 @@ module.exports = grammar({
       $.expression
     ),
 
-    connection: $ => choice(
-      seq($.gatespec, '-->', $.gatespec),
-      seq($.gatespec, '-->', $.channelspec, '-->', $.gatespec),
-      seq($.gatespec, '<--', $.gatespec),
-      seq($.gatespec, '<--', $.channelspec, '<--', $.gatespec),
-      seq($.gatespec, '<-->', $.gatespec),
-      seq($.gatespec, '<-->', $.channelspec, '<-->', $.gatespec)
-    ),
+    // connection: $ => choice(
+    //   seq($.gatespec, '-->', $.gatespec),
+    //   seq($.gatespec, '-->', $.channelspec, '-->', $.gatespec),
+    //   seq($.gatespec, '<--', $.gatespec),
+    //   seq($.gatespec, '<--', $.channelspec, '<--', $.gatespec),
+    //   seq($.gatespec, '<-->', $.gatespec),
+    //   seq($.gatespec, '<-->', $.channelspec, '<-->', $.gatespec)
+    // ),
 
-    gatespec: $ => choice(
-      seq($.mod, '.', $.leftgate),
-      $.leftgate
-    ),
+    // gatespec: $ => choice(
+    //   seq($.mod, '.', $.leftgate),
+    //   $.leftgate
+    // ),
 
     // leftmod: $ => choice(
     //   seq($.NAME, $.vector),
     //   $.NAME
     // ),
 
-    leftgate: $ => choice(
-      seq($.NAME, optional($.subgate)),
-      seq($.NAME, optional($.subgate), $.vector),
-      seq($.NAME, optional($.subgate), '++')
-    ),
+    // leftgate: $ => choice(
+    //   seq($.NAME, optional($.subgate)),
+    //   seq($.NAME, optional($.subgate), $.vector),
+    //   seq($.NAME, optional($.subgate), '++')
+    // ),
 
     // parentleftgate: $ => choice(
     //   seq($.NAME, optional($.subgate)),
@@ -570,10 +564,10 @@ module.exports = grammar({
     //   $.rightgate
     // ),
 
-    mod: $ => choice(
-      $.NAME,
-      seq($.NAME, $.vector)
-    ),
+    // mod: $ => prec(10, choice(
+    //   $.NAME,
+    //   seq($.NAME, $.vector)
+    // )),
 
     // rightgate: $ => choice(
     //   seq($.NAME, optional($.subgate)),
@@ -598,7 +592,8 @@ module.exports = grammar({
 
     channelspec_header: $ => choice(
       $.channelname,
-      seq(optional($.channelname), $.dottedname),
+      $.dottedname,
+      $.channelname, $.dottedname,
       seq(optional($.channelname), $.likeexpr, 'like', $.dottedname)
     ),
     
@@ -674,9 +669,9 @@ module.exports = grammar({
       seq($.NAME, '::', $.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}')
     ),
 
-    exprlist: $ => prec.right(seq($.expression, repeat(seq(',', $.expression)))),
+    exprlist: $ => prec.right(seq($.expression, repeat1(seq(',', $.expression)))),
 
-    keyvaluelist: $ => seq($.keyvalue, repeat(seq(',', $.keyvalue))),
+    keyvaluelist: $ => seq($.keyvalue, repeat1(seq(',', $.keyvalue))),
 
     keyvalue: $ => seq($.key, ':', $.expression),
 
@@ -718,7 +713,7 @@ module.exports = grammar({
       'parent'
     )),
 
-    qname: $ => prec.right(seq($.qname_elem, repeat(seq(',', $.qname_elem)))),
+    qname: $ => prec.right(seq($.qname_elem, repeat1(seq(',', $.qname_elem)))),
     
     operator: $ => choice(
       'index',
@@ -749,12 +744,12 @@ module.exports = grammar({
     //   $.other_literal
     // ),
 
-    quantity: $ => choice(
+    quantity: $ => prec(10, choice(
       seq($.quantity, $.INTCONSTANT, $.NAME),
       seq($.quantity, $.realconstant_ext, $.NAME),
       seq($.INTCONSTANT, $.NAME),
       seq($.realconstant_ext, $.NAME)
-    ),
+    )),
 
     realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan'),
 
