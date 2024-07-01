@@ -535,23 +535,23 @@ module.exports = grammar({
     ),
 
     connection: $ => choice(
-      seq($.leftgatespec, '-->', $.rightgatespec),
-      seq($.leftgatespec, '-->', $.channelspec, '-->', $.rightgatespec),
-      seq($.leftgatespec, '<--', $.rightgatespec),
-      seq($.leftgatespec, '<--', $.channelspec, '<--', $.rightgatespec),
-      seq($.leftgatespec, '<-->', $.rightgatespec),
-      seq($.leftgatespec, '<-->', $.channelspec, '<-->', $.rightgatespec)
+      seq($.gatespec, '-->', $.gatespec),
+      seq($.gatespec, '-->', $.channelspec, '-->', $.gatespec),
+      seq($.gatespec, '<--', $.gatespec),
+      seq($.gatespec, '<--', $.channelspec, '<--', $.gatespec),
+      seq($.gatespec, '<-->', $.gatespec),
+      seq($.gatespec, '<-->', $.channelspec, '<-->', $.gatespec)
     ),
 
-    leftgatespec: $ => choice(
-      seq($.leftmod, '.', $.leftgate),
+    gatespec: $ => choice(
+      seq($.mod, '.', $.leftgate),
       $.leftgate
     ),
 
-    leftmod: $ => choice(
-      seq($.NAME, $.vector),
-      $.NAME
-    ),
+    // leftmod: $ => choice(
+    //   seq($.NAME, $.vector),
+    //   $.NAME
+    // ),
 
     leftgate: $ => choice(
       seq($.NAME, optional($.subgate)),
@@ -565,21 +565,21 @@ module.exports = grammar({
     //   seq($.NAME, optional($.subgate), '++')
     // ),
 
-    rightgatespec: $ => choice(
-      seq($.rightmod, '.', $.rightgate),
-      $.rightgate
-    ),
+    // rightgatespec: $ => choice(
+    //   seq($.mod, '.', $.rightgate),
+    //   $.rightgate
+    // ),
 
-    rightmod: $ => choice(
+    mod: $ => choice(
       $.NAME,
       seq($.NAME, $.vector)
     ),
 
-    rightgate: $ => choice(
-      seq($.NAME, optional($.subgate)),
-      seq($.NAME, optional($.subgate), $.vector),
-      seq($.NAME, optional($.subgate), '++')
-    ),
+    // rightgate: $ => choice(
+    //   seq($.NAME, optional($.subgate)),
+    //   seq($.NAME, optional($.subgate), $.vector),
+    //   seq($.NAME, optional($.subgate), '++')
+    // ),
 
     // parentrightgate: $ => choice(
     //   seq($.NAME, optional($.subgate)),
