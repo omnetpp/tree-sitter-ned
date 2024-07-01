@@ -41,7 +41,7 @@ module.exports = grammar({
     
 
     packagedeclaration: $ => seq(
-      'PACKAGE',
+      'package',
       $.dottedname,
       ';'
     ),
@@ -49,7 +49,7 @@ module.exports = grammar({
     dottedname: $ => seq($.NAME, repeat(seq('.', $.NAME))),
 
     import: $ => seq(
-      'IMPORT',
+      'import',
       $.importspec,
       ';'
     ),
@@ -79,8 +79,8 @@ module.exports = grammar({
     ),
 
     propertydecl_header: $ => choice(
-      seq('PROPERTY', '@', $.PROPNAME, '[', ']'),
-      seq('PROPERTY', '@', $.PROPNAME)
+      seq('property', '@', $.PROPNAME, '[', ']'),
+      seq('property', '@', $.PROPNAME)
     ),
     
     propertydecl_keys: $ => seq(
@@ -99,21 +99,18 @@ module.exports = grammar({
     channeldefinition: $ => seq(
       $.channelheader,
       '{',
-      $.opt_paramblock,
+      optional($.paramblock),
       '}'
     ),
     
     channelheader: $ => seq(
-      'CHANNEL',
+      'channel',
       $.NAME,
-      $.opt_inheritance
+      optional($.inheritance)
     ),
 
-    opt_inheritance: $ => choice(
-      // %empty rule can be represented by an empty sequence or omitted entirely
-      // depending on how you structure your grammar rules.
-      // In Tree-sitter, absence of a rule implies optional nature.
-      // $.EXTENDS,
+    inheritance: $ => choice(      
+      'extends',
       seq('like', $.likenames),
       seq('extends', $.extendsname),
       seq('extends', $.extendsname, 'like', $.likenames)
@@ -134,22 +131,17 @@ module.exports = grammar({
     channelinterfacedefinition: $ => seq(
       $.channelinterfaceheader,
       '{',
-      $.opt_paramblock,
+      optional($.paramblock),
       '}'
     ),
 
     channelinterfaceheader: $ => seq(
       'channelinterface',
       $.NAME,
-      $.opt_interfaceinheritance
+      optional($.interfaceinheritance)
     ),
 
-    opt_interfaceinheritance: $ => choice(
-      seq('extends', $.extendsnames),
-      // %empty rule can be represented by an empty sequence or omitted entirely
-      // depending on how you structure your grammar rules.
-      // In Tree-sitter, absence of a rule implies optional nature.
-    ),
+    interfaceinheritance: $ => seq('extends', $.extendsnames),
     
     extendsnames: $ => prec.left(choice(
       seq(
@@ -162,7 +154,7 @@ module.exports = grammar({
     simplemoduledefinition: $ => seq(
       $.simplemoduleheader,
       '{',
-      $.opt_paramblock,
+      optional($.paramblock),
       optional($.gateblock),
       '}'
     ),
@@ -170,13 +162,13 @@ module.exports = grammar({
     simplemoduleheader: $ => seq(
       'simple',
       $.NAME,
-      $.opt_inheritance
+      optional($.inheritance)
     ),
 
     compoundmoduledefinition: $ => seq(
       $.compoundmoduleheader,
       '{',
-      $.opt_paramblock,
+      optional($.paramblock),
       optional($.gateblock),
       optional($.typeblock),
       optional($.submodblock),
@@ -187,13 +179,13 @@ module.exports = grammar({
     compoundmoduleheader: $ => seq(
       'module',
       $.NAME,
-      $.opt_inheritance
+      optional($.inheritance)
     ),
 
     networkdefinition: $ => seq(
       $.networkheader,
       '{',
-      $.opt_paramblock,
+      optional($.paramblock),
       optional($.gateblock),
       optional($.typeblock),
       optional($.submodblock),
@@ -204,13 +196,13 @@ module.exports = grammar({
     networkheader: $ => seq(
       'network',
       $.NAME,
-      $.opt_inheritance
+      optional($.inheritance)
     ),
 
     moduleinterfacedefinition: $ => seq(
       $.moduleinterfaceheader,
       '{',
-      $.opt_paramblock,
+      optional($.paramblock),
       optional($.gateblock),
       '}'
     ),
@@ -218,10 +210,10 @@ module.exports = grammar({
     moduleinterfaceheader: $ => seq(
       'moduleinterface',
       $.NAME,
-      $.opt_interfaceinheritance
+      optional($.interfaceinheritance)
     ),
 
-    opt_paramblock: $ => choice(
+    paramblock: $ => choice(
       seq(
         optional($.params),
         optional(
@@ -468,7 +460,7 @@ module.exports = grammar({
         seq(
           $.submoduleheader,
           '{',
-          optional($.opt_paramblock),
+          optional(optional($.paramblock)),
           optional(optional($.gateblock)),
           '}',
           optional(';')
@@ -594,7 +586,7 @@ module.exports = grammar({
 
       channelspec: $ => choice(
         $.channelspec_header,
-        seq($.channelspec_header, '{', optional('opt_paramblock'), '}')
+        seq($.channelspec_header, '{', optional($.paramblock), '}')
       ),
 
       channelspec_header: $ => choice(
