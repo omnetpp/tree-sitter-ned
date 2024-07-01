@@ -46,7 +46,7 @@ module.exports = grammar({
       ';'
     ),
 
-    dottedname: $ => seq($.NAME, repeat(seq('.', $.NAME))),
+    dottedname: $ => seq($.NAME, repeat1(seq('.', $.NAME))),
 
     import: $ => seq(
       'import',
@@ -123,8 +123,8 @@ module.exports = grammar({
         $.likenames,
         ',',
         $.likename
-    )),
-    $.likename),
+    ),
+    $.likename)),
 
     likename: $ => $.dottedname,
 
@@ -148,8 +148,8 @@ module.exports = grammar({
         $.extendsnames,
         ',',
         $.extendsname
-    )),
-    $.extendsname),
+    ),
+    $.extendsname)),
 
     simplemoduledefinition: $ => seq(
       $.simplemoduleheader,
@@ -213,23 +213,30 @@ module.exports = grammar({
       optional($.interfaceinheritance)
     ),
 
-    paramblock: $ => choice(
-      seq(
-        optional($.params),
-        optional(
-          seq(
-            'parameters',
-            ':',
-            optional($.params)
-          )
-        )
-      ),
-      seq(
-        'parameters',
-        ':',
-        optional($.params)
-      )
-    ),
+    // paramblock: $ => choice(
+    //   seq(
+    //     optional($.params),
+    //     optional(
+    //       seq(
+    //         'parameters',
+    //         ':',
+    //         optional($.params)
+    //       )
+    //     )
+    //   ),
+    //   seq(
+    //     'parameters',
+    //     ':',
+    //     optional($.params)
+    //   )
+    // ),
+
+    // paramblock: $ => choice(
+    //   $.params,
+    //   seq('parameters:', $.params)
+    // ),
+
+    paramblock: $ => seq(optional('parameters:'), $.params),
 
     params: $ => choice(
       seq($.params, $.paramsitem),
@@ -362,7 +369,7 @@ module.exports = grammar({
     ),
 
     property_key: $ =>
-      choice(
+      prec.right(choice(
         seq(
           $.property_literal,
           '=',
@@ -371,410 +378,410 @@ module.exports = grammar({
         seq(
           $.property_values,
         )
-      ),
+      )),
 
-      property_values: $ =>
-        choice(
-          seq($.property_values, optional(seq(',', $.property_value))),
-          $.property_value
-      ),
+    property_values: $ =>
+      prec.right(10, choice(
+        seq($.property_values, optional(seq(',', $.property_value))),
+        $.property_value
+    )),
 
-      property_value: $ => $.property_literal,
+    property_value: $ => $.property_literal,
 
-      property_literal: $ =>
-        choice(
-          seq($.property_literal, $.COMMONCHAR),
-          seq($.property_literal, $.STRINGCONSTANT),
-          $.COMMONCHAR,
-          $.STRINGCONSTANT
-      ),
-      
-      // opt_gateblock
+    property_literal: $ =>
+      choice(
+        seq($.property_literal, $.COMMONCHAR),
+        seq($.property_literal, $.STRINGCONSTANT),
+        $.COMMONCHAR,
+        $.STRINGCONSTANT
+    ),
+    
+    // opt_gateblock
 
-      gateblock: $ => seq('gates', ':', optional($.gates)),
-      
-      gates: $ =>
-        choice(
-          seq($.gates, $.gate),
-          $.gate
-      ),
+    gateblock: $ => seq('gates', ':', optional($.gates)),
+    
+    gates: $ =>
+      choice(
+        seq($.gates, $.gate),
+        $.gate
+    ),
 
-      gate: $ =>
-        seq($.gate_typenamesize, optional($.inline_properties), ';'),
+    gate: $ =>
+      seq($.gate_typenamesize, optional($.inline_properties), ';'),
 
-      gate_typenamesize: $ =>
-        choice(
-          seq($.gatetype, $.NAME),                        // gatetype NAME
-          seq($.gatetype, $.NAME, '[', ']',),          // gatetype NAME '[' ']'
-          seq($.gatetype, $.NAME, $.vector),              // gatetype NAME vector
-          $.NAME,                                         // NAME
-          seq($.NAME, '[', ']',),                      // NAME '[' ']'
-          seq($.NAME, $.vector)                           // NAME vector
-      ),
+    gate_typenamesize: $ =>
+      choice(
+        seq($.gatetype, $.NAME),                        // gatetype NAME
+        seq($.gatetype, $.NAME, '[', ']',),          // gatetype NAME '[' ']'
+        seq($.gatetype, $.NAME, $.vector),              // gatetype NAME vector
+        $.NAME,                                         // NAME
+        seq($.NAME, '[', ']',),                      // NAME '[' ']'
+        seq($.NAME, $.vector)                           // NAME vector
+    ),
 
-      gatetype: $ => choice('input', 'output', 'inout'),
+    gatetype: $ => choice('input', 'output', 'inout'),
 
-      // opt_typeblock
-      
-      typeblock: $ =>
-        seq(
-          'types', ':',
-          repeat($.localtypes)
-      ),
-      
-      // opt_localtypes
+    // opt_typeblock
+    
+    typeblock: $ =>
+      seq(
+        'types', ':',
+        repeat($.localtypes)
+    ),
+    
+    // opt_localtypes
 
-      localtypes: $ =>
-        repeat1(
-          $.localtype
-      ),
+    localtypes: $ =>
+      prec.right(repeat1(
+        $.localtype
+    )),
 
-      localtype: $ =>
-        choice(
-          $.propertydecl,
-          $.channeldefinition,
-          $.channelinterfacedefinition,
-          $.simplemoduledefinition,
-          $.compoundmoduledefinition,
-          $.networkdefinition,
-          $.moduleinterfacedefinition,
-          ';'
-      ),
-      
-      // opt_submodblock
+    localtype: $ =>
+      choice(
+        $.propertydecl,
+        $.channeldefinition,
+        $.channelinterfacedefinition,
+        $.simplemoduledefinition,
+        $.compoundmoduledefinition,
+        $.networkdefinition,
+        $.moduleinterfacedefinition,
+        ';'
+    ),
+    
+    // opt_submodblock
 
-      submodblock: $ =>
-        seq(
-          'submodules',
-          ':',
-          repeat($.submodules)
-      ),
+    submodblock: $ =>
+      seq(
+        'submodules',
+        ':',
+        repeat($.submodules)
+    ),
 
-      // opt_submodules
+    // opt_submodules
 
-      submodules: $ =>
-        repeat1($.submodule),
+    submodules: $ =>
+      prec.right(repeat1($.submodule)),
 
-      submodule: $ => choice(
-        seq($.submoduleheader, ';'),
-        seq(
-          $.submoduleheader,
-          '{',
-          optional(optional($.paramblock)),
-          optional(optional($.gateblock)),
-          '}',
-          optional(';')
-        )
-      ),
-
-      submoduleheader: $ => choice(
-        seq($.submodulename, ':', $.dottedname, optional($.condition)),
-        seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.condition))
-      ),
-
-      submodulename: $ => choice($.NAME, seq($.NAME, $.vector)),
-
-      // opt_condition
-
-      likeexpr: $ => choice(
-        seq('<', '>'),
-        seq('<', $.expression, '>'),
-        seq('<', 'default', '(', $.expression, ')', '>'),
-      ),
-
-      // opt_connblock
-
-      connblock: $ => choice(
-        seq('connections', 'allowunconnected', ':', optional($.connections)),
-        seq('connections', ':', optional($.connections))
-      ),
-
-      // opt_connections
-
-      connections: $ => choice(
-        seq($.connections, $.connectionitem),
-        $.connectionitem
-      ),
-
-      connectionitem: $ => choice(
-        $.connectiongroup,
-        seq($.connection, optional($.loops_and_conditions), ';')
-      ),
-
-      connectiongroup: $ => seq(
-        optional($.loops_and_conditions),
+    submodule: $ => choice(
+      seq($.submoduleheader, ';'),
+      seq(
+        $.submoduleheader,
         '{',
-        $.connections,
+        optional(optional($.paramblock)),
+        optional(optional($.gateblock)),
         '}',
         optional(';')
-      ),
+      )
+    ),
 
-      // opt_loops_and_conditions
+    submoduleheader: $ => choice(
+      seq($.submodulename, ':', $.dottedname, optional($.condition)),
+      seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.condition))
+    ),
 
-      loops_and_conditions: $ => seq(
-        $.loop_or_condition,
-        repeat(seq(',', $.loop_or_condition))
-      ),
+    submodulename: $ => choice($.NAME, seq($.NAME, $.vector)),
 
-      loop_or_condition: $ => choice($.loop, $.condition),
+    // opt_condition
 
-      loop: $ => seq(
-        'for',
-        $.NAME,
-        '=',
-        $.expression,
-        'to',
-        $.expression
-      ),
+    likeexpr: $ => choice(
+      seq('<', '>'),
+      seq('<', $.expression, '>'),
+      seq('<', 'default', '(', $.expression, ')', '>'),
+    ),
 
-      connection: $ => choice(
-        seq($.leftgatespec, '-->', $.rightgatespec),
-        seq($.leftgatespec, '-->', $.channelspec, '-->', $.rightgatespec),
-        seq($.leftgatespec, '<--', $.rightgatespec),
-        seq($.leftgatespec, '<--', $.channelspec, '<--', $.rightgatespec),
-        seq($.leftgatespec, '<-->', $.rightgatespec),
-        seq($.leftgatespec, '<-->', $.channelspec, '<-->', $.rightgatespec)
-      ),
+    // opt_connblock
 
-      leftgatespec: $ => choice(
-        seq($.leftmod, '.', $.leftgate),
-        $.parentleftgate
-      ),
+    connblock: $ => choice(
+      seq('connections', 'allowunconnected', ':', optional($.connections)),
+      seq('connections', ':', optional($.connections))
+    ),
 
-      leftmod: $ => choice(
-        seq($.NAME, $.vector),
-        $.NAME
-      ),
+    // opt_connections
 
-      leftgate: $ => choice(
-        seq($.NAME, optional($.subgate)),
-        seq($.NAME, optional($.subgate), $.vector),
-        seq($.NAME, optional($.subgate), '++')
-      ),
+    connections: $ => choice(
+      seq($.connections, $.connectionitem),
+      $.connectionitem
+    ),
 
-      parentleftgate: $ => choice(
-        seq($.NAME, optional($.subgate)),
-        seq($.NAME, optional($.subgate), $.vector),
-        seq($.NAME, optional($.subgate), '++')
-      ),
+    connectionitem: $ => choice(
+      $.connectiongroup,
+      seq($.connection, optional($.loops_and_conditions), ';')
+    ),
 
-      rightgatespec: $ => choice(
-        seq($.rightmod, '.', $.rightgate),
-        $.parentrightgate
-      ),
+    connectiongroup: $ => seq(
+      optional($.loops_and_conditions),
+      '{',
+      $.connections,
+      '}',
+      optional(';')
+    ),
 
-      rightmod: $ => choice(
-        $.NAME,
-        seq($.NAME, $.vector)
-      ),
+    // opt_loops_and_conditions
 
-      rightgate: $ => choice(
-        seq($.NAME, optional($.subgate)),
-        seq($.NAME, optional($.subgate), $.vector),
-        seq($.NAME, optional($.subgate), '++')
-      ),
+    loops_and_conditions: $ => seq(
+      $.loop_or_condition,
+      repeat(seq(',', $.loop_or_condition))
+    ),
 
-      parentrightgate: $ => choice(
-        seq($.NAME, optional($.subgate)),
-        seq($.NAME, optional($.subgate), $.vector),
-        seq($.NAME, optional($.subgate), '++')
-      ),
+    loop_or_condition: $ => choice($.loop, $.condition),
 
-      // opt_subgate
+    loop: $ => seq(
+      'for',
+      $.NAME,
+      '=',
+      $.expression,
+      'to',
+      $.expression
+    ),
 
-      subgate: $ => choice('$i', '$o'),
+    connection: $ => choice(
+      seq($.leftgatespec, '-->', $.rightgatespec),
+      seq($.leftgatespec, '-->', $.channelspec, '-->', $.rightgatespec),
+      seq($.leftgatespec, '<--', $.rightgatespec),
+      seq($.leftgatespec, '<--', $.channelspec, '<--', $.rightgatespec),
+      seq($.leftgatespec, '<-->', $.rightgatespec),
+      seq($.leftgatespec, '<-->', $.channelspec, '<-->', $.rightgatespec)
+    ),
 
-      channelspec: $ => choice(
-        $.channelspec_header,
-        seq($.channelspec_header, '{', optional($.paramblock), '}')
-      ),
+    leftgatespec: $ => choice(
+      seq($.leftmod, '.', $.leftgate),
+      $.leftgate
+    ),
 
-      channelspec_header: $ => choice(
-        optional($.channelname),
-        seq(optional($.channelname), $.dottedname),
-        seq(optional($.channelname), $.likeexpr, 'like', $.dottedname)
-      ),
-      
+    leftmod: $ => choice(
+      seq($.NAME, $.vector),
+      $.NAME
+    ),
 
-      channelname: $ => seq($.NAME, ':'),
+    leftgate: $ => choice(
+      seq($.NAME, optional($.subgate)),
+      seq($.NAME, optional($.subgate), $.vector),
+      seq($.NAME, optional($.subgate), '++')
+    ),
 
-      // opt_channelname
+    // parentleftgate: $ => choice(
+    //   seq($.NAME, optional($.subgate)),
+    //   seq($.NAME, optional($.subgate), $.vector),
+    //   seq($.NAME, optional($.subgate), '++')
+    // ),
 
-      condition: $ => seq('if', $.expression),
+    rightgatespec: $ => choice(
+      seq($.rightmod, '.', $.rightgate),
+      $.rightgate
+    ),
 
-      vector: $ => seq('[', $.expression, ']'),
+    rightmod: $ => choice(
+      $.NAME,
+      seq($.NAME, $.vector)
+    ),
 
-      expression: $ => choice(
-        $.simple_expr,
-        $.functioncall,
-        seq($.expression, '.', $.functioncall),
-        $.object,
-        $.array,
-        seq('(', $.expression, ')'),
-      
-        seq($.expression, '+', $.expression),
-        seq($.expression, '-', $.expression),
-        seq($.expression, '*', $.expression),
-        seq($.expression, '/', $.expression),
-        seq($.expression, '%', $.expression),
-        seq($.expression, '^', $.expression),
-        seq('-', $.expression),
-      
-        seq($.expression, '==', $.expression),
-        seq($.expression, '!=', $.expression),
-        seq($.expression, '>', $.expression),
-        seq($.expression, '>=', $.expression),
-        seq($.expression, '<', $.expression),
-        seq($.expression, '<=', $.expression),
-        seq($.expression, '<=>', $.expression),
-        seq($.expression, 'match', $.expression),
-      
-        seq($.expression, '&&', $.expression),
-        seq($.expression, '||', $.expression),
-        seq($.expression, '^^', $.expression),
-      
-        seq('!', $.expression),
-      
-        seq($.expression, '&', $.expression),
-        seq($.expression, '|', $.expression),
-        seq($.expression, '#', $.expression),
-      
-        seq('~', $.expression),
-        seq($.expression, '<<', $.expression),
-        seq($.expression, '>>', $.expression),
-      
-        seq($.expression, '?', $.expression, ':', $.expression)
-      ),
+    rightgate: $ => choice(
+      seq($.NAME, optional($.subgate)),
+      seq($.NAME, optional($.subgate), $.vector),
+      seq($.NAME, optional($.subgate), '++')
+    ),
 
-      functioncall: $ => seq($.funcname, '(', optional($.exprlist), ')'),
+    // parentrightgate: $ => choice(
+    //   seq($.NAME, optional($.subgate)),
+    //   seq($.NAME, optional($.subgate), $.vector),
+    //   seq($.NAME, optional($.subgate), '++')
+    // ),
 
-      array: $ => choice(
-        seq('[', ']'),
-        seq('[', $.exprlist, ']'),
-        seq('[', $.exprlist, ',', ']'),
-      ),
+    // opt_subgate
 
-      exprlist: $ => choice(
-        seq($.exprlist, ',', $.expression),
-        $.expression
-      ),
+    subgate: $ => choice('$i', '$o'),
 
-      object: $ => choice(
-        seq('{', optional($.keyvaluelist), '}'),
-        seq($.NAME, '{', optional($.keyvaluelist), '}'),
-        seq($.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}'),
-        seq($.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}'),
-        seq($.NAME, '::', $.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}')
-      ),
+    channelspec: $ => choice(
+      $.channelspec_header,
+      seq($.channelspec_header, '{', optional($.paramblock), '}')
+    ),
 
-      exprlist: $ => seq($.expression, repeat(seq(',', $.expression))),
+    channelspec_header: $ => choice(
+      $.channelname,
+      seq(optional($.channelname), $.dottedname),
+      seq(optional($.channelname), $.likeexpr, 'like', $.dottedname)
+    ),
+    
 
-      keyvaluelist: $ => seq($.keyvalue, repeat(seq(',', $.keyvalue))),
+    channelname: $ => seq($.NAME, ':'),
 
-      keyvalue: $ => seq($.key, ':', $.expression),
+    // opt_channelname
 
-      key: $ => choice(
-        $.STRINGCONSTANT,
-        $.NAME,
-        $.INTCONSTANT,
-        $.REALCONSTANT,
-        $.quantity,
-        seq('-', $.INTCONSTANT),
-        seq('-', $.REALCONSTANT),
-        seq('-', $.quantity),
-        'nan',
-        'inf',
-        seq('-', 'inf'),
-        'true',
-        'false',
-        'null',
-        'nullptr'
-      ),
+    condition: $ => seq('if', $.expression),
 
-      simple_expr: $ => choice($.qname, $.operator, $.literal),
+    vector: $ => seq('[', $.expression, ']'),
 
-      funcname: $ => choice(
-        $.NAME,
-        'bool',
-        'int',
-        'double',
-        'string',
-        'object',
-        'xml',
-        'xmldoc'
-      ),
+    expression: $ => prec.right(choice(
+      $.simple_expr,
+      $.functioncall,
+      seq($.expression, '.', $.functioncall),
+      $.object,
+      $.array,
+      seq('(', $.expression, ')'),
+    
+      seq($.expression, '+', $.expression),
+      seq($.expression, '-', $.expression),
+      seq($.expression, '*', $.expression),
+      seq($.expression, '/', $.expression),
+      seq($.expression, '%', $.expression),
+      seq($.expression, '^', $.expression),
+      seq('-', $.expression),
+    
+      seq($.expression, '==', $.expression),
+      seq($.expression, '!=', $.expression),
+      seq($.expression, '>', $.expression),
+      seq($.expression, '>=', $.expression),
+      seq($.expression, '<', $.expression),
+      seq($.expression, '<=', $.expression),
+      seq($.expression, '<=>', $.expression),
+      seq($.expression, 'match', $.expression),
+    
+      seq($.expression, '&&', $.expression),
+      seq($.expression, '||', $.expression),
+      seq($.expression, '^^', $.expression),
+    
+      seq('!', $.expression),
+    
+      seq($.expression, '&', $.expression),
+      seq($.expression, '|', $.expression),
+      seq($.expression, '#', $.expression),
+    
+      seq('~', $.expression),
+      seq($.expression, '<<', $.expression),
+      seq($.expression, '>>', $.expression),
+    
+      seq($.expression, '?', $.expression, ':', $.expression)
+    )),
 
-      qname_elem: $ => choice(
-        $.NAME,
-        seq($.NAME, '[', $.expression, ']'),
-        'this',
-        'parent'
-      ),
+    functioncall: $ => seq($.funcname, '(', optional($.exprlist), ')'),
 
-      qname: $ => seq($.qname_elem, repeat(seq(',', $.qname_elem))),
-      
-      operator: $ => choice(
-        'index',
-        'typename',
-        seq($.qname, '.', 'index'),
-        seq($.qname, '.', 'typename'),
-        seq('exists', '(', $.qname, ')'),
-        seq('sizeof', '(', $.qname, ')')
-      ),
+    array: $ => choice(
+      seq('[', ']'),
+      seq('[', $.exprlist, ']'),
+      seq('[', $.exprlist, ',', ']'),
+    ),
 
-      literal: $ => choice(
-        $.STRINGCONSTANT,
-        $.boolliteral,
-        $.numliteral,
-        $.otherliteral
-      ),
+    // exprlist: $ => prec.right(choice(
+    //   seq($.exprlist, ',', $.expression),
+    //   $.expression
+    // )),
 
-      boolliteral: $ => choice('true', 'false'),
+    object: $ => choice(
+      seq('{', optional($.keyvaluelist), '}'),
+      seq($.NAME, '{', optional($.keyvaluelist), '}'),
+      seq($.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}'),
+      seq($.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}'),
+      seq($.NAME, '::', $.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}')
+    ),
 
-      numliteral: $ => choice($.INTCONSTANT, $.realconstant_ext, $.quantity),
+    exprlist: $ => prec.right(seq($.expression, repeat(seq(',', $.expression)))),
 
-      otherliteral: $ => choice('undefined', 'nullptr', 'null'),
+    keyvaluelist: $ => seq($.keyvalue, repeat(seq(',', $.keyvalue))),
 
-      // literal: $ => choice(
-      //   $.string_literal,
-      //   $.bool_literal,
-      //   $.num_literal,
-      //   $.other_literal
-      // ),
+    keyvalue: $ => seq($.key, ':', $.expression),
 
-      quantity: $ => choice(
-        seq($.quantity, $.INTCONSTANT, $.NAME),
-        seq($.quantity, $.realconstant_ext, $.NAME),
-        seq($.INTCONSTANT, $.NAME),
-        seq($.realconstant_ext, $.NAME)
-      ),
+    key: $ => choice(
+      $.STRINGCONSTANT,
+      $.NAME,
+      $.INTCONSTANT,
+      $.REALCONSTANT,
+      $.quantity,
+      seq('-', $.INTCONSTANT),
+      seq('-', $.REALCONSTANT),
+      seq('-', $.quantity),
+      'nan',
+      'inf',
+      seq('-', 'inf'),
+      'true',
+      'false',
+      'null',
+      'nullptr'
+    ),
 
-      realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan'),
+    simple_expr: $ => prec.left(choice($.qname, $.operator, $.literal)),
 
-      // opt_semicolon
+    funcname: $ => choice(
+      $.NAME,
+      'bool',
+      'int',
+      'double',
+      'string',
+      'object',
+      'xml',
+      'xmldoc'
+    ),
 
-      NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
-      PROPNAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
-      INTCONSTANT: $ => /\d+/,
-      REALCONSTANT: $ => /\d+\.\d+/,
-      STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
-      CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
-      DOUBLEASTERISK: $ => '**',
-      PLUSPLUS: $ => '++',
-      EQ: $ => '==',
-      NE: $ => '!=',
-      GE: $ => '>=',
-      LE: $ => '<=',
-      SPACESHIP: $ => '<=>',
-      AND: $ => '&&',
-      OR: $ => '||',
-      XOR: $ => '^^',
-      SHIFT_LEFT: $ => '<<',
-      SHIFT_RIGHT: $ => '>>',
-      DOUBLECOLON: $ => '::',
-      EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
-      COMMONCHAR: $ => /./,
-      INVALID_CHAR: $ => /./  
+    qname_elem: $ => prec.left(choice(
+      $.NAME,
+      seq($.NAME, '[', $.expression, ']'),
+      'this',
+      'parent'
+    )),
+
+    qname: $ => prec.right(seq($.qname_elem, repeat(seq(',', $.qname_elem)))),
+    
+    operator: $ => choice(
+      'index',
+      'typename',
+      seq($.qname, '.', 'index'),
+      seq($.qname, '.', 'typename'),
+      seq('exists', '(', $.qname, ')'),
+      seq('sizeof', '(', $.qname, ')')
+    ),
+
+    literal: $ => choice(
+      $.STRINGCONSTANT,
+      $.boolliteral,
+      $.numliteral,
+      $.otherliteral
+    ),
+
+    boolliteral: $ => choice('true', 'false'),
+
+    numliteral: $ => choice($.INTCONSTANT, $.realconstant_ext, $.quantity),
+
+    otherliteral: $ => choice('undefined', 'nullptr', 'null'),
+
+    // literal: $ => choice(
+    //   $.string_literal,
+    //   $.bool_literal,
+    //   $.num_literal,
+    //   $.other_literal
+    // ),
+
+    quantity: $ => choice(
+      seq($.quantity, $.INTCONSTANT, $.NAME),
+      seq($.quantity, $.realconstant_ext, $.NAME),
+      seq($.INTCONSTANT, $.NAME),
+      seq($.realconstant_ext, $.NAME)
+    ),
+
+    realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan'),
+
+    // opt_semicolon
+
+    NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    PROPNAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    INTCONSTANT: $ => /\d+/,
+    REALCONSTANT: $ => /\d+\.\d+/,
+    STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
+    CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
+    DOUBLEASTERISK: $ => '**',
+    PLUSPLUS: $ => '++',
+    EQ: $ => '==',
+    NE: $ => '!=',
+    GE: $ => '>=',
+    LE: $ => '<=',
+    SPACESHIP: $ => '<=>',
+    AND: $ => '&&',
+    OR: $ => '||',
+    XOR: $ => '^^',
+    SHIFT_LEFT: $ => '<<',
+    SHIFT_RIGHT: $ => '>>',
+    DOUBLECOLON: $ => '::',
+    EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    COMMONCHAR: $ => /./,
+    INVALID_CHAR: $ => /./  
       
       
       
