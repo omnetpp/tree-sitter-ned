@@ -1,20 +1,24 @@
 module.exports = grammar({
   name: 'ned',
 
-  // extras: $ => [
-  //   /\s/,
-  //   $.comment,
-  // ],
+  extras: $ => [
+    /\s/,
+    $.comment,
+  ],
 
   rules: {
-    nedfile: $ => optional($.definitions),
+    nedfile: $ => prec.right(repeat1($.definition)),
 
-    definitions: $ => choice(
-      seq($.definitions, $.definition),
-      $.definition
-    ), 
+    // definitions: $ => choice(
+    //   seq($.definitions, $.definition),
+    //   $.definition
+    // ), 
+
+    _EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     
     definition: $ => choice(
+      $.comment,
+      $._EMPTYLINE,
       $.packagedeclaration,
       $.import,
       $.propertydecl,
@@ -28,9 +32,9 @@ module.exports = grammar({
       ';'
     ),
 
-    comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
+    // comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
 
-    _commentline: _ => token(choice(
+    comment: _ => token(choice(
       seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
       seq(
         '/*',
@@ -54,19 +58,23 @@ module.exports = grammar({
       ';'
     ),
 
-    importspec: $ => choice(
-      seq($.importspec, '.', $.importname),
-      $.importname
-    ),
+    // importspec: $ => choice(
+    //   seq($.importspec, '.', $.importname),
+    //   $.importname
+    // ),
 
-    importname: $ => choice(
-      seq($.importname, $.NAME),
-      seq($.importname, '*'),
-      seq($.importname, '**'),
-      $.NAME,
-      '*',
-      '**'
-    ),
+    importspec: $ => seq($.importname, repeat(seq(',', $.importname))),
+
+    // importname: $ => choice(
+    //   seq($.importname, $.NAME),
+    //   seq($.importname, '*'),
+    //   seq($.importname, '**'),
+    //   $.NAME,
+    //   '*',
+    //   '**'
+    // ),
+
+    importname: $ => repeat1(choice($.NAME, '*', '**')),
 
     property: $ => seq(
       $.property_namevalue,
@@ -79,15 +87,17 @@ module.exports = grammar({
     ),
 
     propertydecl_header: $ => choice(
-      seq('property', '@', $.PROPNAME, '[', ']'),
-      seq('property', '@', $.PROPNAME)
+      seq('property', '@', $.NAME, '[', ']'),
+      seq('property', '@', $.NAME)
     ),
     
-    propertydecl_keys: $ => seq(
-      choice($.propertydecl_keys, $.propertydecl_key),
-      ';',
-      $.propertydecl_key
-    ),
+    // propertydecl_keys: $ => seq(
+    //   choice($.propertydecl_keys, $.propertydecl_key),
+    //   ';',
+    //   $.propertydecl_key
+    // ),
+
+    propertydecl_keys: $ => seq($.propertydecl_key, repeat(seq(';', $.propertydecl_key))),
 
     propertydecl_key: $ => $.property_literal,
 
@@ -118,13 +128,15 @@ module.exports = grammar({
     
     extendsname: $ => $.dottedname,
 
-    likenames: $ => prec.left(choice(
-      seq(
-        $.likenames,
-        ',',
-        $.likename
-    ),
-    $.likename)),
+    // likenames: $ => prec.left(choice(
+    //   seq(
+    //     $.likenames,
+    //     ',',
+    //     $.likename
+    // ),
+    // $.likename)),
+
+    likenames: $ => seq($.likename, repeat(seq(',', $.likename))),
 
     likename: $ => $.dottedname,
 
@@ -143,13 +155,15 @@ module.exports = grammar({
 
     interfaceinheritance: $ => seq('extends', $.extendsnames),
     
-    extendsnames: $ => prec.left(choice(
-      seq(
-        $.extendsnames,
-        ',',
-        $.extendsname
-    ),
-    $.extendsname)),
+    // extendsnames: $ => prec.left(choice(
+    //   seq(
+    //     $.extendsnames,
+    //     ',',
+    //     $.extendsname
+    // ),
+    // $.extendsname)),
+
+    extendsnames: $ => seq($.extendsname, repeat(seq(',', $.extendsname))),
 
     simplemoduledefinition: $ => seq(
       $.simplemoduleheader,
@@ -238,10 +252,12 @@ module.exports = grammar({
 
     // paramblock: $ => seq(optional('parameters:'), $.params),
 
-    params: $ => choice(
-      seq($.params, $.paramsitem),
-      $.paramsitem
-    ),
+    // params: $ => choice(
+    //   seq($.params, $.paramsitem),
+    //   $.paramsitem
+    // ),
+
+    params: $ => repeat1($.paramsitem),
 
     paramsitem: $ => choice($.param, $.property),
 
@@ -305,10 +321,12 @@ module.exports = grammar({
     
     // opt_inline_properties
     
-    inline_properties: $ => choice(
-      $.property_namevalue,
-      seq($.inline_properties, $.property_namevalue)
-    ),
+    // inline_properties: $ => choice(
+    //   $.property_namevalue,
+    //   seq($.inline_properties, $.property_namevalue)
+    // ),
+
+    inline_properties: $ => repeat1($.property_namevalue),
 
     parampattern: $ => $.pattern,
     
@@ -318,10 +336,12 @@ module.exports = grammar({
         seq($.pattern2, '.', 'typename')
     ),
 
-    pattern2: $ => choice(
-      seq($.pattern2, '.', $.pattern_elem),
-      $.pattern_elem
-    ),
+    // pattern2: $ => choice(
+    //   seq($.pattern2, '.', $.pattern_elem),
+    //   $.pattern_elem
+    // ),
+
+    pattern2: $ => seq($.pattern_elem, repeat(seq(',', $.pattern_elem))),
     
     pattern_elem: $ => choice(
       seq($.pattern_name, '[', $.pattern_index, ']'),
@@ -356,17 +376,19 @@ module.exports = grammar({
     
     property_name: $ =>
       choice(
-        seq('@', $.PROPNAME),
-        seq('@', $.PROPNAME, '[', $.PROPNAME, ']')
+        seq('@', $.NAME),
+        seq('@', $.NAME, '[', $.NAME, ']')
     ),
 
     // optional($.property_keys)
 
-    property_keys: $ =>
-      choice(
-        seq($.property_keys, ';', $.property_key),
-        $.property_key
-    ),
+    // property_keys: $ =>
+    //   choice(
+    //     seq($.property_keys, ';', $.property_key),
+    //     $.property_key
+    // ),
+
+    property_keys: $ => seq($.property_key, repeat(seq(';', $.property_key))),
 
     property_key: $ =>
       prec.right(choice(
@@ -378,31 +400,37 @@ module.exports = grammar({
           $.property_values,
       )),
 
-    property_values: $ =>
-      prec.right(10, choice(
-        seq($.property_values, optional(seq(',', $.property_value))),
-        $.property_value
-    )),
+    // property_values: $ =>
+    //   prec.right(10, choice(
+    //     seq($.property_values, optional(seq(',', $.property_value))),
+    //     $.property_value
+    // )),
+
+    property_values: $ => seq($.property_value, repeat(seq(',', $.property_value))),
 
     property_value: $ => $.property_literal,
 
-    property_literal: $ =>
-      choice(
-        seq($.property_literal, $.COMMONCHAR),
-        seq($.property_literal, $.STRINGCONSTANT),
-        $.COMMONCHAR,
-        $.STRINGCONSTANT
-    ),
+    // property_literal: $ =>
+    //   choice(
+    //     seq($.property_literal, $.COMMONCHAR),
+    //     seq($.property_literal, $.STRINGCONSTANT),
+    //     $.COMMONCHAR,
+    //     $.STRINGCONSTANT
+    // ),
+
+    property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT))),
     
     // opt_gateblock
 
     gateblock: $ => seq('gates', ':', optional($.gates)),
     
-    gates: $ =>
-      choice(
-        seq($.gates, $.gate),
-        $.gate
-    ),
+    // gates: $ =>
+    //   choice(
+    //     seq($.gates, $.gate),
+    //     $.gate
+    // ),
+
+    gates: $ => repeat1($.gate),
 
     gate: $ =>
       seq($.gate_typenamesize, optional($.inline_properties), ';'),
@@ -756,27 +784,27 @@ module.exports = grammar({
     // opt_semicolon
 
     NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
-    PROPNAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    // PROPNAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     INTCONSTANT: $ => /\d+/,
     REALCONSTANT: $ => /\d+\.\d+/,
     STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
-    CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
-    DOUBLEASTERISK: $ => '**',
-    PLUSPLUS: $ => '++',
-    EQ: $ => '==',
-    NE: $ => '!=',
-    GE: $ => '>=',
-    LE: $ => '<=',
-    SPACESHIP: $ => '<=>',
-    AND: $ => '&&',
-    OR: $ => '||',
-    XOR: $ => '^^',
-    SHIFT_LEFT: $ => '<<',
-    SHIFT_RIGHT: $ => '>>',
-    DOUBLECOLON: $ => '::',
-    EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
+    // DOUBLEASTERISK: $ => '**',
+    // PLUSPLUS: $ => '++',
+    // EQ: $ => '==',
+    // NE: $ => '!=',
+    // GE: $ => '>=',
+    // LE: $ => '<=',
+    // SPACESHIP: $ => '<=>',
+    // AND: $ => '&&',
+    // OR: $ => '||',
+    // XOR: $ => '^^',
+    // SHIFT_LEFT: $ => '<<',
+    // SHIFT_RIGHT: $ => '>>',
+    // DOUBLECOLON: $ => '::',
+    // EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     COMMONCHAR: $ => /./,
-    INVALID_CHAR: $ => /./  
+    // INVALID_CHAR: $ => /./  
       
       
       
