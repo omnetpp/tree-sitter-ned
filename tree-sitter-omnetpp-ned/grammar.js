@@ -18,7 +18,7 @@ module.exports = grammar({
     
     definition: $ => choice(
       $.comment,
-      $._EMPTYLINE,
+      // $._EMPTYLINE,
       $.packagedeclaration,
       $.import,
       $.propertydecl,
@@ -524,19 +524,24 @@ module.exports = grammar({
       repeat(choice($.connection, $.loop_or_condition)),
     )),
 
-    connection: $ => seq(
-      $.connectionname, seq($.conn_direction, optional(seq(optional($.NAME), optional(seq('{', repeat1(seq(choice($.param, $.property), ';')), '}')), $.conn_direction))), $.connectionname, optional($.condition), ';'
-    ),
+    // connection: $ => prec(10, seq(
+    //   $.connectionname, $.conn_direction, optional(seq(optional($.NAME), optional(seq('{', repeat1(seq(choice($.param, $.property)), '}')), $.conn_direction))), $.connectionname, optional($.condition), ';'
+    // )),
+
+    connection: $ => prec.right(choice(
+      seq($.connectionname, $.conn_direction, $.connectionname, optional($.loops_and_conditions), ';'),
+      seq($.connectionname, $.conn_direction, $.channelspec, $.conn_direction, $.connectionname, optional($.loops_and_conditions), ';'),
+    )),
 
     // link: $ => prec.right(seq($.conn_direction, optional(seq($.identifier, $.conn_direction)))),
 
     conn_direction: $ => choice('-->', '<--', '<-->'),
 
-    connectionname: $ => choice(
-      seq($.dottedname, '.', $.NAME, optional(choice('$i', '$o')), optional('++')),
+    connectionname: $ => prec(10, choice(
+      seq($.dottedname, optional(choice('$i', '$o')), optional('++')),
       $.NAME,
       seq($.NAME, choice('$i', '$o')),
-    ),
+    )),
 
     // opt_loops_and_conditions
 
@@ -613,9 +618,15 @@ module.exports = grammar({
 
     subgate: $ => choice('$i', '$o'),
 
+    // channelspec: $ => choice(
+    //   $.channelspec_header,
+    //   seq($.channelspec_header, '{', optional($.paramblock), '}')
+    // ),
+
     channelspec: $ => choice(
       $.channelspec_header,
-      seq($.channelspec_header, '{', optional($.paramblock), '}')
+      seq($.channelspec_header, '{', optional($.paramblock), '}'),
+      seq('{', $.paramblock, '}'),
     ),
 
     channelspec_header: $ => choice(
@@ -634,7 +645,7 @@ module.exports = grammar({
 
     vector: $ => seq('[', $.expression, ']'),
 
-    expression: $ => prec.right(choice(
+    expression: $ => prec.right(10, choice(
       $.simple_expr,
       $.functioncall,
       seq($.expression, '.', $.functioncall),
@@ -743,14 +754,14 @@ module.exports = grammar({
 
     qname: $ => prec.right(seq($.qname_elem, repeat1(seq(',', $.qname_elem)))),
     
-    operator: $ => choice(
+    operator: $ => prec(20, choice(
       'index',
       'typename',
       seq($.qname, '.', 'index'),
       seq($.qname, '.', 'typename'),
       seq('exists', '(', $.qname, ')'),
       seq('sizeof', '(', $.qname, ')')
-    ),
+    )),
 
     literal: $ => choice(
       $.STRINGCONSTANT,
