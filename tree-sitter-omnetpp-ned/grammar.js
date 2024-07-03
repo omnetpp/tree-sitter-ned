@@ -52,18 +52,26 @@ module.exports = grammar({
 
     dottedname: $ => prec.right(seq($.NAME, repeat(seq('.', $.NAME)))),
 
-    import: $ => seq(
-      'import',
-      $.importspec,
-      ';'
-    ),
+    // import: $ => seq(
+    //   'import',
+    //   $.importspec,
+    //   ';'
+    // ),
 
     // importspec: $ => choice(
     //   seq($.importspec, '.', $.importname),
     //   $.importname
     // ),
 
-    importspec: $ => seq($.importname, repeat(seq(',', $.importname))),
+    // importspec: $ => prec.right(seq($.importname, repeat(seq(',', $.importname)))),
+
+    import: $ => seq('import', $.importspec, ';'),
+
+    importspec: $ => choice($._import_un_qname, seq(repeat(seq($._importname, '.')), $._import_un_qname)),
+
+    _import_un_qname: $ => $._importname,
+  
+    _importname: $ => choice($.NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
 
     // importname: $ => choice(
     //   seq($.importname, $.NAME),
@@ -78,7 +86,7 @@ module.exports = grammar({
 
     property: $ => seq(
       $.property_namevalue,
-      ';'
+      // ';'
     ),
     
     propertydecl: $ => choice(
@@ -259,7 +267,7 @@ module.exports = grammar({
 
     params: $ => repeat1($.paramsitem),
 
-    paramsitem: $ => choice($.param, $.property),
+    paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';')),
 
     // TODO opt_paramblock: optional(params)
     
@@ -271,16 +279,14 @@ module.exports = grammar({
     param_typenamevalue: $ => choice(
       seq(
         $.param_typename,
-        optional($.inline_properties),
-        ';'
+        optional($.inline_properties)
       ),
       seq(
         $.param_typename,
         optional($.inline_properties),
         '=',
         $.paramvalue,
-        optional($.inline_properties),
-        ';'
+        optional($.inline_properties)
       )
     ),
 
@@ -297,8 +303,7 @@ module.exports = grammar({
       $.parampattern,
       optional($.inline_properties),
       '=',
-      $.paramvalue,
-      ';'
+      $.paramvalue
     ),
     
     paramtype: $ => choice(
@@ -316,7 +321,7 @@ module.exports = grammar({
       $.expression,
       seq('default', '(', $.expression, ')'),
       'default',
-      'ask'
+      'ask',
     ),
     
     // opt_inline_properties
@@ -330,18 +335,20 @@ module.exports = grammar({
 
     parampattern: $ => $.pattern,
     
-    pattern: $ =>
-      choice(
-        seq($.pattern2, '.', $.pattern_elem),
-        seq($.pattern2, '.', 'typename')
-    ),
-
-    // pattern2: $ => choice(
-    //   seq($.pattern2, '.', $.pattern_elem),
-    //   $.pattern_elem
+    // pattern: $ =>
+    //   choice(
+    //     seq($.pattern2, '.', $.pattern_elem),
+    //     seq($.pattern2, '.', 'typename')
     // ),
 
-    pattern2: $ => seq($.pattern_elem, repeat(seq(',', $.pattern_elem))),
+    // // pattern2: $ => choice(
+    // //   seq($.pattern2, '.', $.pattern_elem),
+    // //   $.pattern_elem
+    // // ),
+
+    // pattern2: $ => prec.right(seq($.pattern_elem, repeat(seq('.', $.pattern_elem)))),
+
+    pattern: $ => seq(prec.right(seq($.pattern_elem, repeat(seq('.', $.pattern_elem)))), '.', choice($.pattern_elem, 'typename')),
     
     pattern_elem: $ => choice(
       seq($.pattern_name, '[', $.pattern_index, ']'),
@@ -350,16 +357,24 @@ module.exports = grammar({
       $.pattern_name
     ),
     
-    pattern_name: $ => prec.left(choice(
-      seq($.NAME, '$', $.NAME),
+    // pattern_name: $ => prec.left(choice(
+    //   seq($.NAME, '$', $.NAME),
+    //   $.NAME,
+    //   'channel',
+    //   seq('{', $.pattern_index, '}'),
+    //   '*',
+    //   seq($.pattern_name, $.NAME),
+    //   seq($.pattern_name, '{', $.pattern_index, '}'),
+    //   seq($.pattern_name, '*')
+    // )),
+
+    pattern_name: $ => prec.right(10, repeat1(choice(
       $.NAME,
+      seq($.NAME, '$', $.NAME),
       'channel',
       seq('{', $.pattern_index, '}'),
       '*',
-      seq($.pattern_name, $.NAME),
-      seq($.pattern_name, '{', $.pattern_index, '}'),
-      seq($.pattern_name, '*')
-    )),
+    ))),
     
     pattern_index: $ => choice(
       $.INTCONSTANT,
@@ -371,14 +386,14 @@ module.exports = grammar({
     property_namevalue: $ =>
       choice(
         $.property_name,
-        seq($.property_name, '(', optional($.property_keys), ')')
+        prec.right(seq($.property_name, '(', optional($.property_keys), ')'))
     ),
     
     property_name: $ =>
-      choice(
+      prec.right(choice(
         seq('@', $.NAME),
         seq('@', $.NAME, '[', $.NAME, ']')
-    ),
+    )),
 
     // optional($.property_keys)
 
@@ -406,7 +421,7 @@ module.exports = grammar({
     //     $.property_value
     // )),
 
-    property_values: $ => seq($.property_value, repeat(seq(',', $.property_value))),
+    property_values: $ => prec.right(seq($.property_value, repeat(seq(',', $.property_value)))),
 
     property_value: $ => $.property_literal,
 
@@ -418,7 +433,7 @@ module.exports = grammar({
     //     $.STRINGCONSTANT
     // ),
 
-    property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT))),
+    property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT, seq('(', $.property_literal, ')')))),
     
     // opt_gateblock
 
@@ -438,10 +453,10 @@ module.exports = grammar({
     gate_typenamesize: $ =>
       choice(
         seq($.gatetype, $.NAME),                        // gatetype NAME
-        seq($.gatetype, $.NAME, '[', ']',),          // gatetype NAME '[' ']'
+        seq($.gatetype, $.NAME, '[', ']'),          // gatetype NAME '[' ']'
         seq($.gatetype, $.NAME, $.vector),              // gatetype NAME vector
         $.NAME,                                         // NAME
-        seq($.NAME, '[', ']',),                      // NAME '[' ']'
+        seq($.NAME, '[', ']'),                      // NAME '[' ']'
         seq($.NAME, $.vector)                           // NAME vector
     ),
 
@@ -505,7 +520,7 @@ module.exports = grammar({
       seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.condition))
     ),
 
-    submodulename: $ => choice($.NAME, seq($.NAME, $.vector)),
+    submodulename: $ => prec.right(choice($.NAME, seq($.NAME, $.vector))),
 
     // opt_condition
 
@@ -625,8 +640,8 @@ module.exports = grammar({
 
     channelspec: $ => choice(
       $.channelspec_header,
-      seq($.channelspec_header, '{', optional($.paramblock), '}'),
-      seq('{', $.paramblock, '}'),
+      seq($.channelspec_header, '{', optional($.params), '}'),
+      seq('{', $.params, '}'),
     ),
 
     channelspec_header: $ => choice(
@@ -745,14 +760,14 @@ module.exports = grammar({
       'xmldoc'
     ),
 
-    qname_elem: $ => prec.left(choice(
+    qname_elem: $ => prec.right(choice(
       $.NAME,
       seq($.NAME, '[', $.expression, ']'),
       'this',
       'parent'
     )),
 
-    qname: $ => prec.right(seq($.qname_elem, repeat1(seq(',', $.qname_elem)))),
+    qname: $ => prec.right(seq($.qname_elem, repeat(seq('.', $.qname_elem)))),
     
     operator: $ => prec(20, choice(
       'index',
