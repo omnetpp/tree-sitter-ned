@@ -567,7 +567,8 @@ module.exports = grammar({
 
     loop_or_condition: $ => choice($.loop, $.condition),
 
-    loop: $ => seq(
+    loop: $ => choice(
+      seq(
       'for',
       $.NAME,
       '=',
@@ -575,6 +576,7 @@ module.exports = grammar({
       'to',
       $.expression
     ),
+    prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}'))),
 
     // connection: $ => choice(
     //   seq($.gatespec, '-->', $.gatespec),
@@ -723,7 +725,7 @@ module.exports = grammar({
       seq($.NAME, '::', $.NAME, '::', $.NAME, '::', $.NAME, '{', optional($.keyvaluelist), '}')
     ),
 
-    exprlist: $ => prec.right(seq($.expression, repeat1(seq(',', $.expression)))),
+    exprlist: $ => prec.right(seq($.expression, repeat(seq(',', $.expression)))),
 
     keyvaluelist: $ => seq($.keyvalue, repeat1(seq(',', $.keyvalue))),
 
