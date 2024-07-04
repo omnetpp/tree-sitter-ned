@@ -257,7 +257,8 @@ module.exports = grammar({
 
     paramblock: $ => choice(
       $.params,
-      seq('parameters:', $.params)
+      seq('parameters:', $.params),
+      'parameters:'
     ),
 
     // paramblock: $ => seq(optional('parameters:'), $.params),
@@ -394,7 +395,7 @@ module.exports = grammar({
     property_name: $ =>
       prec.right(choice(
         seq('@', $.NAME),
-        seq('@', $.NAME, '[', $.NAME, ']')
+        seq('@', $.NAME, '[', $.dottedname, ']')
     )),
 
     // optional($.property_keys)
@@ -770,7 +771,7 @@ module.exports = grammar({
 
     qname_elem: $ => prec.right(10, choice(
       $.NAME,
-      seq($.NAME, '[', $.expression, ']'),
+      // seq($.NAME, '[', $.expression, ']'),
       'this',
       'parent'
     )),
@@ -788,9 +789,10 @@ module.exports = grammar({
 
     literal: $ => choice(
       $.STRINGCONSTANT,
+      $.XMLCONSTANT,
       $.boolliteral,
       $.numliteral,
-      $.otherliteral
+      $.otherliteral,
     ),
 
     boolliteral: $ => choice('true', 'false'),
@@ -822,6 +824,7 @@ module.exports = grammar({
     INTCONSTANT: $ => /\d+/,
     REALCONSTANT: $ => /\d+\.\d+/,
     STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
+    XMLCONSTANT: $ => /"[^"]*"/,                        // TODO: what if xml('<foo="bar">')
     // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
     // DOUBLEASTERISK: $ => '**',
     // PLUSPLUS: $ => '++',
