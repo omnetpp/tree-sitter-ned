@@ -6,6 +6,8 @@ module.exports = grammar({
     $.comment,
   ],
 
+  conflicts: $ => [[$.dottedname, $.dottednamevector]],
+
   rules: {
     nedfile: $ => prec.right(repeat1($.definition)),
 
@@ -317,12 +319,12 @@ module.exports = grammar({
     
     // TODO opt_volatile -> 'volatile'
     
-    paramvalue: $ => choice(
+    paramvalue: $ => prec.right(choice(
       $.expression,
       seq('default', '(', $.expression, ')'),
       'default',
       'ask',
-    ),
+    )),
     
     // opt_inline_properties
     
@@ -503,7 +505,7 @@ module.exports = grammar({
     submodules: $ =>
       prec.right(repeat1($.submodule)),
 
-    submodule: $ => choice(
+    submodule: $ => prec.right(choice(
       seq($.submoduleheader, ';'),
       seq(
         $.submoduleheader,
@@ -513,12 +515,12 @@ module.exports = grammar({
         '}',
         optional(';')
       )
-    ),
+    )),
 
-    submoduleheader: $ => choice(
+    submoduleheader: $ => prec.right(choice(
       seq($.submodulename, ':', $.dottedname, optional($.condition)),
       seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.condition))
-    ),
+    )),
 
     submodulename: $ => prec.right(choice($.NAME, seq($.NAME, $.vector))),
 
@@ -536,7 +538,7 @@ module.exports = grammar({
       'connections',
       optional('allowunconnected'),
       ':',
-      repeat(choice($.connection, $.loop_or_condition)),
+      repeat(choice($.connection, $.loop_or_condition, $.ifblock)),
     )),
 
     // connection: $ => prec(10, seq(
@@ -553,10 +555,12 @@ module.exports = grammar({
     conn_direction: $ => choice('-->', '<--', '<-->'),
 
     connectionname: $ => prec(10, choice(
-      seq($.dottedname, optional(choice('$i', '$o')), optional('++')),
-      $.NAME,
-      seq($.NAME, choice('$i', '$o')),
+      prec(20, seq($.dottednamevector, optional(choice('$i', '$o')), optional('++'))),
+      seq($.NAME, optional($.vector)),
+      seq($.NAME, optional($.vector), choice('$i', '$o')),
     )),
+
+    dottednamevector: $ => prec.right(seq($.NAME, optional($.vector), repeat(seq('.', $.NAME, optional($.vector))))),
 
     // opt_loops_and_conditions
 
@@ -660,6 +664,8 @@ module.exports = grammar({
 
     condition: $ => seq('if', $.expression),
 
+    ifblock: $ => seq('if', $.expression, '{', repeat($.connection), '}'),
+
     vector: $ => seq('[', $.expression, ']'),
 
     expression: $ => prec.right(10, choice(
@@ -749,7 +755,7 @@ module.exports = grammar({
       'nullptr'
     ),
 
-    simple_expr: $ => prec.left(choice($.qname, $.operator, $.literal)),
+    simple_expr: $ => choice($.qname, $.operator, $.literal),
 
     funcname: $ => choice(
       $.NAME,
@@ -762,7 +768,7 @@ module.exports = grammar({
       'xmldoc'
     ),
 
-    qname_elem: $ => prec.right(choice(
+    qname_elem: $ => prec.right(10, choice(
       $.NAME,
       seq($.NAME, '[', $.expression, ']'),
       'this',
