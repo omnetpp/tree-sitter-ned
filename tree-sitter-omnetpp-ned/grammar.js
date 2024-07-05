@@ -759,7 +759,7 @@ module.exports = grammar({
     simple_expr: $ => choice($.qname, $.operator, $.literal),
 
     funcname: $ => choice(
-      $.NAME,
+      $.qname,
       'bool',
       'int',
       'double',
