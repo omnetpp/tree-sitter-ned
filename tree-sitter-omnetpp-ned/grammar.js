@@ -69,11 +69,11 @@ module.exports = grammar({
 
     import: $ => seq('import', $.importspec, ';'),
 
-    importspec: $ => choice($._import_un_qname, seq(repeat(seq($._importname, '.')), $._import_un_qname)),
+    importspec: $ => choice($.import_un_qname, seq(repeat(seq($.importname, '.')), $.import_un_qname)),
 
-    _import_un_qname: $ => $._importname,
+    import_un_qname: $ => $.importname,
   
-    _importname: $ => choice($.NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
+    // _importname: $ => choice($.NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
 
     // importname: $ => choice(
     //   seq($.importname, $.NAME),
@@ -540,6 +540,7 @@ module.exports = grammar({
       optional('allowunconnected'),
       ':',
       repeat(choice($.connection, $.loop_or_condition, $.ifblock)),
+      optional(';')
     )),
 
     // connection: $ => prec(10, seq(
@@ -556,9 +557,11 @@ module.exports = grammar({
     conn_direction: $ => choice('-->', '<--', '<-->'),
 
     connectionname: $ => prec(10, choice(
-      prec(20, seq($.dottednamevector, optional(choice('$i', '$o')), optional('++'))),
-      seq($.NAME, optional($.vector)),
-      seq($.NAME, optional($.vector), choice('$i', '$o')),
+      prec(20, seq($.dottednamevector, optional(choice('$i', '$o')), optional('++'))),  // TODO: make this comfirm to yacc?
+      seq($.NAME, optional($.subgate)),
+      seq($.NAME, optional($.subgate), $.vector),
+      seq($.NAME, optional($.subgate), '++')
+      // seq($.NAME, optional($.vector), $.subgate, optional($.vector)),
     )),
 
     dottednamevector: $ => prec.right(seq($.NAME, optional($.vector), repeat(seq('.', $.NAME, optional($.vector))))),
@@ -578,7 +581,7 @@ module.exports = grammar({
       $.NAME,
       '=',
       $.expression,
-      'to',
+      '..',
       $.expression
     ),
     prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}'))),
@@ -654,7 +657,7 @@ module.exports = grammar({
     channelspec_header: $ => choice(
       $.channelname,
       $.dottedname,
-      $.channelname, $.dottedname,
+      seq($.channelname, $.dottedname),
       seq(optional($.channelname), $.likeexpr, 'like', $.dottedname)
     ),
     
@@ -771,7 +774,7 @@ module.exports = grammar({
 
     qname_elem: $ => prec.right(10, choice(
       $.NAME,
-      // seq($.NAME, '[', $.expression, ']'),
+      seq($.NAME, '[', $.expression, ']'),
       'this',
       'parent'
     )),
@@ -779,8 +782,8 @@ module.exports = grammar({
     qname: $ => prec.right(seq($.qname_elem, repeat(seq('.', $.qname_elem)))),
     
     operator: $ => prec(20, choice(
-      'index',
-      'typename',
+      // 'index',
+      // 'typename',
       seq($.qname, '.', 'index'),
       seq($.qname, '.', 'typename'),
       seq('exists', '(', $.qname, ')'),
@@ -815,7 +818,7 @@ module.exports = grammar({
       seq($.realconstant_ext, $.NAME)
     )),
 
-    realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan'),
+    realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan', seq('.', $.INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
 
     // opt_semicolon
 
