@@ -36,7 +36,7 @@ module.exports = grammar({
 
     // comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
 
-    comment: _ => token(choice(
+    comment: $ => token(choice(
       seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
       seq(
         '/*',
@@ -395,7 +395,8 @@ module.exports = grammar({
     property_name: $ =>
       prec.right(choice(
         seq('@', $.NAME),
-        seq('@', $.NAME, '[', $.dottedname, ']')
+        seq('@', $.NAME, '[', $.dottedname, ']'),
+        seq('@', $.NAME, '[', $.INTCONSTANT, ']'),
     )),
 
     // optional($.property_keys)
@@ -413,7 +414,7 @@ module.exports = grammar({
         seq(
           $.property_literal,
           '=',
-          $.property_value
+          optional($.property_value)
         ),
           $.property_values,
       )),
@@ -436,7 +437,7 @@ module.exports = grammar({
     //     $.STRINGCONSTANT
     // ),
 
-    property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT, seq('(', $.property_literal, ')')))),
+    property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT, $.XMLCONSTANT, seq('(', $.property_literal, ')')))),
     
     // opt_gateblock
 
@@ -539,8 +540,8 @@ module.exports = grammar({
       'connections',
       optional('allowunconnected'),
       ':',
-      repeat(choice($.connection, $.loop_or_condition, $.ifblock)),
-      optional(';')
+      repeat(choice($.connection, $.loop_or_condition, $.ifblock, $.forblock)),
+      // optional(';')
     )),
 
     // connection: $ => prec(10, seq(
@@ -583,8 +584,8 @@ module.exports = grammar({
       $.expression,
       '..',
       $.expression
-    ),
-    prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}'))),
+    )),
+    // prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}'))),
 
     // connection: $ => choice(
     //   seq($.gatespec, '-->', $.gatespec),
@@ -669,6 +670,8 @@ module.exports = grammar({
     condition: $ => seq('if', $.expression),
 
     ifblock: $ => seq('if', $.expression, '{', repeat($.connection), '}'),
+
+    forblock: $ => seq(seq($.loop, repeat(seq(',', $.loop))), '{', repeat($.connection), '}', optional(';')),
 
     vector: $ => seq('[', $.expression, ']'),
 
@@ -843,7 +846,7 @@ module.exports = grammar({
     // SHIFT_RIGHT: $ => '>>',
     // DOUBLECOLON: $ => '::',
     // EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
-    COMMONCHAR: $ => /./,
+    COMMONCHAR: $ => /[^"]/,
     // INVALID_CHAR: $ => /./  
       
       
