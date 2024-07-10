@@ -16,11 +16,11 @@ module.exports = grammar({
     //   $.definition
     // ), 
 
-    _EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
+    EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     
     definition: $ => choice(
       $.commentblock,
-      $._EMPTYLINE,
+      $.EMPTYLINE,
       $.packagedeclaration,
       $.import,
       $.propertydecl,
@@ -36,14 +36,14 @@ module.exports = grammar({
 
     commentblock: $ => alias(prec.right(repeat1($.comment)), $.content),
 
-    comment: $ => token(choice(
+    comment: $ => token(
       seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
-      seq(
-        '/*',
-        /[^*]*\*+([^/*][^*]*\*+)*/,
-        '/',
-      ),    // TODO is that needed in msg files?
-    )),
+      // seq(
+      //   '/*',
+      //   /[^*]*\*+([^/*][^*]*\*+)*/,
+      //   '/',
+      // ),    // TODO is that needed in msg files? NO
+    ),
     
 
     packagedeclaration: $ => seq(
@@ -270,7 +270,7 @@ module.exports = grammar({
 
     params: $ => repeat1($.paramsitem),
 
-    paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';')),
+    paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';', optional($.commentblock))),
 
     // TODO opt_paramblock: optional(params)
     
@@ -407,7 +407,7 @@ module.exports = grammar({
     //     $.property_key
     // ),
 
-    property_keys: $ => seq($.property_key, repeat(seq(';', $.property_key))),
+    property_keys: $ => seq($.property_key, repeat(seq(';', $.property_key)), optional(';')),
 
     property_key: $ =>
       prec.right(choice(
@@ -452,7 +452,7 @@ module.exports = grammar({
     gates: $ => repeat1($.gate),
 
     gate: $ =>
-      seq($.gate_typenamesize, optional($.inline_properties), ';'),
+      seq($.gate_typenamesize, optional($.inline_properties), ';', optional($.commentblock)),
 
     gate_typenamesize: $ =>
       choice(
@@ -499,13 +499,13 @@ module.exports = grammar({
       seq(
         'submodules',
         ':',
-        repeat($.submodules)
+        prec.right(repeat(choice($.submodule, $.commentblock))),
     ),
 
     // opt_submodules
 
-    submodules: $ =>
-      prec.right(repeat1($.submodule)),
+    // submodules: $ =>
+    //   prec.right(repeat1($.submodule)),
 
     submodule: $ => prec.right(choice(
       seq($.submoduleheader, ';'),
@@ -540,7 +540,7 @@ module.exports = grammar({
       'connections',
       optional('allowunconnected'),
       ':',
-      repeat(choice($.connection, $.loop_or_condition, $.ifblock, $.forblock)),
+      repeat(choice($.connection, $.loop_or_condition, $.ifblock, $.forblock, $.commentblock)),
       // optional(';')
     )),
 
@@ -669,9 +669,9 @@ module.exports = grammar({
 
     condition: $ => seq('if', $.expression),
 
-    ifblock: $ => seq('if', $.expression, '{', repeat($.connection), '}'),
+    ifblock: $ => seq('if', $.expression, '{', repeat(choice($.connection, $.commentblock)), '}'),
 
-    forblock: $ => seq(seq($.loop, repeat(seq(',', $.loop))), '{', repeat($.connection), '}', optional(';')),
+    forblock: $ => seq(seq($.loop, repeat(seq(',', $.loop))), '{', repeat(choice($.connection, $.commentblock)), '}', optional(';')),
 
     vector: $ => seq('[', $.expression, ']'),
 
@@ -817,11 +817,17 @@ module.exports = grammar({
     quantity: $ => prec(10, choice(
       seq($.quantity, $.INTCONSTANT, $.NAME),
       seq($.quantity, $.realconstant_ext, $.NAME),
+      seq($.quantity, $.intconstant_ext, $.NAME),
       seq($.INTCONSTANT, $.NAME),
-      seq($.realconstant_ext, $.NAME)
+      seq($.realconstant_ext, $.NAME),
+      seq($.intconstant_ext, $.NAME)
     )),
 
-    realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan', seq('.', $.INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
+    // intconstant_ext: $ => seq(optional($.INTCONSTANT), 'e', $.INTCONSTANT),
+
+    intconstant_ext: $ => /[0-9]+e[0-9]*/,
+
+    realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan', $.intconstant_ext, seq('.', $.INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
 
     // opt_semicolon
 
