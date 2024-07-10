@@ -172,7 +172,7 @@ module.exports = grammar({
 
     likenames: $ => seq($.likename, repeat(seq(',', $.likename))),
 
-    likename: $ => $.dottedname,
+    likename: $ => alias($.dottedname, $.interface_name),
 
     channel_interface: $ => seq(
       $.channelinterfaceheader,
@@ -545,7 +545,7 @@ module.exports = grammar({
 
     submoduleheader: $ => prec.right(choice(
       seq($.submodulename, ':', $.dottedname, optional($.condition)),
-      seq($.submodulename, ':', $.likeexpr, 'like', $.dottedname, optional($.condition))
+      seq($.submodulename, ':', $.likeexpr, 'like', alias($.dottedname, $.interface_name), optional($.condition))
     )),
 
     submodulename: $ => prec.right(choice($.NAME, seq($.NAME, $.vector))),
@@ -564,7 +564,7 @@ module.exports = grammar({
       'connections',
       optional('allowunconnected'),
       ':',
-      repeat(choice($.connection, $.loop_or_condition, $.ifblock, $.forblock, $.comment)),
+      repeat(choice($.connection, $.loop_or_condition, alias($.ifblock, $.connection_group), alias($.forblock, $.connection_group), $.comment)),
       // optional(';')
     )),
 
@@ -683,7 +683,7 @@ module.exports = grammar({
       $.channelname,
       $.dottedname,
       seq($.channelname, $.dottedname),
-      seq(optional($.channelname), $.likeexpr, 'like', $.dottedname)
+      seq(optional($.channelname), $.likeexpr, 'like', alias($.dottedname, $.interface_name))
     ),
     
 
@@ -693,7 +693,7 @@ module.exports = grammar({
 
     condition: $ => seq('if', $.expression),
 
-    ifblock: $ => alias(seq('if', $.expression, '{', repeat(choice($.connection, $.comment)), '}'), $.connection_group),
+    ifblock: $ => seq('if', $.expression, '{', repeat(choice($.connection, $.comment)), '}'),
 
     forblock: $ => seq(seq($.loop, repeat(seq(',', $.loop))), '{', repeat(choice($.connection, $.comment)), '}', optional(';')),
 
