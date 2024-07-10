@@ -1,0 +1,1 @@
+../smoke_test.sh .ned ~/inet/src/inet "$@"
