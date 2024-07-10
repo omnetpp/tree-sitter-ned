@@ -19,8 +19,8 @@ module.exports = grammar({
     _EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     
     definition: $ => choice(
-      $.comment,
-      // $._EMPTYLINE,
+      $.commentblock,
+      $._EMPTYLINE,
       $.packagedeclaration,
       $.import,
       $.propertydecl,
@@ -34,7 +34,7 @@ module.exports = grammar({
       ';'
     ),
 
-    // comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
+    commentblock: $ => alias(prec.right(repeat1($.comment)), $.content),
 
     comment: $ => token(choice(
       seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
