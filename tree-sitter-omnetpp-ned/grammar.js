@@ -3,7 +3,7 @@ module.exports = grammar({
 
   extras: $ => [
     /\s/,
-    $.commentline,
+    $.inline_comment,
   ],
 
   conflicts: $ => [[$.dottedname, $.dottednamevector]],
@@ -56,9 +56,9 @@ module.exports = grammar({
     //   ';'
     // ),
 
-    comment: $ => alias(prec.right(repeat1($.commentline)), $.content),
+    comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
 
-    commentline: $ => token(
+    _commentline: $ => token(
       seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
       // seq(
       //   '/*',
@@ -66,6 +66,8 @@ module.exports = grammar({
       //   '/',
       // ),    // TODO is that needed in msg files? NO
     ),
+
+    inline_comment: $ => $._commentline,
     
 
     package: $ => seq(
