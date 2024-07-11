@@ -34,8 +34,6 @@ module.exports = grammar({
     //   seq($.definitions, $.definition),
     //   $.definition
     // ), 
-
-    EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     
     // definition: $ => choice(
     //   $.comment,
@@ -856,25 +854,12 @@ module.exports = grammar({
     // opt_semicolon
 
     NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
-    // PROPNAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     INTCONSTANT: $ => /\d+/,
     REALCONSTANT: $ => /\d+\.\d+/,
     STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
-    XMLCONSTANT: $ => /"[^"]*"/,                        // TODO: what if xml('<foo="bar">')
+    XMLCONSTANT: $ => /"[^"]*"|'[^']*'/,
+    EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
-    // DOUBLEASTERISK: $ => '**',
-    // PLUSPLUS: $ => '++',
-    // EQ: $ => '==',
-    // NE: $ => '!=',
-    // GE: $ => '>=',
-    // LE: $ => '<=',
-    // SPACESHIP: $ => '<=>',
-    // AND: $ => '&&',
-    // OR: $ => '||',
-    // XOR: $ => '^^',
-    // SHIFT_LEFT: $ => '<<',
-    // SHIFT_RIGHT: $ => '>>',
-    // DOUBLECOLON: $ => '::',
     // EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     COMMONCHAR: $ => /[^"]/,
     // INVALID_CHAR: $ => /./  
