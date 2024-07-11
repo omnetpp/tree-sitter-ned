@@ -72,7 +72,7 @@ module.exports = grammar({
 
     package: $ => seq(
       'package',
-      $.dottedname,
+      alias($.dottedname, $.name),
       ';'
     ),
 
@@ -160,7 +160,7 @@ module.exports = grammar({
       seq('extends', $.extends, 'like', $.likenames)
     ),
     
-    extends: $ => $.dottedname,
+    extends: $ => alias($.dottedname, $.name),
 
     // likenames: $ => prec.left(choice(
     //   seq(
@@ -214,7 +214,7 @@ module.exports = grammar({
     ),
 
     compound_module: $ => seq(
-      $.compoundmoduleheader,
+      alias($.compoundmoduleheader, $.header),
       '{',
       optional($.parameters),
       optional($.gates),
@@ -226,7 +226,7 @@ module.exports = grammar({
 
     compoundmoduleheader: $ => seq(
       'module',
-      $.NAME,
+      alias($.NAME, $.name),
       optional($.inheritance)
     ),
 
@@ -312,7 +312,7 @@ module.exports = grammar({
         $.param_typename,
         optional($.inline_properties),
         '=',
-        $.paramvalue,
+        alias($.paramvalue, $.value),
         optional($.inline_properties)
       )
     ),
@@ -320,17 +320,17 @@ module.exports = grammar({
     param_typename: $ => choice(
       seq(
         optional('volatile'),
-        $.paramtype,
-        $.NAME
+        alias($.paramtype, $.type),
+        alias($.NAME, $.name)
       ),
-      $.NAME
+      alias($.NAME, $.name)
     ),
     
     parampattern_value: $ => seq(
       $.parampattern,
       optional($.inline_properties),
       '=',
-      $.paramvalue
+      alias($.paramvalue, $.value)
     ),
     
     paramtype: $ => choice(
@@ -412,7 +412,7 @@ module.exports = grammar({
 
     property_namevalue: $ =>
       choice(
-        $.property_name,
+        alias($.property_name, $.name),
         prec.right(seq($.property_name, '(', optional($.property_keys), ')'))
     ),
     
@@ -480,15 +480,15 @@ module.exports = grammar({
 
     gate_typenamesize: $ =>
       choice(
-        seq($.gatetype, $.NAME),                        // gatetype NAME
-        seq($.gatetype, $.NAME, '[', ']'),          // gatetype NAME '[' ']'
-        seq($.gatetype, $.NAME, $.vector),              // gatetype NAME vector
-        $.NAME,                                         // NAME
-        seq($.NAME, '[', ']'),                      // NAME '[' ']'
-        seq($.NAME, $.vector)                           // NAME vector
+        seq($.gatetype, alias($.NAME, $.name)),                        // gatetype NAME
+        seq($.gatetype, alias($.NAME, $.name), '[', ']'),          // gatetype NAME '[' ']'
+        seq($.gatetype, alias($.NAME, $.name), alias($.vector, $.size)),              // gatetype NAME vector
+        alias($.NAME, $.name),                                         // NAME
+        seq(alias($.NAME, $.name), '[', ']'),                      // NAME '[' ']'
+        seq(alias($.NAME, $.name), alias($.vector, $.size))                           // NAME vector
     ),
 
-    gatetype: $ => choice('input', 'output', 'inout'),
+    gatetype: $ => alias(choice('input', 'output', 'inout'), $.type),
 
     // opt_types
     
@@ -512,7 +512,7 @@ module.exports = grammar({
         $.channel_interface,
         $.simple_module,
         $.compound_module,
-        $.network,
+        $.network,              // TODO is this needed here? not in DTD
         $.module_interface,
         ';'
     ),
@@ -603,11 +603,11 @@ module.exports = grammar({
     loop: $ => choice(
       seq(
       'for',
-      $.NAME,
+      alias($.NAME, $.param_name),
       '=',
-      $.expression,
+      alias($.expression, $.from_value),
       '..',
-      $.expression
+      alias($.expression, $.to_value)
     )),
     // prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}'))),
 
