@@ -12,7 +12,7 @@ module.exports = grammar({
     nedfile: $ => prec.right(repeat1(
       choice(
         $.comment,
-        $.EMPTYLINE,
+        $._EMPTYLINE,
         $.package,
         $.import,
         $.property_decl,
@@ -37,7 +37,7 @@ module.exports = grammar({
     
     // definition: $ => choice(
     //   $.comment,
-    //   $.EMPTYLINE,
+    //   $._EMPTYLINE,
     //   $.package,
     //   $.import,
     //   $.property_decl,
@@ -54,7 +54,7 @@ module.exports = grammar({
     //   ';'
     // ),
 
-    comment: $ => alias(prec.right(repeat1($._commentline)), $.content),
+    comment: $ => prec.right(repeat1($._commentline)),
 
     _commentline: $ => token(
       seq('//', /(\\+(.|\r?\n)|[^\\\n])*/),
@@ -286,13 +286,13 @@ module.exports = grammar({
     // parameters: $ => seq(optional('parameters:'), $.params),
 
     // params: $ => choice(
-    //   seq($.params, $.paramsitem),
-    //   $.paramsitem
+    //   seq($.params, $._paramsitem),
+    //   $._paramsitem
     // ),
 
-    params: $ => repeat1($.paramsitem),
+    params: $ => repeat1($._paramsitem),
 
-    paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';', optional($.comment))),
+    _paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';', optional($.comment))),
     
     param: $ => choice(
       $.param_typenamevalue,
@@ -396,10 +396,10 @@ module.exports = grammar({
     ))),
     
     pattern_index: $ => choice(
-      $.INTCONSTANT,
-      seq($.INTCONSTANT, '..', $.INTCONSTANT),
-      seq('..', $.INTCONSTANT),
-      seq($.INTCONSTANT, '..')
+      $._INTCONSTANT,
+      seq($._INTCONSTANT, '..', $._INTCONSTANT),
+      seq('..', $._INTCONSTANT),
+      seq($._INTCONSTANT, '..')
     ),
 
     _property_namevalue: $ =>
@@ -412,7 +412,7 @@ module.exports = grammar({
       prec.right(choice(
         seq('@', $._PROPNAME),
         // seq('@', $._PROPNAME, '[', $.dottedname, ']'),
-        // seq('@', $._PROPNAME, '[', $.INTCONSTANT, ']'),
+        // seq('@', $._PROPNAME, '[', $._INTCONSTANT, ']'),
         seq('@', $._PROPNAME, '[', $._PROPINDEX, ']'),
     )),
 
@@ -431,7 +431,7 @@ module.exports = grammar({
         seq(
           alias($._property_literal, $.name),
           '=',
-          alias(optional($.property_value), $.values)
+          alias(optional($._property_value), $.values)
         ),
           alias($.property_values, $.values),
       )),
@@ -442,19 +442,19 @@ module.exports = grammar({
     //     $.property_value
     // )),
 
-    property_values: $ => prec.right(seq($.property_value, repeat(seq(',', $.property_value)))),
+    property_values: $ => prec.right(seq($._property_value, repeat(seq(',', $._property_value)))),
 
-    property_value: $ => $._property_literal,
+    _property_value: $ => $._property_literal,
 
     // property_literal: $ =>
     //   choice(
     //     seq($._property_literal, $._COMMONCHAR),
-    //     seq($._property_literal, $.STRINGCONSTANT),
+    //     seq($._property_literal, $._STRINGCONSTANT),
     //     $._COMMONCHAR,
-    //     $.STRINGCONSTANT
+    //     $._STRINGCONSTANT
     // ),
 
-    _property_literal: $ => repeat1(seq(choice($._COMMONCHAR, $.STRINGCONSTANT, $.XMLCONSTANT, seq('(', $._property_literal, ')')))),
+    _property_literal: $ => repeat1(seq(choice($._COMMONCHAR, $._STRINGCONSTANT, $._XMLCONSTANT, seq('(', $._property_literal, ')')))),
 
     gates: $ => seq('gates', ':', repeat($.gate)),
     
@@ -743,13 +743,13 @@ module.exports = grammar({
     keyvalue: $ => seq($.key, ':', $.expression),
 
     key: $ => choice(
-      $.STRINGCONSTANT,
+      $._STRINGCONSTANT,
       $._NAME,
-      $.INTCONSTANT,
-      $.REALCONSTANT,
+      $._INTCONSTANT,
+      $._REALCONSTANT,
       $.quantity,
-      seq('-', $.INTCONSTANT),
-      seq('-', $.REALCONSTANT),
+      seq('-', $._INTCONSTANT),
+      seq('-', $._REALCONSTANT),
       seq('-', $.quantity),
       'nan',
       'inf',
@@ -792,8 +792,8 @@ module.exports = grammar({
     )),
 
     literal: $ => choice(
-      $.STRINGCONSTANT,
-      $.XMLCONSTANT,
+      $._STRINGCONSTANT,
+      $._XMLCONSTANT,
       $.boolliteral,
       $.numliteral,
       $.otherliteral,
@@ -801,7 +801,7 @@ module.exports = grammar({
 
     boolliteral: $ => choice('true', 'false'),
 
-    numliteral: $ => choice($.INTCONSTANT, $.realconstant_ext, $.quantity),
+    numliteral: $ => choice($._INTCONSTANT, $.realconstant_ext, $.quantity),
 
     otherliteral: $ => choice('undefined', 'nullptr', 'null'),
 
@@ -813,28 +813,28 @@ module.exports = grammar({
     // ),
 
     quantity: $ => prec(10, choice(
-      seq($.quantity, $.INTCONSTANT, $._NAME),
+      seq($.quantity, $._INTCONSTANT, $._NAME),
       seq($.quantity, $.realconstant_ext, $._NAME),
       seq($.quantity, $.intconstant_ext, $._NAME),
-      seq($.INTCONSTANT, $._NAME),
+      seq($._INTCONSTANT, $._NAME),
       seq($.realconstant_ext, $._NAME),
       seq($.intconstant_ext, $._NAME)
     )),
 
-    // intconstant_ext: $ => seq(optional($.INTCONSTANT), 'e', $.INTCONSTANT),
+    // intconstant_ext: $ => seq(optional($._INTCONSTANT), 'e', $._INTCONSTANT),
 
     intconstant_ext: $ => /[0-9]+e[0-9]*/,
 
-    realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan', $.intconstant_ext, seq('.', $.INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
+    realconstant_ext: $ => choice($._REALCONSTANT, 'inf', 'nan', $.intconstant_ext, seq('.', $._INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
 
     _NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     _PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
     _PROPINDEX: $ => /[a-zA-Z_][a-zA-Z0-9_*?{}:.-]*/,
-    INTCONSTANT: $ => /\d+/,
-    REALCONSTANT: $ => /\d+\.\d+/,
-    STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
-    XMLCONSTANT: $ => /"[^"]*"|'[^']*'/,
-    EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
+    _INTCONSTANT: $ => /\d+/,
+    _REALCONSTANT: $ => /\d+\.\d+/,
+    _STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,
+    _XMLCONSTANT: $ => /"[^"]*"|'[^']*'/,
+    _EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
     _COMMONCHAR: $ => /[^"]/,
     // INVALID_CHAR: $ => /./  
