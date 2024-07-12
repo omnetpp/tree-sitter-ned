@@ -278,8 +278,8 @@ module.exports = grammar({
     // ),
 
     parameters: $ => choice(
-      $.params,
-      seq('parameters:', $.params),
+      $._params,
+      seq('parameters:', $._params),
       'parameters:'
     ),
 
@@ -290,22 +290,22 @@ module.exports = grammar({
     //   $._paramsitem
     // ),
 
-    params: $ => repeat1($._paramsitem),
+    _params: $ => repeat1($._paramsitem),
 
     _paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';', optional($.comment))),
     
     param: $ => choice(
-      $.param_typenamevalue,
+      $._param_typenamevalue,
       $.parampattern_value
     ),
     
-    param_typenamevalue: $ => choice(
+    _param_typenamevalue: $ => choice(
       seq(
-        $.param_typename,
+        $._param_typename,
         optional($.inline_properties)
       ),
       seq(
-        $.param_typename,
+        $._param_typename,
         optional($.inline_properties),
         '=',
         alias($.paramvalue, $.value),
@@ -313,7 +313,7 @@ module.exports = grammar({
       )
     ),
 
-    param_typename: $ => choice(
+    _param_typename: $ => choice(
       seq(
         optional('volatile'),
         alias($.paramtype, $.type),
@@ -542,7 +542,7 @@ module.exports = grammar({
 
     connections: $ => prec.right(seq(
       'connections',
-      optional('allowunconnected'),
+      alias(optional('allowunconnected'), $.allowunconnected),
       ':',
       repeat(choice($.connection, $.loop_or_condition, alias($.ifblock, $.connection_group), alias($.forblock, $.connection_group), $.comment)),
       // optional(';')
@@ -562,10 +562,10 @@ module.exports = grammar({
     conn_direction: $ => choice('-->', '<--', '<-->'),
 
     connectionname: $ => prec(10, choice(
-      prec(20, seq($.dottednamevector, optional(choice('$i', '$o')), optional('++'))),  // TODO: make this comfirm to yacc?
-      seq($._NAME, optional($.subgate)),
-      seq($._NAME, optional($.subgate), $.vector),
-      seq($._NAME, optional($.subgate), '++')
+      // seq($.dottednamevector, optional($.subgate)),
+      prec(20, seq($.dottednamevector, optional($.subgate), alias(optional('++'), $.plusplus))),  // TODO: make this comfirm to yacc?
+      seq($.dottednamevector, optional($.subgate), $.vector),
+      // seq($.dottednamevector, optional($.subgate), alias(optional('++'), $.plusplus))
       // seq($._NAME, optional($.vector), $.subgate, optional($.vector)),
     )),
 
@@ -651,8 +651,8 @@ module.exports = grammar({
 
     channelspec: $ => choice(
       $.channelspec_header,
-      seq($.channelspec_header, '{', optional($.params), '}'),
-      seq('{', $.params, '}'),
+      seq($.channelspec_header, '{', optional($._params), '}'),
+      seq('{', $._params, '}'),
     ),
 
     channelspec_header: $ => choice(
