@@ -447,13 +447,13 @@ module.exports = grammar({
 
     // property_literal: $ =>
     //   choice(
-    //     seq($.property_literal, $.COMMONCHAR),
+    //     seq($.property_literal, $._COMMONCHAR),
     //     seq($.property_literal, $.STRINGCONSTANT),
-    //     $.COMMONCHAR,
+    //     $._COMMONCHAR,
     //     $.STRINGCONSTANT
     // ),
 
-    property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT, $.XMLCONSTANT, seq('(', $.property_literal, ')')))),
+    property_literal: $ => repeat1(seq(choice($._COMMONCHAR, $.STRINGCONSTANT, $.XMLCONSTANT, seq('(', $.property_literal, ')')))),
 
     gates: $ => seq('gates', ':', repeat($.gate)),
     
@@ -833,7 +833,7 @@ module.exports = grammar({
     XMLCONSTANT: $ => /"[^"]*"|'[^']*'/,
     EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
-    COMMONCHAR: $ => /[^"]/,
+    _COMMONCHAR: $ => /[^"]/,
     // INVALID_CHAR: $ => /./  
       
       
