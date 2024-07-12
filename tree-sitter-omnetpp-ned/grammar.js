@@ -410,9 +410,10 @@ module.exports = grammar({
     
     property_name: $ =>
       prec.right(choice(
-        seq('@', $.NAME),
-        seq('@', $.NAME, '[', $.dottedname, ']'),
-        seq('@', $.NAME, '[', $.INTCONSTANT, ']'),
+        seq('@', $.PROPNAME),
+        // seq('@', $.PROPNAME, '[', $.dottedname, ']'),
+        // seq('@', $.PROPNAME, '[', $.INTCONSTANT, ']'),
+        seq('@', $.PROPNAME, '[', $.PROPINDEX, ']'),
     )),
 
     // optional($.property_keys)
@@ -827,6 +828,8 @@ module.exports = grammar({
     realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan', $.intconstant_ext, seq('.', $.INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
 
     NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    PROPNAME: $ => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
+    PROPINDEX: $ => /[a-zA-Z_][a-zA-Z0-9_*?{}:.-]*/,
     INTCONSTANT: $ => /\d+/,
     REALCONSTANT: $ => /\d+\.\d+/,
     STRINGCONSTANT: $ => /"([^"\\]|\\.)*"/,

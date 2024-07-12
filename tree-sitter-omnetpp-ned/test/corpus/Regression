@@ -52,7 +52,7 @@ moduleinterface IRadioVisualizer extends IVisualizer
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -192,7 +192,7 @@ channel Eth400G extends EthernetLink
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -608,7 +608,7 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -633,7 +633,7 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -726,7 +726,7 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -736,7 +736,7 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -747,9 +747,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -759,9 +758,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -773,9 +771,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -807,9 +804,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -842,9 +838,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -877,9 +872,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -912,9 +906,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -947,9 +940,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -982,9 +974,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1017,9 +1008,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1052,9 +1042,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1087,9 +1076,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1122,9 +1110,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1157,9 +1144,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1192,9 +1178,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1227,9 +1212,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1262,9 +1246,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1297,9 +1280,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1332,9 +1314,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1367,9 +1348,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1402,9 +1382,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1437,9 +1416,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1472,9 +1450,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1507,9 +1484,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1542,9 +1518,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1577,9 +1552,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1612,9 +1586,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1647,9 +1620,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1683,9 +1655,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1719,9 +1690,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -1794,7 +1764,7 @@ moduleinterface IHook
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -2330,7 +2300,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -2725,7 +2695,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2755,7 +2725,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2785,7 +2755,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2815,7 +2785,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2845,7 +2815,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2875,7 +2845,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2905,7 +2875,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2935,7 +2905,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2965,7 +2935,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -2995,7 +2965,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3025,7 +2995,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3055,7 +3025,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3085,7 +3055,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3115,7 +3085,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3145,7 +3115,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3175,7 +3145,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3205,7 +3175,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3235,7 +3205,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3265,7 +3235,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3295,7 +3265,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3325,7 +3295,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3355,7 +3325,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3385,7 +3355,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3415,7 +3385,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3445,7 +3415,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3475,7 +3445,7 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3758,7 +3728,7 @@ module EthernetMac like IEtherMac
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3781,7 +3751,7 @@ module EthernetMac like IEtherMac
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3795,7 +3765,7 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (name
-                (NAME)))))
+                (PROPNAME)))))
         (paramsitem
           (param
             (param_typenamevalue
@@ -3805,7 +3775,7 @@ module EthernetMac like IEtherMac
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3831,7 +3801,7 @@ module EthernetMac like IEtherMac
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -3851,7 +3821,7 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -3861,7 +3831,7 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -3872,9 +3842,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3884,9 +3853,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3896,9 +3864,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3908,9 +3875,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3920,9 +3886,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3932,9 +3897,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3944,9 +3908,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3956,9 +3919,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3968,9 +3930,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3980,9 +3941,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -3992,9 +3952,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4006,9 +3965,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4020,9 +3978,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4032,9 +3989,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4044,9 +4000,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4056,9 +4011,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4087,9 +4041,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4117,9 +4070,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4149,9 +4101,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4176,9 +4127,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4203,9 +4153,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4230,9 +4179,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4251,9 +4199,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4272,9 +4219,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4299,9 +4245,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4327,9 +4272,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4355,9 +4299,8 @@ module EthernetMac like IEtherMac
           (property
             (property_namevalue
               (property_name
-                (NAME)
-                (dottedname
-                  (NAME)))
+                (PROPNAME)
+                (PROPINDEX))
               (property_keys
                 (property_key
                   (property_literal)
@@ -4388,7 +4331,7 @@ module EthernetMac like IEtherMac
         (inline_properties
           (property_namevalue
             (property_name
-              (NAME))
+              (PROPNAME))
             (property_keys
               (property_key
                 (property_values
@@ -4404,7 +4347,7 @@ module EthernetMac like IEtherMac
         (inline_properties
           (property_namevalue
             (property_name
-              (NAME))
+              (PROPNAME))
             (property_keys
               (property_key
                 (property_values
@@ -4420,7 +4363,7 @@ module EthernetMac like IEtherMac
         (inline_properties
           (property_namevalue
             (property_name
-              (NAME))
+              (PROPNAME))
             (property_keys
               (property_key
                 (property_values
@@ -4601,7 +4544,7 @@ network EarthCloud
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -4627,7 +4570,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4652,7 +4595,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4671,7 +4614,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4778,7 +4721,7 @@ network EarthCloud
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -4798,7 +4741,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4817,7 +4760,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4836,7 +4779,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4855,7 +4798,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4874,7 +4817,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4893,7 +4836,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4912,7 +4855,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -4931,7 +4874,7 @@ network EarthCloud
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5408,7 +5351,7 @@ module Ieee8021qFilter like IPacketFilter
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -5444,7 +5387,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5516,7 +5459,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5551,7 +5494,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5581,7 +5524,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5611,7 +5554,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5651,7 +5594,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5686,7 +5629,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5716,7 +5659,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5756,7 +5699,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5775,7 +5718,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5794,7 +5737,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -5812,7 +5755,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6235,7 +6178,7 @@ module Ieee8021qFilter like IPacketFilter
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6714,7 +6657,7 @@ network LargeNet
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -6740,7 +6683,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6765,7 +6708,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6849,7 +6792,7 @@ network LargeNet
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -6875,7 +6818,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6900,7 +6843,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6919,7 +6862,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -6944,7 +6887,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7091,7 +7034,7 @@ network LargeNet
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -7155,7 +7098,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7180,7 +7123,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7199,7 +7142,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7224,7 +7167,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7270,7 +7213,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7295,7 +7238,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7654,7 +7597,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7685,7 +7628,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7716,7 +7659,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7747,7 +7690,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7766,7 +7709,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7785,7 +7728,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7810,7 +7753,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7835,7 +7778,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7860,7 +7803,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7879,7 +7822,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7898,7 +7841,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7923,7 +7866,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7948,7 +7891,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7973,7 +7916,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -7992,7 +7935,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8011,7 +7954,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8036,7 +7979,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8061,7 +8004,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8086,7 +8029,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8105,7 +8048,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8124,7 +8067,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8149,7 +8092,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8174,7 +8117,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -8199,7 +8142,7 @@ network LargeNet
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9262,7 +9205,7 @@ module MultiDomainGptp like IGptp
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -9387,7 +9330,7 @@ module MultiDomainGptp like IGptp
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9406,7 +9349,7 @@ module MultiDomainGptp like IGptp
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9435,7 +9378,7 @@ module MultiDomainGptp like IGptp
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9504,7 +9447,7 @@ module MultiDomainGptp like IGptp
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9528,7 +9471,7 @@ module MultiDomainGptp like IGptp
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9762,7 +9705,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9781,7 +9724,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9800,7 +9743,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9819,7 +9762,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9838,7 +9781,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9857,7 +9800,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9876,7 +9819,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -9895,7 +9838,7 @@ network ARPTest
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10268,7 +10211,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10307,7 +10250,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10512,7 +10455,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (inline_properties
           (property_namevalue
             (property_name
-              (NAME))
+              (PROPNAME))
             (property_keys
               (property_key
                 (property_values
@@ -10533,7 +10476,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10552,7 +10495,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10576,7 +10519,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10600,7 +10543,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10635,7 +10578,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10659,7 +10602,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10683,7 +10626,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10707,7 +10650,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10725,7 +10668,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10827,7 +10770,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10851,7 +10794,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -10895,7 +10838,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (property
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11023,7 +10966,7 @@ simple CellInfo {
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -11034,7 +10977,7 @@ simple CellInfo {
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -11052,7 +10995,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11084,7 +11027,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11116,7 +11059,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11147,7 +11090,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11178,7 +11121,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11203,7 +11146,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11229,7 +11172,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11295,7 +11238,7 @@ simple CellInfo {
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11543,7 +11486,7 @@ simple TraCIScreenRecorder
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -11554,7 +11497,7 @@ simple TraCIScreenRecorder
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
@@ -11608,7 +11551,7 @@ simple TraCIScreenRecorder
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11634,7 +11577,7 @@ simple TraCIScreenRecorder
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11661,7 +11604,7 @@ simple TraCIScreenRecorder
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -11826,7 +11769,7 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
               (inline_properties
                 (property_namevalue
                   (property_name
-                    (NAME))
+                    (PROPNAME))
                   (property_keys
                     (property_key
                       (property_values
@@ -12227,7 +12170,7 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
           (property
             (property_namevalue
               (property_name
-                (NAME))
+                (PROPNAME))
               (property_keys
                 (property_key
                   (property_values
