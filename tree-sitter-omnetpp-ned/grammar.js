@@ -293,8 +293,6 @@ module.exports = grammar({
     params: $ => repeat1($.paramsitem),
 
     paramsitem: $ => prec.right(10, seq(choice($.param, $.property), ';', optional($.comment))),
-
-    // TODO opt_parameters: optional(params)
     
     param: $ => choice(
       $.param_typenamevalue,
@@ -340,16 +338,12 @@ module.exports = grammar({
       'xml'
     ),
     
-    // TODO opt_volatile -> 'volatile'
-    
     paramvalue: $ => prec.right(choice(
       $.expression,
       seq('default', '(', $.expression, ')'),
       'default',
       'ask',
     )),
-    
-    // opt_inline_properties
     
     // inline_properties: $ => choice(
     //   $.property_namevalue,
@@ -460,8 +454,6 @@ module.exports = grammar({
     // ),
 
     property_literal: $ => repeat1(seq(choice($.COMMONCHAR, $.STRINGCONSTANT, $.XMLCONSTANT, seq('(', $.property_literal, ')')))),
-    
-    // opt_gates
 
     gates: $ => seq('gates', ':', repeat($.gate)),
     
@@ -487,16 +479,12 @@ module.exports = grammar({
     ),
 
     gatetype: $ => alias(choice('input', 'output', 'inout'), $.type),
-
-    // opt_types
     
     types: $ =>
       seq(
         'types', ':',
         repeat($.localtypes)
     ),
-    
-    // opt_localtypes
 
     localtypes: $ =>
       prec.right(repeat1(
@@ -514,8 +502,7 @@ module.exports = grammar({
         $.module_interface,
         ';'
     ),
-    
-    // opt_submodules
+  
 
     submodules: $ =>
       seq(
@@ -523,8 +510,6 @@ module.exports = grammar({
         ':',
         prec.right(repeat(choice($.submodule, $.comment))),
     ),
-
-    // opt_submodules
 
     // submodules: $ =>
     //   prec.right(repeat1($.submodule)),
@@ -548,15 +533,11 @@ module.exports = grammar({
 
     submodulename: $ => prec.right(choice($.NAME, seq($.NAME, $.vector))),
 
-    // opt_condition
-
     likeexpr: $ => choice(
       seq('<', '>'),
       seq('<', $.expression, '>'),
       seq('<', 'default', '(', $.expression, ')', '>'),
     ),
-
-    // opt_connblock
 
     connections: $ => prec.right(seq(
       'connections',
@@ -588,8 +569,6 @@ module.exports = grammar({
     )),
 
     dottednamevector: $ => prec.right(seq($.NAME, optional($.vector), repeat(seq('.', $.NAME, optional($.vector))))),
-
-    // opt_loops_and_conditions
 
     loops_and_conditions: $ => seq(
       $.loop_or_condition,
@@ -662,8 +641,6 @@ module.exports = grammar({
     //   seq($.NAME, optional($.subgate), '++')
     // ),
 
-    // opt_subgate
-
     subgate: $ => choice('$i', '$o'),
 
     // channelspec: $ => choice(
@@ -686,8 +663,6 @@ module.exports = grammar({
     
 
     channelname: $ => seq($.NAME, ':'),
-
-    // opt_channelname
 
     condition: $ => seq('if', $.expression),
 
@@ -851,8 +826,6 @@ module.exports = grammar({
 
     realconstant_ext: $ => choice($.REALCONSTANT, 'inf', 'nan', $.intconstant_ext, seq('.', $.INTCONSTANT)),   // last one is a kludge for parsing default(.1s);
 
-    // opt_semicolon
-
     NAME: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     INTCONSTANT: $ => /\d+/,
     REALCONSTANT: $ => /\d+\.\d+/,
@@ -860,7 +833,6 @@ module.exports = grammar({
     XMLCONSTANT: $ => /"[^"]*"|'[^']*'/,
     EMPTYLINE: $ => /\r?\n\s*\r?\n\s*/,
     // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
-    // EXPRESSION_SELECTOR: $ => /[_a-zA-Z][_a-zA-Z0-9]*/,
     COMMONCHAR: $ => /[^"]/,
     // INVALID_CHAR: $ => /./  
       
