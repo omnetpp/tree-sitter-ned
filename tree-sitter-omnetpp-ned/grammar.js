@@ -3,7 +3,9 @@ module.exports = grammar({
 
   extras: ($) => [/\s/, $.inline_comment],
 
-  conflicts: ($) => [[$._dottedname, $.dottednamevector]],
+  // conflicts: ($) => [[$._dottedname, $._dottednamevector]],
+
+  conflicts: ($) => [[$._dottedname, $.modulepart]],
 
   rules: {
     nedfile: ($) =>
@@ -594,18 +596,18 @@ module.exports = grammar({
       prec.right(
         choice(
           seq(
-            $.connectionname,
+            alias($.connectionname, $.src),
             $.arrow,
-            $.connectionname,
+            alias($.connectionname, $.dest),
             optional($.loops_and_conditions),
             ";",
           ),
           seq(
-            $.connectionname,
+            alias($.connectionname, $.src),
             $.arrow,
             $.channelspec,
             $.arrow,
-            $.connectionname,
+            alias($.connectionname, $.dest),
             optional($.loops_and_conditions),
             ";",
           ),
@@ -616,33 +618,56 @@ module.exports = grammar({
 
     arrow: ($) => choice("-->", "<--", "<-->"),
 
-    connectionname: ($) =>
-      prec(
-        10,
-        choice(
-          // seq($.dottednamevector, optional($.subgate)),
-          prec(
-            20,
-            seq(
-              $.dottednamevector,
-              optional($.subgate),
-              alias(optional("++"), $.plusplus),
-            ),
-          ), // TODO: make this comfirm to yacc?
-          seq($.dottednamevector, optional($.subgate), $.vector),
-          // seq($.dottednamevector, optional($.subgate), alias(optional('++'), $.plusplus))
-          // seq($._NAME, optional($.vector), $.subgate, optional($.vector)),
-        ),
-      ),
+    // connectionname: ($) =>
+    //   prec(
+    //     10,
+    //     choice(
+    //       // seq($._dottednamevector, optional($.subgate)),
+    //       prec(
+    //         20,
+    //         seq(
+    //           $._dottednamevector,
+    //           optional($.subgate),
+    //           alias(optional("++"), $.plusplus),
+    //         ),
+    //       ), // TODO: make this comfirm to yacc?
+    //       seq($._dottednamevector, optional($.subgate), $.vector),
+    //       // seq($._dottednamevector, optional($.subgate), alias(optional('++'), $.plusplus))
+    //       // seq($._NAME, optional($.vector), $.subgate, optional($.vector)),
+    //     ),
+    //   ),
 
-    dottednamevector: ($) =>
-      prec.right(
-        seq(
-          $._NAME,
-          optional($.vector),
-          repeat(seq(".", $._NAME, optional($.vector))),
-        ),
+    // _dottednamevector: ($) =>
+    //   prec.right(choice(
+    //     alias(seq(
+    //       alias($._NAME, $.gatename),
+    //       alias(optional($.vector), $.gateindex),
+    //     ), $.gate2),
+    //     seq(
+    //       alias(repeat1(seq(alias($._NAME, $.name), optional(alias($.vector, $.index)))), $.module),
+    //       ".",
+    //       alias(seq(alias($._NAME, $.gatename),
+    //       alias(optional($.vector), $.gateindex)), $.gate2),
+    //     ),
+    //   )),
+
+    connectionname: $ => $._modulegate,
+
+    _modulegate: $ => prec.left(seq(
+      alias(optional($.modulepart), $.module),
+      alias($.gatepart, $.gate)
+    )),
+
+    modulepart: $ => prec.left(seq(repeat1(seq(alias($._NAME, $.name), optional(alias($.vector, $.index)))), '.')),
+
+    gatepart: $ => seq(
+      $._NAME,
+      optional(alias($.vector, $.index)),
+      choice(
+        seq(optional($.subgate), alias(optional('++'), $.plusplus)),
+        seq(optional($.subgate), alias($.vector, $.index))
       ),
+    ),
 
     loops_and_conditions: ($) =>
       seq($.loop_or_condition, repeat(seq(",", $.loop_or_condition))),
