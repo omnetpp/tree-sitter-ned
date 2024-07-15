@@ -35,8 +35,7 @@ moduleinterface IRadioVisualizer extends IVisualizer
     (moduleinterfaceheader
       (interfaceinheritance
         (extendss
-          (extends
-            (name)))))
+          (extends))))
     (parameters
       (property
         (name)
@@ -147,9 +146,7 @@ channel Eth400G extends EthernetLink
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (type)
@@ -159,154 +156,87 @@ channel Eth400G extends EthernetLink
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (param
         (name)
         (value
-          (expression
-            (functioncall
-              (funcname
-                (qname
-                  (qname_elem)))
-              (exprlist
-                (expression
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem))))
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (realconstant_ext
-                            (intconstant_ext)))))))
-                (expression
-                  (simple_expr
-                    (literal))))))))))
+          (functioncall
+            (funcname)
+            (exprlist
+              (realconstant_ext
+                (intconstant_ext))))))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity))))))))))
+          (quantity))))))
 
 ====
 FlowMeasurementRecorder.ned (properties)
@@ -430,21 +360,14 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
         (importname))))
   (comment)
   (simple_module
-    (simplemoduleheader
-      (inheritance
-        (extends
-          (name))
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (extends)
+    (implements)
     (parameters
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
@@ -454,11 +377,7 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -468,64 +387,31 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral
-                    (quantity))))))))
+          (quantity)))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (boolliteral))))))
+        (value))
       (param
         (type)
         (name)
         (value
-          (expression
-            (expression
-              (simple_expr
-                (literal)))
-            (expression
-              (expression
-                (functioncall
-                  (funcname
-                    (qname
-                      (qname_elem)))
-                  (exprlist
-                    (expression
-                      (simple_expr
-                        (literal))))))
-              (expression
-                (expression
-                  (functioncall
-                    (funcname
-                      (qname
-                        (qname_elem)))))
-                (expression
-                  (simple_expr
-                    (literal))))))))
+          (functioncall
+            (funcname)
+            (exprlist))
+          (functioncall
+            (funcname))))
       (property
         (name)
         (key
@@ -1088,15 +974,11 @@ moduleinterface IHook
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name)))
+        (type)
+        (name))
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))))
+        (type)
+        (name)))))
 
 ====
 IntegratedMultiCanvasVisualizer.ned (import, package, parameters, submodules)
@@ -1484,12 +1366,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (importname))))
   (comment)
   (compound_module
-    (header
-      (name)
-      (inheritance
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (implements)
     (parameters
       (property
         (name)
@@ -1498,211 +1376,125 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
+      (param
+        (parampattern_value
+          (parampattern
+            (pattern
+              (pattern_elem
+                (pattern_name))
+              (pattern_elem
+                (pattern_name))))
+          (value)))
+      (param
+        (parampattern_value
+          (parampattern
+            (pattern
+              (pattern_elem
+                (pattern_name))
+              (pattern_elem
+                (pattern_name))))
+          (value)))
       (param
         (parampattern_value
           (parampattern
@@ -1712,503 +1504,265 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
               (pattern_elem
                 (pattern_name))))
           (value
-            (expression
-              (simple_expr
-                (literal))))))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (expression
-              (simple_expr
-                (literal))))))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (expression
-              (functioncall
-                (funcname
-                  (qname
-                    (qname_elem)))
-                (exprlist
-                  (expression
-                    (simple_expr
-                      (literal))))))))))
+            (functioncall
+              (funcname)
+              (exprlist))))))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
@@ -2393,12 +1947,8 @@ module EthernetMac like IEtherMac
         (importname))))
   (comment)
   (compound_module
-    (header
-      (name)
-      (inheritance
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (implements)
     (parameters
       (param
         (type)
@@ -2407,27 +1957,16 @@ module EthernetMac like IEtherMac
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (boolliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (boolliteral))))))
+        (value))
       (comment)
       (param
         (type)
@@ -2436,11 +1975,7 @@ module EthernetMac like IEtherMac
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (boolliteral))))))
+        (value))
       (comment)
       (param
         (type)
@@ -2450,11 +1985,7 @@ module EthernetMac like IEtherMac
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (param
         (type)
         (name)
@@ -2472,12 +2003,7 @@ module EthernetMac like IEtherMac
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral
-                    (quantity))))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -2487,11 +2013,7 @@ module EthernetMac like IEtherMac
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (comment)
       (property
         (name)
@@ -2751,30 +2273,24 @@ module EthernetMac like IEtherMac
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))
+        (type)
+        (name)
         (inline_properties
           (name)
           (key
             (values)))
         (comment))
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))
+        (type)
+        (name)
         (inline_properties
           (name)
           (key
             (values)))
         (comment))
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))
+        (type)
+        (name)
         (inline_properties
           (name)
           (key
@@ -2921,38 +2437,29 @@ network EarthCloud
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))
+        (type)
+        (name)))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
@@ -2962,76 +2469,44 @@ network EarthCloud
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
+          (from_value)
           (to_value
-            (expression
-              (simple_expr
-                (operator
-                  (qname
-                    (qname_elem)))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+            (operator)))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector)
             (plusplus))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))))))
   (network
     (networkheader)
@@ -3042,72 +2517,64 @@ network EarthCloud
           (values))))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
@@ -3115,159 +2582,111 @@ network EarthCloud
               (values))))))
     (connections
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))))
+              (quantity)))
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity))))))))
-        (conn_direction)
-        (connectionname
+              (quantity))))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))))
+              (quantity)))
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity))))))))
-        (conn_direction)
-        (connectionname
+              (quantity))))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))))
+              (quantity)))
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity))))))))
-        (conn_direction)
-        (connectionname
+              (quantity))))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))))
+              (quantity)))
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity))))))))
-        (conn_direction)
-        (connectionname
+              (quantity))))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))))
+              (quantity)))
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity))))))))
-        (conn_direction)
-        (connectionname
+              (quantity))))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))))
+              (quantity)))
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity))))))))
-        (conn_direction)
-        (connectionname
+              (quantity))))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus))))))
 
@@ -3428,12 +2847,8 @@ module Ieee8021qFilter like IPacketFilter
         (importname))))
   (comment)
   (compound_module
-    (header
-      (name)
-      (inheritance
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (implements)
     (parameters
       (param
         (type)
@@ -3457,233 +2872,134 @@ module Ieee8021qFilter like IPacketFilter
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name)))
+        (type)
+        (name))
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))
+        (type)
+        (name)))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal
-                    (boolliteral))))))
+            (value))
           (param
             (name)
             (value
-              (expression
-                (expression
-                  (functioncall
-                    (funcname
-                      (qname
-                        (qname_elem)
-                        (qname_elem)
-                        (qname_elem)))
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (qname
-                            (qname_elem)))))))
-                (functioncall
-                  (funcname
-                    (qname
-                      (qname_elem)))
-                  (exprlist
-                    (expression
-                      (simple_expr
-                        (literal))))))))
+              (functioncall
+                (funcname)
+                (exprlist))
+              (functioncall
+                (funcname)
+                (exprlist))))
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal)))))
+            (value))
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal)))))
+            (value))
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal)))))
+            (value))
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal)))))
+            (value))
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
@@ -3692,343 +3008,157 @@ module Ieee8021qFilter like IPacketFilter
     (connections
       (allowunconnected)
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector)))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
-          (connectionname
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
           (loops_and_conditions
             (loop_or_condition
               (condition
-                (expression
-                  (expression
-                    (expression
-                      (functioncall
-                        (funcname
-                          (qname
-                            (qname_elem)
-                            (qname_elem)))
-                        (exprlist
-                          (expression
-                            (simple_expr
-                              (qname
-                                (qname_elem)))))))
-                    (functioncall
-                      (funcname
-                        (qname
-                          (qname_elem)))
-                      (exprlist
-                        (expression
-                          (simple_expr
-                            (literal))))))
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem))))))))))
+                (functioncall
+                  (funcname)
+                  (exprlist))
+                (functioncall
+                  (funcname)
+                  (exprlist)))))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))))
+              (vector))))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))))
+              (vector))))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
-          (conn_direction)
-          (connectionname
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
           (loops_and_conditions
             (loop_or_condition
               (condition
-                (expression
-                  (expression
-                    (functioncall
-                      (funcname
-                        (qname
-                          (qname_elem)))
-                      (exprlist
-                        (expression
-                          (simple_expr
-                            (qname
-                              (qname_elem))))
-                        (expression
-                          (simple_expr
-                            (literal)))
-                        (expression
-                          (simple_expr
-                            (qname
-                              (qname_elem))))
-                        (expression
-                          (simple_expr
-                            (literal)))
-                        (expression
-                          (simple_expr
-                            (qname
-                              (qname_elem)))))))
-                  (expression
-                    (simple_expr
-                      (literal
-                        (otherliteral))))))))))
+                (functioncall
+                  (funcname)
+                  (exprlist)))))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))))
+              (vector))))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))))
+              (vector))))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector)
             (plusplus))))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector))))))
 
 ====
@@ -4418,31 +3548,20 @@ network LargeNet
   (comment)
   (channel
     (channelheader
-      (inheritance
-        (extends
-          (name))))
+      (extends))
     (parameters
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity
-                    (realconstant_ext))))))))
+          (quantity
+            (realconstant_ext))))
       (param
         (name)
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))))
+          (quantity)))))
   (comment)
   (compound_module
-    (header
-      (name))
+    (name)
     (parameters
       (param
         (type)
@@ -4454,29 +3573,21 @@ network LargeNet
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))
+        (type)
+        (name)))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
@@ -4486,46 +3597,29 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))))
   (comment)
   (compound_module
-    (header
-      (name))
+    (name)
     (parameters
       (param
         (type)
@@ -4541,52 +3635,38 @@ network LargeNet
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))
+        (type)
+        (name)))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
@@ -4596,90 +3676,56 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))))
   (comment)
   (compound_module
-    (header
-      (name))
+    (name)
     (parameters
       (param
         (type)
@@ -4699,117 +3745,80 @@ network LargeNet
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))
+        (type)
+        (name)))
     (types
       (localtypes
         (localtype
           (channel
             (channelheader
-              (inheritance
-                (extends
-                  (name))))
+              (extends))
             (parameters
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity)))))))
+                  (quantity)))
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity))))))))))))
+                  (quantity))))))))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal)))))
+            (value))
           (comment)
           (param
             (name)
             (value
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity
-                        (intconstant_ext))))))))
+              (quantity
+                (intconstant_ext))))
           (comment)
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
@@ -4819,128 +3828,78 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))))
   (comment)
@@ -5016,333 +3975,220 @@ network LargeNet
         (localtype
           (channel
             (channelheader
-              (inheritance
-                (extends
-                  (name))))
+              (extends))
             (parameters
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity)))))))
+                  (quantity)))
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity))))))))))))
+                  (quantity))))))))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (dottedname))
+        (name)
+        (vector)
+        (type)
         (parameters
           (property
             (name)
@@ -5353,717 +4199,365 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem))))
-                  (expression
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem))))
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem)))))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem))))
-                  (expression
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem))))
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem)))))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem))))
-                  (expression
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem))))
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem)))))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem))))))
+              (vector))
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem))))
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral)))))))
+              (vector))
             (plusplus))))
       (comment)
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)))
       (comment)
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)))
       (comment)
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)))
       (comment)
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
+          (arrow)
           (channelspec
-            (channelspec_header
-              (dottedname)))
-          (conn_direction)
-          (connectionname
+            (channelspec_header))
+          (arrow)
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)))
       (comment)
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector
-            (vector
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral))))))
+            (vector))
           (plusplus))))))
 
 ====
@@ -6157,12 +4651,8 @@ module MultiDomainGptp like IGptp
         (importname))))
   (comment)
   (compound_module
-    (header
-      (name)
-      (inheritance
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (implements)
     (parameters
       (param
         (type)
@@ -6186,116 +4676,58 @@ module MultiDomainGptp like IGptp
           (values))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name)))
+        (type)
+        (name))
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))))
+        (type)
+        (name)))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename
-            (vector
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))))
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (vector)
+        (like_expr)
+        (like_type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem)
-                    (qname_elem))))))
+            (value))
           (param
             (name)
             (value
-              (expression
-                (expression
-                  (functioncall
-                    (funcname
-                      (qname
-                        (qname_elem)))
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (qname
-                            (qname_elem)
-                            (qname_elem)))))))
-                (expression
-                  (expression
-                    (simple_expr
-                      (literal)))
-                  (expression
-                    (expression
-                      (functioncall
-                        (funcname)
-                        (exprlist
-                          (expression
-                            (simple_expr
-                              (qname
-                                (qname_elem)
-                                (qname_elem)))))))
-                    (expression
-                      (simple_expr
-                        (literal))))))))
+              (functioncall
+                (funcname)
+                (exprlist))
+              (functioncall
+                (funcname)
+                (exprlist))))
           (param
             (name)
             (value
-              (expression
-                (functioncall
-                  (funcname
-                    (qname
-                      (qname_elem)))
-                  (exprlist
-                    (expression
-                      (simple_expr
-                        (qname
-                          (qname_elem)
-                          (qname_elem)))))))))
+              (functioncall
+                (funcname)
+                (exprlist))))
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem)
-                    (qname_elem))))))
+            (value))
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (param
             (name)
-            (value
-              (expression
-                (simple_expr
-                  (literal)))))
+            (value))
           (property
             (name)
             (key
@@ -6304,66 +4736,47 @@ module MultiDomainGptp like IGptp
       (connection_group
         (loop
           (param_name)
-          (from_value
-            (simple_expr
-              (literal
-                (numliteral))))
-          (to_value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral))))))
+          (from_value)
+          (to_value))
         (connection
-          (connectionname
+          (src
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))
-          (conn_direction)
-          (connectionname
+              (vector)))
+          (arrow)
+          (dest
             (dottednamevector)
             (plusplus)))
         (connection
-          (connectionname
+          (src
             (dottednamevector)
             (plusplus))
-          (conn_direction)
-          (connectionname
+          (arrow)
+          (dest
             (dottednamevector
-              (vector
-                (expression
-                  (simple_expr
-                    (qname
-                      (qname_elem)))))))))
+              (vector)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector))))))
 
 ====
@@ -6479,117 +4892,89 @@ network ARPTest
         (localtype
           (channel
             (channelheader
-              (inheritance
-                (extends
-                  (name))))
+              (extends))
             (parameters
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity)))))))
+                  (quantity)))
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity))))))))))
+                  (quantity))))))
         (localtype
           (channel
             (channelheader
-              (inheritance
-                (extends
-                  (name))))
+              (extends))
             (parameters
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity)))))))
+                  (quantity)))
               (param
                 (name)
                 (value
-                  (expression
-                    (simple_expr
-                      (literal
-                        (numliteral
-                          (quantity))))))))))))
+                  (quantity))))))))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
@@ -6597,75 +4982,69 @@ network ARPTest
               (values))))))
     (connections
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus)))
       (connection
-        (connectionname
+        (src
           (dottednamevector)
           (plusplus))
-        (conn_direction)
+        (arrow)
         (channelspec
-          (channelspec_header
-            (dottedname)))
-        (conn_direction)
-        (connectionname
+          (channelspec_header))
+        (arrow)
+        (src
           (dottednamevector)
           (plusplus))))))
 
@@ -6854,22 +5233,22 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (importname))))
   (comment)
   (compound_module
-    (header
-      (name)
-      (inheritance
-        (extends
-          (name))
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (extends)
+    (implements)
     (parameters
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
+      (param
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (key
+            (values)))
+        (value))
       (param
         (type)
         (name)
@@ -6878,23 +5257,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal)))))
-      (param
-        (type)
-        (name)
-        (inline_properties
-          (name)
-          (key
-            (values)))
-        (value
-          (expression
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral
-                    (quantity))))))))
+          (quantity)))
       (param
         (parampattern_value
           (parampattern
@@ -6902,12 +5265,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (pattern_elem)
               (pattern_elem
                 (pattern_name))))
-          (value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem)
-                  (qname_elem)))))))
+          (value)))
       (param
         (parampattern_value
           (parampattern
@@ -6915,12 +5273,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (pattern_elem)
               (pattern_elem
                 (pattern_name))))
-          (value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem)
-                  (qname_elem)))))))
+          (value)))
       (param
         (parampattern_value
           (parampattern
@@ -6929,12 +5282,7 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
                 (pattern_name))
               (pattern_elem
                 (pattern_name))))
-          (value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem)
-                  (qname_elem)))))))
+          (value)))
       (param
         (parampattern_value
           (parampattern
@@ -6947,12 +5295,16 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
                 (pattern_name))
               (pattern_elem
                 (pattern_name))))
-          (value
-            (expression
-              (simple_expr
-                (qname
-                  (qname_elem)
-                  (qname_elem)))))))
+          (value)))
+      (param
+        (parampattern_value
+          (parampattern
+            (pattern
+              (pattern_elem
+                (pattern_name))
+              (pattern_elem
+                (pattern_name))))
+          (value)))
       (param
         (parampattern_value
           (parampattern
@@ -6962,9 +5314,9 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (pattern_elem
                 (pattern_name))))
           (value
-            (expression
-              (simple_expr
-                (literal))))))
+            (functioncall
+              (funcname)
+              (exprlist)))))
       (param
         (parampattern_value
           (parampattern
@@ -6974,15 +5326,9 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (pattern_elem
                 (pattern_name))))
           (value
-            (expression
-              (functioncall
-                (funcname
-                  (qname
-                    (qname_elem)))
-                (exprlist
-                  (expression
-                    (simple_expr
-                      (literal)))))))))
+            (functioncall
+              (funcname)
+              (exprlist)))))
       (param
         (parampattern_value
           (parampattern
@@ -6992,15 +5338,9 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (pattern_elem
                 (pattern_name))))
           (value
-            (expression
-              (functioncall
-                (funcname
-                  (qname
-                    (qname_elem)))
-                (exprlist
-                  (expression
-                    (simple_expr
-                      (literal)))))))))
+            (functioncall
+              (funcname)
+              (exprlist)))))
       (param
         (parampattern_value
           (parampattern
@@ -7010,43 +5350,13 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (pattern_elem
                 (pattern_name))))
           (value
-            (expression
-              (functioncall
-                (funcname
-                  (qname
-                    (qname_elem)))
-                (exprlist
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem)
-                        (qname_elem))))))))))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (expression
-              (functioncall
-                (funcname
-                  (qname
-                    (qname_elem)))
-                (exprlist
-                  (expression
-                    (simple_expr
-                      (qname
-                        (qname_elem)
-                        (qname_elem)))))))))))
+            (functioncall
+              (funcname)
+              (exprlist))))))
     (gates
       (gate
-        (gate_typenamesize
-          (gatetype
-            (type))
-          (name))
+        (type)
+        (name)
         (inline_properties
           (name)
           (key
@@ -7054,105 +5364,71 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (comment)))
     (submodules
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (dottedname))
+        (name)
+        (type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name)
-          (condition
-            (expression
-              (expression
-                (simple_expr
-                  (qname
-                    (qname_elem))))
-              (expression
-                (simple_expr
-                  (literal))))))
+        (name)
+        (like_expr)
+        (like_type)
+        (condition)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
             (key
               (values)))))
       (submodule
-        (submoduleheader
-          (submodulename)
-          (likeexpr
-            (expression
-              (simple_expr
-                (literal))))
-          (interface_name))
+        (name)
+        (like_expr)
+        (like_type)
         (parameters
           (property
             (name)
@@ -7161,116 +5437,108 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
     (connections
       (allowunconnected)
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector))
         (loops_and_conditions
           (loop_or_condition
             (condition
-              (expression
-                (simple_expr
-                  (operator
-                    (qname
-                      (qname_elem)))))))))
+              (operator)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector))
         (loops_and_conditions
           (loop_or_condition
             (condition
-              (expression
-                (simple_expr
-                  (operator
-                    (qname
-                      (qname_elem)))))))))
+              (operator)))))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (dest
           (dottednamevector)))
       (connection
-        (connectionname
+        (src
           (dottednamevector))
-        (conn_direction)
+        (arrow)
         (channelspec
           (property
             (name)
             (key
               (values))))
-        (conn_direction)
-        (connectionname
+        (arrow)
+        (src
           (dottednamevector))))))
 
 ====
@@ -7374,7 +5642,7 @@ simple CellInfo {
   (package
     (name))
   (simple_module
-    (simplemoduleheader)
+    (name)
     (parameters
       (property
         (name)
@@ -7393,17 +5661,7 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral))))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -7413,17 +5671,7 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral
-                      (quantity)))))
-              (expression
-                (simple_expr
-                  (literal
-                    (numliteral))))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -7433,16 +5681,7 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral
-                    (quantity)))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral)))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -7452,16 +5691,7 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral
-                    (quantity)))))
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral)))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -7471,11 +5701,7 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -7485,12 +5711,8 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity
-                    (realconstant_ext))))))))
+          (quantity
+            (realconstant_ext))))
       (comment)
       (param
         (type)
@@ -7500,38 +5722,22 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (boolliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
@@ -7541,108 +5747,62 @@ simple CellInfo {
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral)))))))))
+        (value)))))
 
 ====
 TraCIScreenRecorder.ned - from Veins (default(.1s))
@@ -7707,7 +5867,7 @@ simple TraCIScreenRecorder
     (name))
   (comment)
   (simple_module
-    (simplemoduleheader)
+    (name)
     (parameters
       (property
         (name)
@@ -7720,26 +5880,17 @@ simple TraCIScreenRecorder
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
@@ -7749,11 +5900,7 @@ simple TraCIScreenRecorder
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity)))))))
+          (quantity)))
       (comment)
       (param
         (type)
@@ -7763,12 +5910,8 @@ simple TraCIScreenRecorder
           (key
             (values)))
         (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral
-                  (quantity
-                    (realconstant_ext))))))))
+          (quantity
+            (realconstant_ext))))
       (comment)
       (param
         (type)
@@ -7778,12 +5921,7 @@ simple TraCIScreenRecorder
           (key
             (values)))
         (value
-          (expression
-            (expression
-              (simple_expr
-                (literal
-                  (numliteral
-                    (quantity))))))))
+          (quantity)))
       (comment))))
 
 ====
@@ -7799,29 +5937,20 @@ module Something {
 
 (nedfile
   (compound_module
-    (header
-      (name))
+    (name)
     (parameters
       (param
         (name)
         (value
-          (expression
-            (functioncall
-              (funcname)
-              (exprlist
-                (expression
-                  (simple_expr
-                    (literal))))))))
+          (functioncall
+            (funcname)
+            (exprlist))))
       (param
         (name)
         (value
-          (expression
-            (functioncall
-              (funcname)
-              (exprlist
-                (expression
-                  (simple_expr
-                    (literal)))))))))))
+          (functioncall
+            (funcname)
+            (exprlist)))))))
 
 ====
 PcpTrafficClassClassifier (array)
@@ -7886,14 +6015,9 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
         (importname))))
   (comment)
   (compound_module
-    (header
-      (name)
-      (inheritance
-        (extends
-          (name))
-        (likenames
-          (likename
-            (interface_name)))))
+    (name)
+    (extends)
+    (implements)
     (parameters
       (param
         (type)
@@ -7902,314 +6026,42 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
           (name)
           (key
             (values)))
-        (value
-          (expression
-            (simple_expr
-              (literal)))))
+        (value))
       (comment)
       (param
         (type)
         (name)
         (value
-          (expression
-            (array
-              (exprlist
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral)))))))
-                (inline_comment)
-                (expression
-                  (array
-                    (exprlist
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))
-                      (expression
-                        (simple_expr
-                          (literal
-                            (numliteral))))))))))))
+          (array
+            (exprlist
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))
+              (inline_comment)
+              (array
+                (exprlist))))))
       (comment)
       (param
         (type)
         (name)
-        (value
-          (expression
-            (simple_expr
-              (literal
-                (numliteral))))))
+        (value))
       (comment)
       (property
         (name)
