@@ -495,8 +495,8 @@ module.exports = grammar({
     _gate_typenamesize: ($) =>
       choice(
         seq($._gatetype, alias($._NAME, $.name)), // gatetype NAME
-        seq($._gatetype, alias($._NAME, $.name), "[", "]"), // gatetype NAME '[' ']'
-        seq($._gatetype, alias($._NAME, $.name), alias($.vector, $.size)), // gatetype NAME vector
+        seq($._gatetype, alias($._NAME, $.name), alias("[]", $.vector)), // gatetype NAME '[' ']'
+        seq($._gatetype, alias($._NAME, $.name), $.vector), // gatetype NAME vector
         alias($._NAME, $.name), // NAME
         seq(alias($._NAME, $.name), "[", "]"), // NAME '[' ']'
         seq(alias($._NAME, $.name), alias($.vector, $.size)), // NAME vector
@@ -795,13 +795,7 @@ module.exports = grammar({
     condition: ($) => seq("if", $._expression),
 
     ifblock: ($) =>
-      seq(
-        "if",
-        $._expression,
-        "{",
-        repeat(choice($.connection, $.comment)),
-        "}",
-      ),
+      seq($.condition, "{", repeat(choice($.connection, $.comment)), "}"),
 
     forblock: ($) =>
       seq(
@@ -812,7 +806,7 @@ module.exports = grammar({
         optional(";"),
       ),
 
-    vector: ($) => seq("[", $._expression, "]"),
+    vector: ($) => seq("[", alias($._expression, $.size), "]"),
 
     _expression: ($) =>
       prec.right(
