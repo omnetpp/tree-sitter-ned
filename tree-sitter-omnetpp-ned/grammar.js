@@ -5,7 +5,7 @@ module.exports = grammar({
 
   // conflicts: ($) => [[$._dottedname, $._dottednamevector]],
 
-  conflicts: ($) => [[$._dottedname, $.modulepart]],
+  conflicts: ($) => [[$._dottedname, $._modulepart]],
 
   rules: {
     nedfile: ($) =>
@@ -548,7 +548,12 @@ module.exports = grammar({
     _submoduleheader: ($) =>
       prec.right(
         choice(
-          seq($._submodulename, ":", alias($._dottedname, $.type), optional($.condition)),
+          seq(
+            $._submodulename,
+            ":",
+            alias($._dottedname, $.type),
+            optional($.condition),
+          ),
           seq(
             $._submodulename,
             ":",
@@ -560,7 +565,10 @@ module.exports = grammar({
         ),
       ),
 
-    _submodulename: ($) => prec.right(choice(alias($._NAME, $.name), seq(alias($._NAME, $.name), $.vector))),
+    _submodulename: ($) =>
+      prec.right(
+        choice(alias($._NAME, $.name), seq(alias($._NAME, $.name), $.vector)),
+      ),
 
     likeexpr: ($) =>
       choice(
@@ -605,7 +613,7 @@ module.exports = grammar({
           seq(
             alias($.connectionname, $.src),
             $.arrow,
-            $.channelspec,
+            $._channelspec,
             $.arrow,
             alias($.connectionname, $.dest),
             optional($.loops_and_conditions),
@@ -651,23 +659,38 @@ module.exports = grammar({
     //     ),
     //   )),
 
-    connectionname: $ => $._modulegate,
+    connectionname: ($) => $._modulegate,
 
-    _modulegate: $ => prec.left(seq(
-      alias(optional($.modulepart), $.module),
-      alias($.gatepart, $.gate)
-    )),
-
-    modulepart: $ => prec.left(seq(repeat1(seq(alias($._NAME, $.name), optional(alias($.vector, $.index)))), '.')),
-
-    gatepart: $ => seq(
-      $._NAME,
-      optional(alias($.vector, $.index)),
-      choice(
-        seq(optional($.subgate), alias(optional('++'), $.plusplus)),
-        seq(optional($.subgate), alias($.vector, $.index))
+    _modulegate: ($) =>
+      prec.left(
+        seq(
+          optional(alias($._modulepart, $.module)),
+          alias($.gatepart, $.gate),
+        ),
       ),
-    ),
+
+    _modulepart: ($) =>
+      prec.left(
+        seq(
+          repeat1(
+            alias(
+              seq(alias($._NAME, $.name), optional(alias($.vector, $.index))),
+              $.module,
+            ),
+          ),
+          ".",
+        ),
+      ),
+
+    gatepart: ($) =>
+      seq(
+        alias($._NAME, $.name),
+        optional(alias($.vector, $.index)),
+        choice(
+          seq(optional($.subgate), alias(optional("++"), $.plusplus)),
+          seq(optional($.subgate), alias($.vector, $.index)),
+        ),
+      ),
 
     loops_and_conditions: ($) =>
       seq($.loop_or_condition, repeat(seq(",", $.loop_or_condition))),
@@ -689,11 +712,11 @@ module.exports = grammar({
 
     // connection: $ => choice(
     //   seq($.gatespec, '-->', $.gatespec),
-    //   seq($.gatespec, '-->', $.channelspec, '-->', $.gatespec),
+    //   seq($.gatespec, '-->', $._channelspec, '-->', $.gatespec),
     //   seq($.gatespec, '<--', $.gatespec),
-    //   seq($.gatespec, '<--', $.channelspec, '<--', $.gatespec),
+    //   seq($.gatespec, '<--', $._channelspec, '<--', $.gatespec),
     //   seq($.gatespec, '<-->', $.gatespec),
-    //   seq($.gatespec, '<-->', $.channelspec, '<-->', $.gatespec)
+    //   seq($.gatespec, '<-->', $._channelspec, '<-->', $.gatespec)
     // ),
 
     // gatespec: $ => choice(
@@ -743,27 +766,27 @@ module.exports = grammar({
     subgate: ($) => choice("$i", "$o"),
 
     // channelspec: $ => choice(
-    //   $.channelspec_header,
-    //   seq($.channelspec_header, '{', optional($.parameters), '}')
+    //   $._channelspec_header,
+    //   seq($._channelspec_header, '{', optional($.parameters), '}')
     // ),
 
-    channelspec: ($) =>
+    _channelspec: ($) =>
       choice(
-        $.channelspec_header,
-        seq($.channelspec_header, "{", optional($._params), "}"),
+        $._channelspec_header,
+        seq($._channelspec_header, "{", optional($._params), "}"),
         seq("{", $._params, "}"),
       ),
 
-    channelspec_header: ($) =>
+    _channelspec_header: ($) =>
       choice(
-        $.channelname,
-        $._dottedname,
-        seq($.channelname, $._dottedname),
+        alias($.channelname, $.name),
+        alias($._dottedname, $.name),
+        seq(alias($.channelname, $.name), alias($._dottedname, $.type)),
         seq(
-          optional($.channelname),
-          $.likeexpr,
+          optional(alias($.channelname, $.name)),
+          alias($.likeexpr, $.like_expr),
           "like",
-          alias($._dottedname, $.implements),
+          alias($._dottedname, $.like_type),
         ),
       ),
 
@@ -923,7 +946,12 @@ module.exports = grammar({
     _qname_elem: ($) =>
       prec.right(
         10,
-        choice($._NAME, seq($._NAME, "[", $._expression, "]"), "this", "parent"),
+        choice(
+          $._NAME,
+          seq($._NAME, "[", $._expression, "]"),
+          "this",
+          "parent",
+        ),
       ),
 
     _qname: ($) =>
