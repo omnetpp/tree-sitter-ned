@@ -275,10 +275,10 @@ module.exports = grammar({
     _paramsitem: ($) =>
       prec.right(
         10,
-        seq(choice($.param, $.property), ";", optional($.comment)),
+        seq(choice($.parameter, $.property), ";", optional($.comment)),
       ),
 
-    param: ($) => choice($._param_typenamevalue, $.parampattern_value),
+    parameter: ($) => choice($._param_typenamevalue, $.parampattern_value),
 
     _param_typenamevalue: ($) =>
       choice(
@@ -496,10 +496,10 @@ module.exports = grammar({
       choice(
         seq($._gatetype, alias($._NAME, $.name)), // gatetype NAME
         seq($._gatetype, alias($._NAME, $.name), alias("[]", $.vector)), // gatetype NAME '[' ']'
-        seq($._gatetype, alias($._NAME, $.name), $.vector), // gatetype NAME vector
+        seq($._gatetype, alias($._NAME, $.name), alias($.sizevector, $.vector)), // gatetype NAME vector
         alias($._NAME, $.name), // NAME
         seq(alias($._NAME, $.name), "[", "]"), // NAME '[' ']'
-        seq(alias($._NAME, $.name), alias($.vector, $.size)), // NAME vector
+        seq(alias($._NAME, $.name), alias($.sizevector, $.vector)), // NAME vector
       ),
 
     _gatetype: ($) => alias(choice("input", "output", "inout"), $.type),
@@ -567,7 +567,10 @@ module.exports = grammar({
 
     _submodulename: ($) =>
       prec.right(
-        choice(alias($._NAME, $.name), seq(alias($._NAME, $.name), $.vector)),
+        choice(
+          alias($._NAME, $.name),
+          seq(alias($._NAME, $.name), alias($.sizevector, $.vector)),
+        ),
       ),
 
     likeexpr: ($) =>
@@ -662,21 +665,14 @@ module.exports = grammar({
     connectionname: ($) => $._modulegate,
 
     _modulegate: ($) =>
-      prec.left(
-        seq(
-          optional(alias($._modulepart, $.module)),
-          alias($.gatepart, $.gate),
-        ),
-      ),
+      prec.left(seq(optional($._modulepart), alias($.gatepart, $.gate))),
 
     _modulepart: ($) =>
       prec.left(
         seq(
-          repeat1(
-            alias(
-              seq(alias($._NAME, $.name), optional(alias($.vector, $.index))),
-              $.module,
-            ),
+          alias(
+            repeat1(seq(alias($._NAME, $.name), optional($._indexvector))),
+            $.module,
           ),
           ".",
         ),
@@ -685,10 +681,10 @@ module.exports = grammar({
     gatepart: ($) =>
       seq(
         alias($._NAME, $.name),
-        optional(alias($.vector, $.index)),
+        optional($._indexvector),
         choice(
           seq(optional($.subgate), alias(optional("++"), $.plusplus)),
-          seq(optional($.subgate), alias($.vector, $.index)),
+          seq(optional($.subgate), $._indexvector),
         ),
       ),
 
@@ -806,7 +802,9 @@ module.exports = grammar({
         optional(";"),
       ),
 
-    vector: ($) => seq("[", alias($._expression, $.size), "]"),
+    sizevector: ($) => seq("[", alias($._expression, $.size), "]"),
+
+    _indexvector: ($) => seq("[", alias($._expression, $.index), "]"),
 
     _expression: ($) =>
       prec.right(
