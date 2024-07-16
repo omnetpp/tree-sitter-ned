@@ -811,8 +811,8 @@ module.exports = grammar({
         10,
         choice(
           $._simple_expr,
-          $.functioncall,
-          seq($._expression, ".", $.functioncall),
+          $._functioncall,
+          seq($._expression, ".", $._functioncall),
           $.object,
           $.array,
           seq("(", $._expression, ")"),
@@ -852,17 +852,17 @@ module.exports = grammar({
         ),
       ),
 
-    functioncall: ($) => seq($.funcname, "(", optional($.exprlist), ")"),
+    _functioncall: ($) => seq($._funcname, "(", optional($._exprlist), ")"),
 
     array: ($) =>
       choice(
         seq("[", "]"),
-        seq("[", $.exprlist, "]"),
-        seq("[", $.exprlist, ",", "]"),
+        seq("[", $._exprlist, "]"),
+        seq("[", $._exprlist, ",", "]"),
       ),
 
     // exprlist: $ => prec.right(choice(
-    //   seq($.exprlist, ',', $._expression),
+    //   seq($._exprlist, ',', $._expression),
     //   $._expression
     // )),
 
@@ -895,7 +895,7 @@ module.exports = grammar({
         ),
       ),
 
-    exprlist: ($) =>
+    _exprlist: ($) =>
       prec.right(seq($._expression, repeat(seq(",", $._expression)))),
 
     keyvaluelist: ($) => seq($.keyvalue, repeat1(seq(",", $.keyvalue))),
@@ -908,10 +908,10 @@ module.exports = grammar({
         $._NAME,
         $._INTCONSTANT,
         $._REALCONSTANT,
-        $.quantity,
+        $._quantity,
         seq("-", $._INTCONSTANT),
         seq("-", $._REALCONSTANT),
-        seq("-", $.quantity),
+        seq("-", $._quantity),
         "nan",
         "inf",
         seq("-", "inf"),
@@ -923,7 +923,7 @@ module.exports = grammar({
 
     _simple_expr: ($) => choice($._qname, $.operator, $._literal),
 
-    funcname: ($) =>
+    _funcname: ($) =>
       choice(
         $._qname,
         "bool",
@@ -973,7 +973,8 @@ module.exports = grammar({
 
     _boolliteral: ($) => choice("true", "false"),
 
-    _numliteral: ($) => choice($._INTCONSTANT, $.realconstant_ext, $.quantity),
+    _numliteral: ($) =>
+      choice($._INTCONSTANT, $._realconstant_ext, $._quantity),
 
     _otherliteral: ($) => choice("undefined", "nullptr", "null"),
 
@@ -984,29 +985,29 @@ module.exports = grammar({
     //   $.other_literal
     // ),
 
-    quantity: ($) =>
+    _quantity: ($) =>
       prec(
         10,
         choice(
-          seq($.quantity, $._INTCONSTANT, $._NAME),
-          seq($.quantity, $.realconstant_ext, $._NAME),
-          seq($.quantity, $.intconstant_ext, $._NAME),
+          seq($._quantity, $._INTCONSTANT, $._NAME),
+          seq($._quantity, $._realconstant_ext, $._NAME),
+          seq($._quantity, $._intconstant_ext, $._NAME),
           seq($._INTCONSTANT, $._NAME),
-          seq($.realconstant_ext, $._NAME),
-          seq($.intconstant_ext, $._NAME),
+          seq($._realconstant_ext, $._NAME),
+          seq($._intconstant_ext, $._NAME),
         ),
       ),
 
     // intconstant_ext: $ => seq(optional($._INTCONSTANT), 'e', $._INTCONSTANT),
 
-    intconstant_ext: ($) => /[0-9]+e[0-9]*/,
+    _intconstant_ext: ($) => /[0-9]+e[0-9]*/,
 
-    realconstant_ext: ($) =>
+    _realconstant_ext: ($) =>
       choice(
         $._REALCONSTANT,
         "inf",
         "nan",
-        $.intconstant_ext,
+        $._intconstant_ext,
         seq(".", $._INTCONSTANT),
       ), // last one is a kludge for parsing default(.1s);
 
