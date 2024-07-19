@@ -3,8 +3,6 @@ module.exports = grammar({
 
   extras: ($) => [/\s/, $.inline_comment],
 
-  // conflicts: ($) => [[$._dottedname, $._dottednamevector]],
-
   conflicts: ($) => [[$._dottedname, $._modulepart]],
 
   rules: {
@@ -23,66 +21,21 @@ module.exports = grammar({
             $.simple,
             $.module,
             $.network,
-            $.module_interface,
+            $.moduleinterface,
             ";",
           ),
         ),
       ),
 
-    // definitions: $ => choice(
-    //   seq($.definitions, $.definition),
-    //   $.definition
-    // ),
-
-    // definition: $ => choice(
-    //   $.comment,
-    //   $._EMPTYLINE,
-    //   $.package,
-    //   $.import,
-    //   $.property_decl,
-    //   alias(seq(
-    //     $._property_namevalue,
-    //     ';'
-    //   ), $.property),
-    //   $.channel,
-    //   $.channel_interface,
-    //   $.simple,
-    //   $.module,
-    //   $.network,
-    //   $.module_interface,
-    //   ';'
-    // ),
-
     comment: ($) => prec.right(repeat1($._commentline)),
 
-    _commentline: ($) =>
-      token(
-        seq("//", /(\\+(.|\r?\n)|[^\\\n])*/),
-        // seq(
-        //   '/*',
-        //   /[^*]*\*+([^/*][^*]*\*+)*/,
-        //   '/',
-        // ),    // TODO is that needed in msg files? NO
-      ),
+    _commentline: ($) => token(seq("//", /(\\+(.|\r?\n)|[^\\\n])*/)),
 
     inline_comment: ($) => $._commentline,
 
     package: ($) => seq("package", alias($._dottedname, $.name), ";"),
 
     _dottedname: ($) => prec.right(seq($._NAME, repeat(seq(".", $._NAME)))),
-
-    // import: $ => seq(
-    //   'import',
-    //   $.importspec,
-    //   ';'
-    // ),
-
-    // importspec: $ => choice(
-    //   seq($.importspec, '.', $._importname),
-    //   $._importname
-    // ),
-
-    // importspec: $ => prec.right(seq($._importname, repeat(seq(',', $._importname)))),
 
     import: ($) => seq("import", alias($.importspec, $.name), ";"),
 
@@ -94,24 +47,9 @@ module.exports = grammar({
 
     _import_un_qname: ($) => $._importname,
 
-    // _importname: $ => choice($._NAME, 'message', 'packet', 'class', 'struct', 'enum', 'abstract'),
-
-    // importname: $ => choice(
-    //   seq($._importname, $._NAME),
-    //   seq($._importname, '*'),
-    //   seq($._importname, '**'),
-    //   $._NAME,
-    //   '*',
-    //   '**'
-    // ),
-
     _importname: ($) => repeat1(choice($._NAME, "*", "**")),
 
-    property: ($) =>
-      seq(
-        $._property_namevalue,
-        // ';'
-      ),
+    property: ($) => $._property_namevalue,
 
     property_decl: ($) =>
       choice(
@@ -131,12 +69,6 @@ module.exports = grammar({
         seq("property", "@", $._NAME, "[", "]"),
         seq("property", "@", $._NAME),
       ),
-
-    // property_decl_keys: $ => seq(
-    //   choice($.property_decl_keys, $.property_decl_key),
-    //   ';',
-    //   $.property_decl_key
-    // ),
 
     property_decl_keys: ($) =>
       seq($.property_decl_key, repeat(seq(";", $.property_decl_key))),
@@ -159,14 +91,6 @@ module.exports = grammar({
 
     extends: ($) => $._dottedname,
 
-    // likenames: $ => prec.left(choice(
-    //   seq(
-    //     $._likenames,
-    //     ',',
-    //     $._likename
-    // ),
-    // $._likename)),
-
     _likenames: ($) => seq($._likename, repeat(seq(",", $._likename))),
 
     _likename: ($) => alias($._dottedname, $.implements),
@@ -175,19 +99,11 @@ module.exports = grammar({
       seq($.channelinterfaceheader, "{", optional($.parameters), "}"),
 
     channelinterfaceheader: ($) =>
-      seq("channelinterface", $._NAME, optional($.interfaceinheritance)),
+      seq("channelinterface", $._NAME, optional($._interfaceinheritance)),
 
-    interfaceinheritance: ($) => seq("extends", $.extendss),
+    _interfaceinheritance: ($) => seq("extends", $._extendnames),
 
-    // extendss: $ => prec.left(choice(
-    //   seq(
-    //     $.extendss,
-    //     ',',
-    //     $.extends
-    // ),
-    // $.extends)),
-
-    extendss: ($) => seq($.extends, repeat(seq(",", $.extends))),
+    _extendnames: ($) => seq($.extends, repeat(seq(",", $.extends))), // TODO is that needed?
 
     simple: ($) =>
       seq(
@@ -231,45 +147,20 @@ module.exports = grammar({
     _networkheader: ($) =>
       seq("network", alias($._NAME, $.name), optional($._inheritance)),
 
-    module_interface: ($) =>
+    moduleinterface: ($) =>
       seq(
-        $.moduleinterfaceheader,
+        $._moduleinterfaceheader,
         "{",
         optional($.parameters),
         optional($.gates),
         "}",
       ),
 
-    moduleinterfaceheader: ($) =>
-      seq("moduleinterface", $._NAME, optional($.interfaceinheritance)),
-
-    // parameters: $ => choice(
-    //   seq(
-    //     optional($.params),
-    //     optional(
-    //       seq(
-    //         'parameters',
-    //         ':',
-    //         optional($.params)
-    //       )
-    //     )
-    //   ),
-    //   seq(
-    //     'parameters',
-    //     ':',
-    //     optional($.params)
-    //   )
-    // ),
+    _moduleinterfaceheader: ($) =>
+      seq("moduleinterface", $._NAME, optional($._interfaceinheritance)),
 
     parameters: ($) =>
       choice($._params, seq("parameters:", $._params), "parameters:"),
-
-    // parameters: $ => seq(optional('parameters:'), $.params),
-
-    // params: $ => choice(
-    //   seq($.params, $._paramsitem),
-    //   $._paramsitem
-    // ),
 
     _params: ($) => repeat1($._paramsitem),
 
@@ -324,27 +215,9 @@ module.exports = grammar({
         ),
       ),
 
-    // inline_properties: $ => choice(
-    //   $._property_namevalue,
-    //   seq($.inline_properties, $._property_namevalue)
-    // ),
-
     inline_properties: ($) => repeat1($._property_namevalue),
 
     _parampattern: ($) => $.pattern,
-
-    // pattern: $ =>
-    //   choice(
-    //     seq($.pattern2, '.', $._pattern_elem),
-    //     seq($.pattern2, '.', 'typename')
-    // ),
-
-    // // pattern2: $ => choice(
-    // //   seq($.pattern2, '.', $._pattern_elem),
-    // //   $._pattern_elem
-    // // ),
-
-    // pattern2: $ => prec.right(seq($._pattern_elem, repeat(seq('.', $._pattern_elem)))),
 
     pattern: ($) =>
       seq(
@@ -360,17 +233,6 @@ module.exports = grammar({
         "**",
         $._pattern_name,
       ),
-
-    // pattern_name: $ => prec.left(choice(
-    //   seq($._NAME, '$', $._NAME),
-    //   $._NAME,
-    //   'channel',
-    //   seq('{', $.pattern_index, '}'),
-    //   '*',
-    //   seq($._pattern_name, $._NAME),
-    //   seq($._pattern_name, '{', $.pattern_index, '}'),
-    //   seq($._pattern_name, '*')
-    // )),
 
     _pattern_name: ($) =>
       prec.right(
@@ -416,14 +278,6 @@ module.exports = grammar({
         ),
       ),
 
-    // optional($._property_tags)
-
-    // property_keys: $ =>
-    //   choice(
-    //     seq($._property_tags, ';', $.property_key),
-    //     $.property_key
-    // ),
-
     _property_tags: ($) =>
       seq(
         alias($.property_tag, $.tag),
@@ -443,24 +297,10 @@ module.exports = grammar({
         ),
       ),
 
-    // property_values: $ =>
-    //   prec.right(10, choice(
-    //     seq($.property_values, optional(seq(',', $.property_value))),
-    //     $.property_value
-    // )),
-
     property_values: ($) =>
       prec.right(seq($._property_value, repeat(seq(",", $._property_value)))),
 
     _property_value: ($) => $._property_literal,
-
-    // property_literal: $ =>
-    //   choice(
-    //     seq($._property_literal, $._COMMONCHAR),
-    //     seq($._property_literal, $._STRINGCONSTANT),
-    //     $._COMMONCHAR,
-    //     $._STRINGCONSTANT
-    // ),
 
     _property_literal: ($) =>
       repeat1(
@@ -475,14 +315,6 @@ module.exports = grammar({
       ),
 
     gates: ($) => seq("gates", ":", repeat($.gate)),
-
-    // gates: $ =>
-    //   choice(
-    //     seq($.gates, $.gate),
-    //     $.gate
-    // ),
-
-    // gates: $ => repeat1($.gate),
 
     gate: ($) =>
       seq(
@@ -516,7 +348,7 @@ module.exports = grammar({
         $.simple,
         $.module,
         $.network, // TODO is this needed here? not in DTD
-        $.module_interface,
+        $.moduleinterface,
         ";",
       ),
 
@@ -526,9 +358,6 @@ module.exports = grammar({
         ":",
         prec.right(repeat(choice($.submodule, $.comment))),
       ),
-
-    // submodules: $ =>
-    //   prec.right(repeat1($.submodule)),
 
     submodule: ($) =>
       prec.right(
@@ -595,13 +424,8 @@ module.exports = grammar({
               $.comment,
             ),
           ),
-          // optional(';')
         ),
       ),
-
-    // connection: $ => prec(10, seq(
-    //   $.connectionname, $.arrow, optional(seq(optional($._NAME), optional(seq('{', repeat1(seq(choice($.param, $.property)), '}')), $.arrow))), $.connectionname, optional($.condition), ';'
-    // )),
 
     connection: ($) =>
       prec.right(
@@ -625,42 +449,7 @@ module.exports = grammar({
         ),
       ),
 
-    // link: $ => prec.right(seq($.arrow, optional(seq($.identifier, $.arrow)))),
-
     arrow: ($) => choice("-->", "<--", "<-->"),
-
-    // connectionname: ($) =>
-    //   prec(
-    //     10,
-    //     choice(
-    //       // seq($._dottednamevector, optional($.subgate)),
-    //       prec(
-    //         20,
-    //         seq(
-    //           $._dottednamevector,
-    //           optional($.subgate),
-    //           alias(optional("++"), $.plusplus),
-    //         ),
-    //       ), // TODO: make this comfirm to yacc?
-    //       seq($._dottednamevector, optional($.subgate), $.vector),
-    //       // seq($._dottednamevector, optional($.subgate), alias(optional('++'), $.plusplus))
-    //       // seq($._NAME, optional($.vector), $.subgate, optional($.vector)),
-    //     ),
-    //   ),
-
-    // _dottednamevector: ($) =>
-    //   prec.right(choice(
-    //     alias(seq(
-    //       alias($._NAME, $.gatename),
-    //       alias(optional($.vector), $.gateindex),
-    //     ), $.gate2),
-    //     seq(
-    //       alias(repeat1(seq(alias($._NAME, $.name), optional(alias($.vector, $.index)))), $.module),
-    //       ".",
-    //       alias(seq(alias($._NAME, $.gatename),
-    //       alias(optional($.vector), $.gateindex)), $.gate2),
-    //     ),
-    //   )),
 
     connectionname: ($) => $._modulegate,
 
@@ -694,77 +483,16 @@ module.exports = grammar({
     _loop_or_condition: ($) => choice($.loop, $.condition),
 
     loop: ($) =>
-      choice(
-        seq(
-          "for",
-          alias($._NAME, $.param_name),
-          "=",
-          alias($._expression, $.from_value),
-          "..",
-          alias($._expression, $.to_value),
-        ),
+      seq(
+        "for",
+        alias($._NAME, $.param_name),
+        "=",
+        alias($._expression, $.from_value),
+        "..",
+        alias($._expression, $.to_value),
       ),
-    // prec.left(seq('for', /[^{}}]*/, '{', repeat1($.connection), '}'))),
-
-    // connection: $ => choice(
-    //   seq($.gatespec, '-->', $.gatespec),
-    //   seq($.gatespec, '-->', $._channelspec, '-->', $.gatespec),
-    //   seq($.gatespec, '<--', $.gatespec),
-    //   seq($.gatespec, '<--', $._channelspec, '<--', $.gatespec),
-    //   seq($.gatespec, '<-->', $.gatespec),
-    //   seq($.gatespec, '<-->', $._channelspec, '<-->', $.gatespec)
-    // ),
-
-    // gatespec: $ => choice(
-    //   seq($.mod, '.', $.leftgate),
-    //   $.leftgate
-    // ),
-
-    // leftmod: $ => choice(
-    //   seq($._NAME, $.vector),
-    //   $._NAME
-    // ),
-
-    // leftgate: $ => choice(
-    //   seq($._NAME, optional($.subgate)),
-    //   seq($._NAME, optional($.subgate), $.vector),
-    //   seq($._NAME, optional($.subgate), '++')
-    // ),
-
-    // parentleftgate: $ => choice(
-    //   seq($._NAME, optional($.subgate)),
-    //   seq($._NAME, optional($.subgate), $.vector),
-    //   seq($._NAME, optional($.subgate), '++')
-    // ),
-
-    // rightgatespec: $ => choice(
-    //   seq($.mod, '.', $.rightgate),
-    //   $.rightgate
-    // ),
-
-    // mod: $ => prec(10, choice(
-    //   $._NAME,
-    //   seq($._NAME, $.vector)
-    // )),
-
-    // rightgate: $ => choice(
-    //   seq($._NAME, optional($.subgate)),
-    //   seq($._NAME, optional($.subgate), $.vector),
-    //   seq($._NAME, optional($.subgate), '++')
-    // ),
-
-    // parentrightgate: $ => choice(
-    //   seq($._NAME, optional($.subgate)),
-    //   seq($._NAME, optional($.subgate), $.vector),
-    //   seq($._NAME, optional($.subgate), '++')
-    // ),
 
     subgate: ($) => choice("$i", "$o"),
-
-    // channelspec: $ => choice(
-    //   $._channelspec_header,
-    //   seq($._channelspec_header, '{', optional($.parameters), '}')
-    // ),
 
     _channelspec: ($) =>
       choice(
@@ -860,11 +588,6 @@ module.exports = grammar({
         seq("[", $._exprlist, "]"),
         seq("[", $._exprlist, ",", "]"),
       ),
-
-    // exprlist: $ => prec.right(choice(
-    //   seq($._exprlist, ',', $._expression),
-    //   $._expression
-    // )),
 
     object: ($) =>
       choice(
@@ -978,13 +701,6 @@ module.exports = grammar({
 
     _otherliteral: ($) => choice("undefined", "nullptr", "null"),
 
-    // literal: $ => choice(
-    //   $.string_literal,
-    //   $.bool_literal,
-    //   $.num_literal,
-    //   $.other_literal
-    // ),
-
     _quantity: ($) =>
       prec(
         10,
@@ -997,8 +713,6 @@ module.exports = grammar({
           seq($._intconstant_ext, $._NAME),
         ),
       ),
-
-    // intconstant_ext: $ => seq(optional($._INTCONSTANT), 'e', $._INTCONSTANT),
 
     _intconstant_ext: ($) => /[0-9]+e[0-9]*/,
 
@@ -1019,8 +733,6 @@ module.exports = grammar({
     _STRINGCONSTANT: ($) => /"([^"\\]|\\.)*"/,
     _XMLCONSTANT: ($) => /"[^"]*"|'[^']*'/,
     _EMPTYLINE: ($) => /\r?\n\s*\r?\n\s*/,
-    // CHARCONSTANT: $ => /'([^'\\]|\\.)'/,
     _COMMONCHAR: ($) => /[^"]/,
-    // INVALID_CHAR: $ => /./
   },
 });
