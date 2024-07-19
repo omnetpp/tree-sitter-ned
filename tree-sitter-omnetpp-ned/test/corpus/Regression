@@ -39,8 +39,8 @@ moduleinterface IRadioVisualizer extends IVisualizer
     (parameters
       (property
         (name)
-        (key
-          (values))))))
+        (tag
+          (value_list))))))
 
 ================
 EthernetLink.ned (channel)
@@ -138,105 +138,87 @@ channel Eth400G extends EthernetLink
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
-      (param
+          (tag
+            (value_list)))
+        (value))
+      (parameter
         (name)
-        (value
-          (functioncall
-            (funcname)
-            (exprlist
-              (realconstant_ext
-                (intconstant_ext))))))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity))))))
+        (value)))))
 
 ====
 FlowMeasurementRecorder.ned (properties)
@@ -345,592 +327,605 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (simple_module
+  (simple
     (name)
     (extends)
     (implements)
     (parameters
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
-        (value
-          (functioncall
-            (funcname)
-            (exprlist))
-          (functioncall
-            (funcname))))
+        (value))
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))))))
+          (value_list))))))
 
 ====
 IHook.ned (module interface)
@@ -970,8 +965,8 @@ moduleinterface IHook
     (parameters
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
@@ -1176,598 +1171,468 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (compound_module
+  (module
     (name)
     (implements)
     (parameters
       (property
         (name)
-        (key
-          (values)))
-      (param
+        (tag
+          (value_list)))
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (functioncall
-              (funcname)
-              (exprlist))))))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value)))
     (submodules
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))))
+            (tag
+              (value_list))))))))
 
 ====
 EthernetMac.ned (parameters, gates)
@@ -1939,362 +1804,381 @@ module EthernetMac like IEtherMac
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (compound_module
+  (module
     (name)
     (implements)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
-        (type)
-        (name)
-        (value))
-      (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
-      (param
+          (tag
+            (value_list)))
+        (value))
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values))))
+          (tag
+            (value_list))))
       (property
         (name))
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (comment)
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values)))
+          (value_list)))
       (property
         (name)
-        (key
+        (index)
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))
-        (key
+          (value_list))
+        (tag
           (name)
-          (values))))
+          (value_list))))
     (gates
       (gate
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
+          (tag
+            (value_list)))
         (comment))
       (gate
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
+          (tag
+            (value_list)))
         (comment))
       (gate
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
+          (tag
+            (value_list)))
         (comment)))))
 
 ====
@@ -2390,55 +2274,30 @@ network EarthCloud
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (network
-    (networkheader)
+    (name)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
-        (name)))
+        (name)
+        (vector)))
     (submodules
       (submodule
         (name)
@@ -2446,25 +2305,26 @@ network EarthCloud
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection_group
         (loop
@@ -2474,23 +2334,32 @@ network EarthCloud
             (operator)))
         (connection
           (src
-            (dottednamevector
-              (vector)))
+            (gate
+              (name)
+              (index)))
           (arrow)
           (dest
-            (dottednamevector)
-            (plusplus))))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection_group
         (loop
           (param_name)
@@ -2498,23 +2367,28 @@ network EarthCloud
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector))
-            (plusplus))))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))))))
   (network
-    (networkheader)
+    (name)
     (parameters
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (submodules
       (submodule
         (name)
@@ -2522,173 +2396,191 @@ network EarthCloud
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (param
+          (module
+            (name))
+          (gate
             (name)
-            (value
-              (quantity)))
-          (param
-            (name)
-            (value
-              (quantity))))
+            (plusplus)))
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (param
+          (module
+            (name))
+          (gate
             (name)
-            (value
-              (quantity)))
-          (param
-            (name)
-            (value
-              (quantity))))
+            (plusplus)))
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (param
+          (module
+            (name))
+          (gate
             (name)
-            (value
-              (quantity)))
-          (param
-            (name)
-            (value
-              (quantity))))
+            (plusplus)))
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (param
+          (module
+            (name))
+          (gate
             (name)
-            (value
-              (quantity)))
-          (param
-            (name)
-            (value
-              (quantity))))
+            (plusplus)))
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (param
+          (module
+            (name))
+          (gate
             (name)
-            (value
-              (quantity)))
-          (param
-            (name)
-            (value
-              (quantity))))
+            (plusplus)))
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (param
+          (module
+            (name))
+          (gate
             (name)
-            (value
-              (quantity)))
-          (param
-            (name)
-            (value
-              (quantity))))
+            (plusplus)))
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus))))))
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))))))
 
 ====
 Ieee8021qFilter.ned (streamFilter[i].out --> sm[j].in++ if streamFilterTable.get(i).get("gate") == j;)
@@ -2804,72 +2696,42 @@ module Ieee8021qFilter like IPacketFilter
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (compound_module
+  (module
     (name)
     (implements)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
@@ -2885,281 +2747,338 @@ module Ieee8021qFilter like IPacketFilter
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
-          (param
+          (parameter
             (name)
-            (value
-              (functioncall
-                (funcname)
-                (exprlist))
-              (functioncall
-                (funcname)
-                (exprlist))))
+            (value))
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
           (property
             (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
     (connections
       (allowunconnected)
       (connection
         (src
-          (dottednamevector))
+          (gate
+            (name)))
         (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
-        (arrow)
-        (src
-          (dottednamevector)))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector))
-            (plusplus))
-          (loops_and_conditions
-            (loop_or_condition
-              (condition
-                (functioncall
-                  (funcname)
-                  (exprlist))
-                (functioncall
-                  (funcname)
-                  (exprlist)))))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector))))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector))))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector
-              (vector))
-            (plusplus))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector))
-            (plusplus))
-          (loops_and_conditions
-            (loop_or_condition
-              (condition
-                (functioncall
-                  (funcname)
-                  (exprlist)))))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector))))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector
-              (vector))))
-        (connection
-          (src
-            (dottednamevector
-              (vector)))
-          (arrow)
-          (dest
-            (dottednamevector)
-            (plusplus))))
-      (connection
-        (src
-          (dottednamevector))
+        (property
+          (name)
+          (tag
+            (value_list)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (condition
+            (value))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (condition
+            (value))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
-        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
         (src
-          (dottednamevector))))))
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (gate
+            (name)))))))
 
 ====
 LargeNet.ned - from inet-4.4.1 (2e8 mps)
@@ -3513,64 +3432,38 @@ network LargeNet
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
   (channel
     (channelheader
       (extends))
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (quantity
-            (realconstant_ext))))
-      (param
+        (value))
+      (parameter
         (name)
-        (value
-          (quantity)))))
+        (value))))
   (comment)
-  (compound_module
+  (module
     (name)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
@@ -3582,17 +3475,18 @@ network LargeNet
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection_group
         (loop
@@ -3601,38 +3495,47 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
         (dest
-          (dottednamevector)))))
+          (gate
+            (name))))))
   (comment)
-  (compound_module
+  (module
     (name)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
@@ -3644,34 +3547,36 @@ network LargeNet
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection_group
         (loop
@@ -3680,22 +3585,31 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (gate
+            (name))))
       (connection_group
         (loop
           (param_name)
@@ -3703,65 +3617,71 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))))
   (comment)
-  (compound_module
+  (module
     (name)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
         (name)))
     (types
-      (localtypes
-        (localtype
-          (channel
-            (channelheader
-              (extends))
-            (parameters
-              (param
-                (name)
-                (value
-                  (quantity)))
-              (param
-                (name)
-                (value
-                  (quantity))))))))
+      (channel
+        (channelheader
+          (extends))
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value)))))
     (submodules
       (submodule
         (name)
@@ -3769,61 +3689,62 @@ network LargeNet
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
           (comment)
-          (param
+          (parameter
             (name)
-            (value
-              (quantity
-                (intconstant_ext))))
+            (value))
           (comment)
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection_group
         (loop
@@ -3832,22 +3753,31 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (gate
+            (name))))
       (connection_group
         (loop
           (param_name)
@@ -3855,26 +3785,36 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection_group
         (loop
           (param_name)
@@ -3882,318 +3822,340 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))))
   (comment)
   (network
-    (networkheader)
+    (name)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment))
     (types
-      (localtypes
-        (localtype
-          (channel
-            (channelheader
-              (extends))
-            (parameters
-              (param
-                (name)
-                (value
-                  (quantity)))
-              (param
-                (name)
-                (value
-                  (quantity))))))))
+      (channel
+        (channelheader
+          (extends))
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value)))))
     (submodules
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (vector)
-        (type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
     (connections
       (comment)
       (connection_group
@@ -4207,16 +4169,21 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector
-              (vector))
-            (plusplus))
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection_group
         (loop
           (param_name)
@@ -4228,16 +4195,21 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector
-              (vector))
-            (plusplus))
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection_group
         (loop
           (param_name)
@@ -4249,16 +4221,21 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector
-              (vector))
-            (plusplus))
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection_group
         (loop
           (param_name)
@@ -4266,299 +4243,404 @@ network LargeNet
           (to_value))
         (connection
           (src
-            (dottednamevector
-              (vector))
-            (plusplus))
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
-          (channelspec
-            (channelspec_header))
+          (name)
           (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
           (src
-            (dottednamevector
-              (vector))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
             (plusplus))))
-      (comment)
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)))
-      (comment)
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)))
-      (comment)
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)))
-      (comment)
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (dottednamevector)
-            (plusplus))
-          (arrow)
-          (channelspec
-            (channelspec_header))
-          (arrow)
-          (src
-            (dottednamevector
-              (vector)))))
-      (connection
-        (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (channelspec_header))
-        (arrow)
-        (src
-          (dottednamevector)))
-      (comment)
-      (connection
-        (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (channelspec_header))
-        (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
-      (connection
-        (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (channelspec_header))
-        (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
-      (connection
-        (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (channelspec_header))
-        (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
-      (connection
-        (src
-          (dottednamevector)
-          (plusplus))
-        (arrow)
-        (channelspec
-          (channelspec_header))
-        (arrow)
-        (src
-          (dottednamevector
-            (vector))
-          (plusplus))))))
+        (dest
+          (module
+            (name)
+            (index))
+          (gate
+            (name)
+            (plusplus)))))))
 
 ====
 MultiDomainGptp.ned (submodules)
@@ -4629,51 +4711,36 @@ module MultiDomainGptp like IGptp
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (compound_module
+  (module
     (name)
     (implements)
     (parameters
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
-      (param
+      (parameter
         (type)
         (name))
       (comment)
       (property
         (name)
-        (key
-          (values))))
+        (tag
+          (value_list))))
     (gates
       (gate
         (type)
@@ -4684,54 +4751,46 @@ module MultiDomainGptp like IGptp
     (submodules
       (submodule
         (name)
-        (vector)
+        (vector
+          (size))
         (like_expr)
         (like_type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
-          (param
+          (parameter
             (name)
-            (value
-              (functioncall
-                (funcname)
-                (exprlist))
-              (functioncall
-                (funcname)
-                (exprlist))))
-          (param
+            (value))
+          (parameter
             (name)
-            (value
-              (functioncall
-                (funcname)
-                (exprlist))))
-          (param
+            (value))
+          (parameter
             (name)
             (value))
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
-          (param
+          (parameter
             (name)
             (value))
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection_group
         (loop
@@ -4740,44 +4799,62 @@ module MultiDomainGptp like IGptp
           (to_value))
         (connection
           (src
-            (dottednamevector
-              (vector)))
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
           (arrow)
           (dest
-            (dottednamevector)
-            (plusplus)))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus))))
         (connection
           (src
-            (dottednamevector)
-            (plusplus))
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
           (arrow)
           (dest
-            (dottednamevector
-              (vector)))))
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
       (connection
         (src
-          (dottednamevector))
+          (gate
+            (name)))
         (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
+        (property
+          (name)
+          (tag
+            (value_list)))
         (arrow)
-        (src
-          (dottednamevector)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
+        (property
+          (name)
+          (tag
+            (value_list)))
         (arrow)
-        (src
-          (dottednamevector))))))
+        (dest
+          (gate
+            (name)))))))
 
 ====
 ArpTest.ned (types)
@@ -4852,69 +4929,38 @@ network ARPTest
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (network
-    (networkheader)
+    (name)
     (types
-      (localtypes
-        (localtype
-          (channel
-            (channelheader
-              (extends))
-            (parameters
-              (param
-                (name)
-                (value
-                  (quantity)))
-              (param
-                (name)
-                (value
-                  (quantity))))))
-        (localtype
-          (channel
-            (channelheader
-              (extends))
-            (parameters
-              (param
-                (name)
-                (value
-                  (quantity)))
-              (param
-                (name)
-                (value
-                  (quantity))))))))
+      (channel
+        (channelheader
+          (extends))
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))))
+      (channel
+        (channelheader
+          (extends))
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value)))))
     (submodules
       (submodule
         (name)
@@ -4922,131 +4968,161 @@ network ARPTest
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list))))))
     (connections
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus)))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
       (connection
         (src
-          (dottednamevector)
-          (plusplus))
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
         (arrow)
-        (channelspec
-          (channelspec_header))
+        (name)
         (arrow)
-        (src
-          (dottednamevector)
-          (plusplus))))))
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))))))
 
 ====
 ExtUpperIeee80211Interface.ned (extends, likename)
@@ -5154,213 +5230,86 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (compound_module
+  (module
     (name)
     (extends)
     (implements)
     (parameters
-      (param
+      (parameter
         (type)
         (name)
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
+          (tag
+            (value_list)))
         (value))
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem)
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem)
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value)))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (functioncall
-              (funcname)
-              (exprlist)))))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (functioncall
-              (funcname)
-              (exprlist)))))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (functioncall
-              (funcname)
-              (exprlist)))))
-      (param
-        (parampattern_value
-          (parampattern
-            (pattern
-              (pattern_elem
-                (pattern_name))
-              (pattern_elem
-                (pattern_name))))
-          (value
-            (functioncall
-              (funcname)
-              (exprlist))))))
+          (tag
+            (value_list)))
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value)))
     (gates
       (gate
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
+          (tag
+            (value_list)))
         (comment)))
     (submodules
       (submodule
@@ -5369,16 +5318,16 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (type)
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (like_expr)
@@ -5386,8 +5335,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (like_expr)
@@ -5395,27 +5344,19 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (like_expr)
         (like_type)
-        (condition)
+        (condition
+          (value))
         (parameters
           (property
             (name)
-            (key
-              (values)))))
-      (submodule
-        (name)
-        (like_expr)
-        (like_type)
-        (parameters
-          (property
-            (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (like_expr)
@@ -5423,8 +5364,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (parameters
           (property
             (name)
-            (key
-              (values)))))
+            (tag
+              (value_list)))))
       (submodule
         (name)
         (like_expr)
@@ -5432,114 +5373,187 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (parameters
           (property
             (name)
-            (key
-              (values))))))
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
     (connections
       (allowunconnected)
       (connection
         (src
-          (dottednamevector))
+          (gate
+            (name)))
         (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
-        (arrow)
-        (src
-          (dottednamevector)))
-      (connection
-        (src
-          (dottednamevector))
+        (property
+          (name)
+          (tag
+            (value_list)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
         (dest
-          (dottednamevector))
-        (loops_and_conditions
-          (loop_or_condition
-            (condition
-              (operator)))))
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
         (dest
-          (dottednamevector))
-        (loops_and_conditions
-          (loop_or_condition
-            (condition
-              (operator)))))
+          (module
+            (name))
+          (gate
+            (name)))
+        (condition
+          (value
+            (operator))))
       (connection
         (src
-          (dottednamevector))
-        (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
-        (arrow)
-        (src
-          (dottednamevector)))
-      (connection
-        (src
-          (dottednamevector))
-        (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
-        (arrow)
-        (src
-          (dottednamevector)))
-      (connection
-        (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name)))
+        (condition
+          (value
+            (operator))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
         (arrow)
         (dest
-          (dottednamevector)))
+          (module
+            (name))
+          (gate
+            (name))))
       (connection
         (src
-          (dottednamevector))
+          (module
+            (name))
+          (gate
+            (name)))
         (arrow)
-        (channelspec
-          (property
-            (name)
-            (key
-              (values))))
+        (property
+          (name)
+          (tag
+            (value_list)))
         (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
         (src
-          (dottednamevector))))))
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)))))))
 
 ====
 CellInfo.ned - from Simu5G (quantity)
@@ -5641,165 +5655,156 @@ simple CellInfo {
   (comment)
   (package
     (name))
-  (simple_module
+  (simple
     (name)
     (parameters
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity
-            (realconstant_ext))))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value)))))
@@ -5866,62 +5871,58 @@ simple TraCIScreenRecorder
   (package
     (name))
   (comment)
-  (simple_module
+  (simple
     (name)
     (parameters
       (property
         (name)
-        (key
-          (values)))
+        (tag
+          (value_list)))
       (property
         (name)
-        (key
-          (values)))
-      (param
+        (tag
+          (value_list)))
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity
-            (realconstant_ext))))
+          (tag
+            (value_list)))
+        (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
-        (value
-          (quantity)))
+          (tag
+            (value_list)))
+        (value))
       (comment))))
 
 ====
@@ -5936,21 +5937,15 @@ module Something {
 ---
 
 (nedfile
-  (compound_module
+  (module
     (name)
     (parameters
-      (param
+      (parameter
         (name)
-        (value
-          (functioncall
-            (funcname)
-            (exprlist))))
-      (param
+        (value))
+      (parameter
         (name)
-        (value
-          (functioncall
-            (funcname)
-            (exprlist)))))))
+        (value)))))
 
 ====
 PcpTrafficClassClassifier (array)
@@ -6000,70 +5995,51 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
   (package
     (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (import
-    (importspec
-      (importname)
-      (importname)
-      (importname)
-      (import_un_qname
-        (importname))))
+    (name))
   (comment)
-  (compound_module
+  (module
     (name)
     (extends)
     (implements)
     (parameters
-      (param
+      (parameter
         (type)
         (name)
         (inline_properties
           (name)
-          (key
-            (values)))
+          (tag
+            (value_list)))
         (value))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value
           (array
-            (exprlist
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))
-              (inline_comment)
-              (array
-                (exprlist))))))
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array))))
       (comment)
-      (param
+      (parameter
         (type)
         (name)
         (value))
       (comment)
       (property
         (name)
-        (key
-          (values))))))
+        (tag
+          (value_list))))))
