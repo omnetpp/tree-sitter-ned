@@ -20,8 +20,8 @@ module.exports = grammar({
             alias(seq($._property_namevalue, ";"), $.property),
             $.channel,
             $.channel_interface,
-            $.simple_module,
-            $.compound_module,
+            $.simple,
+            $.module,
             $.network,
             $.module_interface,
             ";",
@@ -46,8 +46,8 @@ module.exports = grammar({
     //   ), $.property),
     //   $.channel,
     //   $.channel_interface,
-    //   $.simple_module,
-    //   $.compound_module,
+    //   $.simple,
+    //   $.module,
     //   $.network,
     //   $.module_interface,
     //   ';'
@@ -189,7 +189,7 @@ module.exports = grammar({
 
     extendss: ($) => seq($.extends, repeat(seq(",", $.extends))),
 
-    simple_module: ($) =>
+    simple: ($) =>
       seq(
         $._simplemoduleheader,
         "{",
@@ -201,7 +201,7 @@ module.exports = grammar({
     _simplemoduleheader: ($) =>
       seq("simple", alias($._NAME, $.name), optional($._inheritance)),
 
-    compound_module: ($) =>
+    module: ($) =>
       seq(
         $._compoundmoduleheader,
         "{",
@@ -504,17 +504,17 @@ module.exports = grammar({
 
     _gatetype: ($) => alias(choice("input", "output", "inout"), $.type),
 
-    types: ($) => seq("types", ":", repeat($.localtypes)),
+    types: ($) => seq("types", ":", repeat($._localtypes)),
 
-    localtypes: ($) => prec.right(repeat1($.localtype)),
+    _localtypes: ($) => prec.right(repeat1($._localtype)),
 
-    localtype: ($) =>
+    _localtype: ($) =>
       choice(
         $.property_decl,
         $.channel,
         $.channel_interface,
-        $.simple_module,
-        $.compound_module,
+        $.simple,
+        $.module,
         $.network, // TODO is this needed here? not in DTD
         $.module_interface,
         ";",
@@ -788,7 +788,7 @@ module.exports = grammar({
 
     channelname: ($) => seq($._NAME, ":"),
 
-    condition: ($) => seq("if", $._expression),
+    condition: ($) => seq("if", alias($._expression, $.value)),
 
     ifblock: ($) =>
       seq($.condition, "{", repeat(choice($.connection, $.comment)), "}"),
