@@ -21,7 +21,7 @@ for folder in "$@"; do
     
     echo "Running tests in $folder:"
     # Find files with the given extension and write their absolute paths to list
-    find -name "*$extension" -exec realpath {} \; > "$cwd/list"
+    find -name "*.$extension" -exec realpath {} \; > "$cwd/list"
 
     # Change back to the original directory
     cd "$cwd" || exit 1
