@@ -1,0 +1,6917 @@
+==================
+IRadioVisualizer.ned & ILinkLayer.ned (module interface)
+==================
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.visualizer.contract;
+
+//
+// This module interface allows configuring different ~IRadioVisualizer
+// submodules from INI files. Such a visualizer displays radios.
+//
+// @see ~RadioCanvasVisualizer, ~RadioOsgVisualizer, ~RadioVisualizer, ~RadioVisualizerBase
+//
+moduleinterface IRadioVisualizer extends IVisualizer
+{
+    parameters:
+        @display("i=block/app");
+}
+
+moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
+{
+    parameters:
+        @display("i=block/rxtx");
+}
+
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (comment)
+  (moduleinterface
+    (extends)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))))
+  (moduleinterface
+    (extends)
+    (extends)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list))))))
+
+================
+EthernetLink.ned (channel)
+================
+
+//
+// Copyright (C) 2012 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.node.ethernet;
+
+import inet.common.Cable;
+
+//
+// Base for Ethernet link types. Propagation delay can be specified with the
+// length of the cable, i.e. in meters instead of nanoseconds or microseconds.
+//
+channel EthernetLink extends Cable
+{
+    double length @unit(m) = default(10m);
+    delay = default(replaceUnit(length / 2e8, "s"));
+}
+
+//
+// 10 megabit/sec Ethernet link
+//
+channel Eth10M extends EthernetLink
+{
+    datarate = 10Mbps;
+}
+
+//
+// 100 megabit/sec Ethernet link
+//
+channel Eth100M extends EthernetLink
+{
+    datarate = 100Mbps;
+}
+
+//
+// 1 gigabit/sec Ethernet link
+//
+channel Eth1G extends EthernetLink
+{
+    datarate = 1Gbps;
+}
+
+//
+// 10 gigabit/sec Ethernet link
+//
+channel Eth10G extends EthernetLink
+{
+    datarate = 10Gbps;
+}
+
+//
+// 40 gigabit/sec Ethernet link
+//
+channel Eth40G extends EthernetLink
+{
+    datarate = 40Gbps;
+}
+
+//
+// 100 gigabit/sec Ethernet link
+//
+channel Eth100G extends EthernetLink
+{
+    datarate = 100Gbps;
+}
+
+//
+// 200 gigabit/sec Ethernet link
+//
+channel Eth200G extends EthernetLink
+{
+    datarate = 200Gbps;
+}
+
+//
+// 400 gigabit/sec Ethernet link
+//
+channel Eth400G extends EthernetLink
+{
+    datarate = 400Gbps;
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value)))))
+
+====
+FlowMeasurementRecorder.ned (properties)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.queueing.flow;
+
+import inet.queueing.base.PacketFlowBase;
+import inet.queueing.contract.IPacketFlow;
+
+//
+// This module is part of the flow measurement infrastructure. It can be used
+// to record the collected statistics and also to terminate the flow measurements.
+//
+// The flow measurement statistics are collected for every bit individually.
+// The measurement starts from the moment the bit enters the flow and continues
+// up to the point where the bit exits the flow. The collected statistics can
+// be recorded multiple times during this time. The flow measurement tracks
+// bits individually using their unique identity.
+//
+// @see ~FlowMeasurementStarter
+//
+simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
+{
+    parameters:
+        object packetFilter = default("*"); // Which packets are considered, matches all packets by default
+        int offset @unit(b) = default(0b); // Designates the packet part to be measured
+        int length @unit(b) = default(-1b); // Designates the packet part to be measured
+        string flowName = default(""); // Use packet flow to separate measurement from other measurements
+        string measure = default("not packetEvent"); // Match expression for a combination of: packetEvent, elapsedTime, delayingTime, queueingTime, processingTime, transmissionTime, propagationTime
+        bool endMeasurement = default(true);
+        string packetEventFileName = default("results/" + expand("${configname}-") + fullPath() + "-packetEvent.json");
+        @class(FlowMeasurementRecorder);
+        @display("i=block/timer");
+        @signal[packetFlowMeasured](type=inet::Packet);
+        @signal[packetFlowEnded](type=inet::Packet);
+        // the statistic value is the throughput of the measured flow
+        @statistic[flowDataRate](title="flow data rate"; source=throughput(packetLength(demuxFlow(packetFlowMeasured))); record=vector; unit=bps; interpolationmode=linear);
+        // the statistical value is the time difference of the current simulation time and the creation time of the bit
+        @statistic[bitLifeTime](title="bit life time"; source=weightTimes(lengthWeightedValuePerRegion(lifeTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the elapsed time from the moment the bit entered the flow
+        @statistic[bitElapsedTime](title="bit elapsed time"; source=weightTimes(lengthWeightedValuePerRegion(elapsedTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the delaying time of the bit for all delayers where the bit was delayed
+        @statistic[totalBitDelayingTime](title="total bit delaying time"; source=weightTimes(lengthWeightedValuePerRegion(delayingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the processing time of the bit for all processors where the bit was processed
+        @statistic[totalBitProcessingTime](title="total bit processing time"; source=weightTimes(lengthWeightedValuePerRegion(processingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the queueing time of the bit for all queues where the bit was enqueued
+        @statistic[totalBitQueueingTime](title="total bit queueing time"; source=weightTimes(lengthWeightedValuePerRegion(queueingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the propagation time of the bit for all channels where the bit was propagated
+        @statistic[totalBitPropagationTime](title="total bit propagation time"; source=weightTimes(lengthWeightedValuePerRegion(propagationTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the transmission duration of the bit for all transmitters where the bit was transmitted
+        @statistic[totalBitTransmissionTime](title="total bit transmission time"; source=weightTimes(lengthWeightedValuePerRegion(transmissionTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the transmission duration of the complete packets for all transmitters where the bit was transmitted
+        @statistic[totalPacketTransmissionTimePerBit](title="total packet transmission time per bit"; source=weightTimes(lengthWeightedValuePerRegion(packetTransmssionTimePerRegion(demuxFlow(packetFlowMeasured)))); record=histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the time difference of the current simulation time and the creation time of any bit in the region
+        @statistic[bitLifeTimePerRegion](title="bit life time per region"; source=dropWeight(lengthWeightedValuePerRegion(lifeTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the elapsed time from the moment any bit in the region entered the flow
+        @statistic[bitElapsedTimePerRegion](title="bit elapsed time per region"; source=dropWeight(lengthWeightedValuePerRegion(elapsedTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the sum of the delaying time of any bit in the region for all delayers where that particular bit was delayed
+        @statistic[totalBitDelayingTimePerRegion](title="total bit delaying time per region"; source=dropWeight(lengthWeightedValuePerRegion(delayingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the sum of the processing time of any bit in the region for all processors where that particular bit was processed
+        @statistic[totalBitProcessingTimePerRegion](title="total bit processing time per region"; source=dropWeight(lengthWeightedValuePerRegion(processingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the sum of the queueing time of any bit in the region for all queues where that particular bit was enqueued
+        @statistic[totalBitQueueingTimePerRegion](title="total bit queueing time per region"; source=dropWeight(lengthWeightedValuePerRegion(queueingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the sum of the propagation time of any bit in the region for all channels where that particular bit was propagated
+        @statistic[totalBitPropagationTimePerRegion](title="total bit propagation time per region"; source=dropWeight(lengthWeightedValuePerRegion(propagationTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the sum of the transmission duration of any bit in the region for all transmitters where that particular bit was transmitted
+        @statistic[totalBitTransmissionTimePerRegion](title="total bit transmission time per region"; source=dropWeight(lengthWeightedValuePerRegion(transmissionTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value (the same for all bits in the region) is the sum of the transmission duration of the complete packets for all transmitters where the particular bit of the region was transmitted
+        @statistic[totalPacketTransmissionTimePerRegion](title="total packet transmission time per region"; source=dropWeight(lengthWeightedValuePerRegion(packetTransmissionTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector?,histogram?; unit=s; interpolationmode=none);
+        // the statistical value is the time difference of the current simulation time and the creation time of any bit in the region
+        @statistic[meanBitLifeTimePerPacket](title="mean bit life time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(lifeTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the elapsed time from the moment any bit in the region entered the flow
+        @statistic[meanBitElapsedTimePerPacket](title="mean bit elapsed time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(elapsedTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the delaying time of any bit in the region for all delayers where that particular bit was delayed
+        @statistic[meanTotalBitDelayingTimePerPacket](title="mean total bit delaying time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(delayingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the processing time of any bit in the region for all processors where that particular bit was processed
+        @statistic[meanTotalBitProcessingTimePerPacket](title="mean total bit processing time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(processingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the queueing time of any bit in the region for all queues where that particular bit was enqueued
+        @statistic[meanTotalBitQueueingTimePerPacket](title="mean total bit queueing time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(queueingTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the propagation time of any bit in the region for all channels where that particular bit was propagated
+        @statistic[meanTotalBitPropagationTimePerPacket](title="mean total bit propagation time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(propagationTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the transmission duration of any bit in the region for all transmitters where that particular bit was transmitted
+        @statistic[meanTotalBitTransmissionTimePerPacket](title="mean total bit transmission time per packet"; source=weightedMeanPerGroup(groupRegionsPerPacket(transmissionTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the sum of the transmission duration of the complete packets for all transmitters where the particular bit of the region was transmitted
+        @statistic[meanTotalPacketTransmissionTime](title="mean total packet transmission time"; source=weightedMeanPerGroup(groupRegionsPerPacket(packetTransmissionTimePerRegion(demuxFlow(packetFlowMeasured)))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the difference of subsequent values of the mean bit elapsed time per packet
+        @statistic[packetJitter](title="packet jitter"; source=jitter(weightedMeanPerGroup(groupRegionsPerPacket(elapsedTimePerRegion(demuxFlow(packetFlowMeasured))))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the difference of the current and the mean bit elapsed time per packet
+        @statistic[packetDelayDifferenceToMean](title="packet delay difference to mean"; source=differenceToMean(weightedMeanPerGroup(groupRegionsPerPacket(elapsedTimePerRegion(demuxFlow(packetFlowMeasured))))); record=vector,histogram; unit=s; interpolationmode=none);
+        // the statistical value is the variation of the mean bit elapsed time per packet
+        @statistic[packetDelayVariation](title="packet delay variation"; source=stddev(weightedMeanPerGroup(groupRegionsPerPacket(elapsedTimePerRegion(demuxFlow(packetFlowMeasured))))); record=vector,histogram; unit=s);
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (simple
+    (name)
+    (extends)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))))))
+
+====
+IHook.ned (module interface)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.common;
+
+//
+// Generic module that can be inserted at some points in the model
+//
+moduleinterface IHook
+{
+    @display("i=block/socket");
+    gates:
+        input in;
+        output out;
+}
+
+
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (comment)
+  (moduleinterface
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name))
+      (gate
+        (type)
+        (name)))))
+
+====
+IntegratedMultiCanvasVisualizer.ned (import, package, parameters, submodules)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.visualizer.canvas.integrated;
+
+import inet.visualizer.contract.IChannelVisualizer;
+import inet.visualizer.contract.IDataLinkVisualizer;
+import inet.visualizer.contract.IEnergyStorageVisualizer;
+import inet.visualizer.contract.IFailureProtectionConfigurationVisualizer;
+import inet.visualizer.contract.IGateScheduleVisualizer;
+import inet.visualizer.contract.IIeee80211Visualizer;
+import inet.visualizer.contract.IInfoVisualizer;
+import inet.visualizer.contract.IIntegratedVisualizer;
+import inet.visualizer.contract.IInterfaceTableVisualizer;
+import inet.visualizer.contract.ILinkBreakVisualizer;
+import inet.visualizer.contract.IMediumVisualizer;
+import inet.visualizer.contract.IMobilityVisualizer;
+import inet.visualizer.contract.INetworkConnectionVisualizer;
+import inet.visualizer.contract.INetworkNodeVisualizer;
+import inet.visualizer.contract.INetworkRouteVisualizer;
+import inet.visualizer.contract.IPacketDropVisualizer;
+import inet.visualizer.contract.IPhysicalEnvironmentVisualizer;
+import inet.visualizer.contract.IPhysicalLinkVisualizer;
+import inet.visualizer.contract.IQueueVisualizer;
+import inet.visualizer.contract.IRadioVisualizer;
+import inet.visualizer.contract.IRoutingTableVisualizer;
+import inet.visualizer.contract.ISceneVisualizer;
+import inet.visualizer.contract.IStatisticVisualizer;
+import inet.visualizer.contract.IStreamRedundancyConfigurationVisualizer;
+import inet.visualizer.contract.ITracingObstacleLossVisualizer;
+import inet.visualizer.contract.ITransportConnectionVisualizer;
+import inet.visualizer.contract.ITransportRouteVisualizer;
+
+
+//
+// This module integrates all canvas visualizers into a single module. It
+// supports disabling any submodule visualizer by providing an empty string as
+// its type.
+//
+// @see ~IntegratedOsgVisualizer, ~IntegratedVisualizer, ~IIntegratedVisualizer.
+//
+module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
+{
+    parameters:
+        @display("i=block/app");
+        int numSceneVisualizers = default(1);
+        int numPhysicalEnvironmentVisualizers = default(1);
+        int numNetworkNodeVisualizers = default(1);
+        int numNetworkConnectionVisualizers = default(1);
+        int numMobilityVisualizers = default(1);
+        int numStatisticVisualizers = default(1);
+        int numInfoVisualizers = default(1);
+        int numEnergyStorageVisualizers = default(1);
+        int numMediumVisualizers = default(1);
+        int numObstacleLossVisualizers = default(1);
+        int numPacketDropVisualizers = default(1);
+        int numQueueVisualizers = default(1);
+        int numGateScheduleVisualizers = default(1);
+        int numRadioVisualizers = default(1);
+        int numPhysicalLinkVisualizers = default(1);
+        int numInterfaceTableVisualizers = default(1);
+        int numDataLinkVisualizers = default(1);
+        int numLinkBreakVisualizers = default(1);
+        int numIeee80211Visualizers = default(1);
+        int numNetworkRouteVisualizers = default(1);
+        int numRoutingTableVisualizers = default(1);
+        int numTransportRouteVisualizers = default(1);
+        int numTransportConnectionVisualizers = default(1);
+        int numFailureProtectionConfigurationVisualizers = default(1);
+        int numStreamRedundancyConfigurationVisualizers = default(1);
+        int numChannelVisualizers = default(1);
+        *.visualizationTargetModule = default("^.^");
+        *.visualizationSubjectModule = default("^.^");
+        *.networkNodeVisualizerModule = default(absPath(".networkNodeVisualizer[0]"));
+    submodules:
+        sceneVisualizer[numSceneVisualizers]: <default("SceneCanvasVisualizer")> like ISceneVisualizer {
+            parameters:
+                @display("p=150,100,row,100");
+        }
+        physicalEnvironmentVisualizer[numPhysicalEnvironmentVisualizers]: <default("PhysicalEnvironmentCanvasVisualizer")> like IPhysicalEnvironmentVisualizer {
+            parameters:
+                @display("p=150,200,row,100");
+        }
+        networkNodeVisualizer[numNetworkNodeVisualizers]: <default("NetworkNodeCanvasVisualizer")> like INetworkNodeVisualizer {
+            parameters:
+                @display("p=150,300,row,100");
+        }
+        networkConnectionVisualizer[numNetworkConnectionVisualizers]: <default("NetworkConnectionCanvasVisualizer")> like INetworkConnectionVisualizer {
+            parameters:
+                @display("p=150,400,row,100");
+        }
+        mobilityVisualizer[numMobilityVisualizers]: <default("MobilityCanvasVisualizer")> like IMobilityVisualizer {
+            parameters:
+                @display("p=150,500,row,100");
+        }
+        statisticVisualizer[numStatisticVisualizers]: <default("StatisticCanvasVisualizer")> like IStatisticVisualizer {
+            parameters:
+                @display("p=150,600,row,100");
+        }
+        infoVisualizer[numInfoVisualizers]: <default("InfoCanvasVisualizer")> like IInfoVisualizer {
+            parameters:
+                @display("p=150,700,row,100");
+        }
+        energyStorageVisualizer[numEnergyStorageVisualizers]: <default("EnergyStorageCanvasVisualizer")> like IEnergyStorageVisualizer {
+            parameters:
+                @display("p=150,800,row,100");
+        }
+        mediumVisualizer[numMediumVisualizers]: <default("MediumCanvasVisualizer")> like IMediumVisualizer {
+            parameters:
+                @display("p=150,900,row,100");
+        }
+        obstacleLossVisualizer[numObstacleLossVisualizers]: <default("TracingObstacleLossCanvasVisualizer")> like ITracingObstacleLossVisualizer {
+            parameters:
+                @display("p=150,1000,row,100");
+        }
+        packetDropVisualizer[numPacketDropVisualizers]: <default("PacketDropCanvasVisualizer")> like IPacketDropVisualizer {
+            parameters:
+                @display("p=150,1100,row,100");
+        }
+        queueVisualizer[numQueueVisualizers]: <default("QueueCanvasVisualizer")> like IQueueVisualizer {
+            parameters:
+                @display("p=450,100,row,100");
+        }
+        gateScheduleVisualizer[numGateScheduleVisualizers]: <default("GateScheduleCanvasVisualizer")> like IGateScheduleVisualizer {
+            parameters:
+                @display("p=450,200,row,100");
+        }
+        radioVisualizer[numRadioVisualizers]: <default("RadioCanvasVisualizer")> like IRadioVisualizer {
+            parameters:
+                @display("p=450,300,row,100");
+        }
+        physicalLinkVisualizer[numPhysicalLinkVisualizers]: <default("PhysicalLinkCanvasVisualizer")> like IPhysicalLinkVisualizer {
+            parameters:
+                @display("p=450,400,row,100");
+        }
+        interfaceTableVisualizer[numInterfaceTableVisualizers]: <default("InterfaceTableCanvasVisualizer")> like IInterfaceTableVisualizer {
+            parameters:
+                @display("p=450,500,row,100");
+        }
+        dataLinkVisualizer[numDataLinkVisualizers]: <default("DataLinkCanvasVisualizer")> like IDataLinkVisualizer {
+            parameters:
+                @display("p=450,600,row,100");
+        }
+        linkBreakVisualizer[numLinkBreakVisualizers]: <default("LinkBreakCanvasVisualizer")> like ILinkBreakVisualizer {
+            parameters:
+                @display("p=450,700,row,100");
+        }
+        ieee80211Visualizer[numIeee80211Visualizers]: <default("Ieee80211CanvasVisualizer")> like IIeee80211Visualizer {
+            parameters:
+                @display("p=450,800,row,25,row,100");
+        }
+        networkRouteVisualizer[numNetworkRouteVisualizers]: <default("NetworkRouteCanvasVisualizer")> like INetworkRouteVisualizer {
+            parameters:
+                @display("p=450,900,row,100");
+        }
+        routingTableVisualizer[numRoutingTableVisualizers]: <default("RoutingTableCanvasVisualizer")> like IRoutingTableVisualizer {
+            parameters:
+                @display("p=450,1000,row,100");
+        }
+        transportRouteVisualizer[numTransportRouteVisualizers]: <default("TransportRouteCanvasVisualizer")> like ITransportRouteVisualizer {
+            parameters:
+                @display("p=450,1100,row,100");
+        }
+        transportConnectionVisualizer[numTransportConnectionVisualizers]: <default("TransportConnectionCanvasVisualizer")> like ITransportConnectionVisualizer {
+            parameters:
+                @display("p=450,1200,row,100");
+        }
+        failureProtectionConfigurationVisualizer[numFailureProtectionConfigurationVisualizers]: <default("FailureProtectionConfigurationCanvasVisualizer")> like IFailureProtectionConfigurationVisualizer {
+            parameters:
+                @display("p=750,100");
+        }
+        streamRedundancyConfigurationVisualizer[numStreamRedundancyConfigurationVisualizers]: <default("StreamRedundancyConfigurationCanvasVisualizer")> like IStreamRedundancyConfigurationVisualizer {
+            parameters:
+                @display("p=750,200");
+        }
+        channelVisualizer[numChannelVisualizers]: <default("ChannelCanvasVisualizer")> like IChannelVisualizer {
+            parameters:
+                @display("p=750,300");
+        }
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (implements)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value)))
+    (submodules
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))))
+
+====
+EthernetMac.ned (parameters, gates)
+====
+
+//
+// Copyright (C) 2006 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.linklayer.ethernet.basic;
+
+import inet.linklayer.contract.IEtherMac;
+
+//
+// Ethernet MAC which supports full-duplex operation ONLY.
+// See the ~IEtherMac for general information.
+//
+// Most of today's Ethernet networks are switched and operate
+// in full-duplex mode. Full-duplex transmission can be used for
+// point-to-point connections only. Since full-duplex connections
+// cannot be shared, collisions are eliminated. This setup eliminates
+// most of the need for the CSMA/CD access control mechanism because
+// there is no need to determine whether the connection is already
+// being used. This allows for a much simpler simulation model
+// for the MAC. (In "traditional" Ethernet simulations, most of the code
+// deals with the shared medium and the CSMA/CD mechanism.)
+// ~EthernetMac implements Ethernet without shared medium and CSMA/CD.
+// (If you need half-duplex operation, see ~EthernetCsmaMac which is for a full-blown
+// and therefore more complicated Ethernet MAC model.)
+//
+// ~EthernetMac performs transmission and reception of frames.
+// It does not do encapsulation/decapsulation; see ~Ieee8022Llc and ~EthernetEncapsulation
+// for that.
+//
+// Supported variations:
+// - 10Mb Ethernet (full-duplex mode)
+// - 100Mb Ethernet (full-duplex mode)
+// - 1Gb Ethernet (full-duplex mode)
+// - 10Gb Ethernet (full-duplex mode)
+// - 40Gb Ethernet (full-duplex mode)
+// - 100Gb Ethernet (full-duplex mode)
+//
+// Supports all three Ethernet frame types. (It handles ~EtherFrame message class;
+// specific frame classes (Ethernet-II, IEEE 802.3) are subclassed from that one.)
+// RAW mode (only used by the IPX protocol) is not supported.
+//
+// <b>Operation</b>
+//
+// Processing of frames received from higher layers:
+// - if the source address in the frame is empty, fill it out
+// - frames get queued up until transmission
+// - transmits the frame when the transmitter is ready
+// - can send a PAUSE message if requested by higher layers (PAUSE protocol,
+//   used in switches).
+//
+// Processing of frames incoming from the network:
+// - receive frame from the network
+// - CRC checking (frames with the error bit set are discarded).
+// - respond to PAUSE frames
+// - in promiscuous mode, pass up all received frames;
+//   otherwise, only frames with matching MAC addresses and
+//   broadcast frames are passed up.
+//
+// The module does not perform encapsulation or decapsulation of frames --
+// this is done by higher layers (~EthernetEncapsulation).
+//
+// When a frame is received from the higher layers, it must be an ~EtherFrame,
+// and with all protocol fields filled out
+// (including the destination MAC address). The source address, if left empty,
+// will be filled in. Then the frame is queued and transmitted.
+//
+// Data frames received from the network are `EtherFrames`. They are passed to
+// the higher layers without modification.
+// Also, the module properly responds to PAUSE frames but never sends them
+// by itself -- however, it transmits PAUSE frames received from upper layers.
+// See <a href="ether-pause.html">PAUSE handling</a> for more info.
+//
+// For more info see <a href="ether-overview.html">Ethernet Model Overview</a>.
+//
+// <b>Disabling and disconnecting</b>
+//
+// If the MAC is not connected to the network ("cable unplugged"), it will
+// start up in "disabled" mode. A disabled MAC simply discards any messages
+// it receives. It is currently not supported to dynamically connect/disconnect
+// a MAC.
+//
+//
+// <b>Queueing</b>
+//
+// In routers, MAC relies on an external queue module (see ~IPacketQueue)
+// to model finite buffer, implement QoS, and/or RED, and requests packets
+// from this external queue one-by-one.
+//
+// In hosts, no such queue is used, so MAC contains an internal
+// queue to store packets waiting for transmission.
+// Conceptually, the queue is of infinite size, but for better diagnostics
+// one can specify a hard limit in the queue parameter -- if this is
+// exceeded, the simulation stops with an error.
+//
+//
+// <b>Physical layer messaging</b>
+//
+// Please see <a href="physical.html">Messaging on the physical layer</a>.
+//
+// @see ~EthernetCsmaMac, ~EthernetInterface, ~IPacketQueue, ~EthernetEncapsulation, ~Ieee8022Llc
+// @see ~EthernetMacHeader, ~Ieee8022LlcHeader, ~EthernetFcs
+//
+module EthernetMac like IEtherMac
+{
+    parameters:
+        string interfaceTableModule;        // The path to the InterfaceTable module
+        string displayStringTextFormat = default("rate: %b\nsent: %s, rcvd: %r\nqueue: %q, drop: %d");
+        bool sendRawBytes = default(false); // When true, packets are serialized into a sequence of bytes before sending out
+        bool promiscuous = default(false);  // If true, all packets are received; otherwise, only the
+                                            // ones with a matching destination MAC address
+        bool duplexMode;                    // Must be set to "true", as EthernetMac does not support half-duplex operation
+                                            // (parameter is present to reduce the risk of accidental misconfiguration)
+        bool allowNonstandardBitrate = default(false); // Allows any bitrate and uses the first larger bitrate specified parameters
+        int mtu @unit(B) = default(1500B);
+        string fcsMode @enum("declared", "computed");
+        @lifecycleSupport;
+        double stopOperationExtraTime @unit(s) = default(-1s);    // Extra time after the lifecycle stop operation finished
+        double stopOperationTimeout @unit(s) = default(2s);    // Timeout value for the lifecycle stop operation
+        @class(EthernetMac);
+        @display("i=block/rxtx");
+
+        @signal[txPk](type=inet::Packet);
+        @signal[rxPkOk](type=inet::Packet);
+        @signal[txPausePkUnits](type=long);
+        @signal[rxPausePkUnits](type=long);
+        @signal[rxPkFromHl](type=inet::Packet);
+        @signal[packetDropped](type=inet::Packet);
+        @signal[packetSentToLower](type=inet::Packet);
+        @signal[packetReceivedFromLower](type=inet::Packet);
+        @signal[packetSentToUpper](type=inet::Packet);
+        @signal[packetReceivedFromUpper](type=inet::Packet);
+        @signal[transmissionStateChanged](type=long); // Enum=MacTransmitState
+        @signal[receptionStateChanged](type=long); // Enum=MacReceiveState
+        @signal[transmissionStarted](type=inet::physicallayer::EthernetSignalBase);
+        @signal[transmissionEnded](type=inet::physicallayer::EthernetSignalBase);
+        @signal[receptionEnded](type=inet::physicallayer::Signal);
+
+        @statistic[transmitting](title="transmitting state"; type=int; source=count(transmissionStarted) - count(transmissionEnded); record=vector; interpolationmode=sample-hold);
+        @statistic[throughput](title="throughput"; unit=bps; source=throughput(transmissionEnded); record=vector,histogram; interpolationmode=linear);
+        @statistic[utilization](title="utilization"; unit=%; source=100 * utilization(count(transmissionStarted) - count(transmissionEnded)); record=vector,histogram; interpolationmode=linear);
+        @statistic[txPk](title="packets transmitted"; source=packetSentToLower; record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
+        @statistic[rxPkOk](title="packets received OK"; source=rxPkOk; record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
+        @statistic[passedUpPk](title="packets passed to higher layer"; source=packetSentToUpper; record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
+        @statistic[txPausePkUnits](title="pause units sent"; record=count,sum,vector; interpolationmode=none);
+        @statistic[rxPausePkUnits](title="pause units received"; record=count,sum,vector; interpolationmode=none);
+        @statistic[packetReceivedFromUpper](title="packet bytes from higher layer"; source=packetReceivedFromUpper; record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
+        @statistic[packetDropIncorrectlyReceived](title="packet drop: incorrectly received"; source=packetDropReasonIsIncorrectlyReceived(packetDropped); record=count,sum(packetBytes),vector(packetBytes); interpolationmode=none);
+        @statistic[packetDropInterfaceDown](title="packet drop: interface down"; source=packetDropReasonIsInterfaceDown(packetDropped); record=count,sum(packetBytes),vector(packetBytes); interpolationmode=none);
+        @statistic[packetDropNotAddressedToUs](title="packet drop: not addressed to us"; source=packetDropReasonIsNotAddressedToUs(packetDropped); record=count,sum(packetBytes),vector(packetBytes); interpolationmode=none);
+
+    gates:
+        input upperLayerIn @labels(EtherFrame);    // To ~EthernetEncapsulation or ~IMacRelayUnit
+        output upperLayerOut @labels(EtherFrame);  // To ~EthernetEncapsulation or ~IMacRelayUnit
+        inout phys @labels(EthernetSignal);        // To the network
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list))))
+      (property
+        (name))
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (comment))
+      (gate
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (comment))
+      (gate
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (comment)))))
+
+====
+EarthCloud.ned (network, connections)
+====
+
+//
+// Copyright (C) 2012 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.examples.internetcloud.earthcloud;
+
+import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
+import inet.node.ethernet.Eth100M;
+import inet.node.inet.Router;
+import inet.node.inet.StandardHost;
+import inet.node.internetcloud.InternetCloud;
+
+
+network SimpleContinentCloud
+{
+    parameters:
+        int numClients;
+        @display("i=device/lan-ring");
+    gates:
+        inout pppg[];
+    submodules:
+        router: Router {
+            @display("p=250,100");
+        }
+        client[numClients]: StandardHost {
+            @display("p=400,100,col,100");
+        }
+        server: StandardHost {
+            @display("p=100,100");
+        }
+    connections:
+        for i=0..sizeof(pppg)-1 {
+            pppg[i] <--> router.pppg++;
+        }
+        router.ethg++ <--> Eth100M <--> server.ethg++;
+        for i=0..numClients-1 {
+            router.ethg++ <--> Eth100M <--> client[i].ethg++;
+        }
+}
+
+network EarthCloud
+{
+    @display("bgi=maps/world;bgb=875,414");
+    submodules:
+        configurator: Ipv4NetworkConfigurator {
+            parameters:
+                @display("p=100,200;is=s");
+        }
+
+        internet: InternetCloud {
+            @display("p=387,185;is=vl");
+        }
+        africa: SimpleContinentCloud {
+            @display("p=465,288");
+        }
+        asia: SimpleContinentCloud {
+            @display("p=662,121");
+        }
+        australia: SimpleContinentCloud {
+            @display("p=759,299;");
+        }
+        europe: SimpleContinentCloud {
+            @display("p=446,77");
+        }
+        northAmerica: SimpleContinentCloud {
+            @display("p=170,120");
+        }
+        southAmerica: SimpleContinentCloud {
+            @display("p=260,270");
+        }
+    connections:
+        africa.pppg++ <--> {  datarate = 100Mbps; delay = 2ms; } <--> internet.pppg++;
+        asia.pppg++ <--> {  datarate = 100Mbps; delay = 2ms; } <--> internet.pppg++;
+        australia.pppg++ <--> {  datarate = 100Mbps; delay = 2ms; } <--> internet.pppg++;
+        europe.pppg++ <--> {  datarate = 100Mbps; delay = 2ms; } <--> internet.pppg++;
+        northAmerica.pppg++ <--> {  datarate = 100Mbps; delay = 2ms; } <--> internet.pppg++;
+        southAmerica.pppg++ <--> {  datarate = 100Mbps; delay = 2ms; } <--> internet.pppg++;
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (network
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name)
+        (vector)))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value
+            (operator)))
+        (connection
+          (src
+            (gate
+              (name)
+              (index)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))))))
+  (network
+    (name)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (parameter
+          (name)
+          (value))
+        (parameter
+          (name)
+          (value))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))))))
+
+====
+Ieee8021qFilter.ned (streamFilter[i].out --> sm[j].in++ if streamFilterTable.get(i).get("gate") == j;)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.linklayer.ieee8021q;
+
+import inet.queueing.common.BackPressureBarrier;
+import inet.queueing.common.PacketMultiplexer;
+import inet.queueing.contract.IPacketClassifier;
+import inet.queueing.contract.IPacketFilter;
+import inet.queueing.contract.IPacketGate;
+import inet.queueing.contract.IPacketMeter;
+
+//
+// This module implements the IEEE 802.1Q per-stream filtering and policing.
+// The relationship between streams, gates, and meters is not one-to-one. The
+// number of streams, gates, and meters can be different, and the module will take
+// care of the connections between the submodules based on the `streamFilterTable`
+// parameter.
+//
+// In order to define the behavior of a default path, you can add an entry to the
+// `streamFilterTable` that matches all streams:
+// {stream: "*", gate: n, meter: n}
+//
+module Ieee8021qFilter like IPacketFilter
+{
+    parameters:
+        int numStreams; // The number of different streams to filter for
+        int numGates; // The number of gates
+        int numMeters; // The number of traffic meters
+        object streamFilterTable; // An array of objects where each object contains a stream name, gate index, and meter index, for example: [{stream: "s0", gate: 0, meter: 0}, ...]
+        @display("i=block/filter");
+    gates:
+        input in;
+        output out;
+    submodules:
+        classifier: <default("PriorityClassifier")> like IPacketClassifier {
+            @display("p=100,100");
+        }
+        streamFilter[numStreams]: <default("StreamFilter")> like IPacketFilter {
+            backpressure = default(true);
+            streamNameFilter = default(parent.streamFilterTable.get(index).get("stream"));
+            @display("p=300,100,column,150");
+        }
+        sm[numGates]: PacketMultiplexer {
+            displayStringTextFormat = default("");
+            @display("p=500,100,column,150");
+        }
+        gateFilter[numGates]: <default("BackPressureBasedFilter")> like IPacketFilter {
+            @display("p=700,100,column,150");
+        }
+        gate[numGates]: <default("InteractiveGate")> like IPacketGate {
+            @display("p=900,100,column,150");
+        }
+        gc[numGates]: <default("StreamClassifier")> like IPacketClassifier {
+            displayStringTextFormat = default("");
+            @display("p=1100,100,column,150;i=-;b=10,10,oval,grey,,1");
+        }
+        gm[numMeters]: PacketMultiplexer {
+            displayStringTextFormat = default("");
+            @display("p=1300,100,column,150");
+        }
+        meter[numMeters]: <default("DualRateThreeColorMeter")> like IPacketMeter {
+            @display("p=1500,100,column,150");
+        }
+        flowFilter[numMeters]: <default("LabelFilter")> like IPacketFilter {
+            labelFilter = default("green");
+            @display("p=1700,100,column,150");
+        }
+        multiplexer: PacketMultiplexer {
+            @display("p=1900,100");
+        }
+        barrier: BackPressureBarrier {
+            @display("p=2100,100");
+        }
+    connections allowunconnected:
+        in --> { @display("m=w"); } --> classifier.in;
+        for i=0..numStreams-1 {
+            classifier.out++ --> streamFilter[i].in;
+        }
+        for i=0..numStreams-1, for j=0..numGates-1 {
+            streamFilter[i].out --> sm[j].in++ if streamFilterTable.get(i).get("gate") == j;
+        }
+        for i=0..numGates-1 {
+            sm[i].out --> gateFilter[i].in;
+            gateFilter[i].out --> gate[i].in;
+            gate[i].out --> gc[i].in;
+        }
+        for i=0..numGates-1, for j=0..numMeters-1 {
+            gc[i].out++ --> gm[j].in++ if findArrayObjectElement(streamFilterTable, "gate", i, "meter", j) != null;
+        }
+        for i=0..numMeters-1 {
+            gm[i].out --> meter[i].in;
+            meter[i].out --> flowFilter[i].in;
+            flowFilter[i].out --> multiplexer.in++;
+        }
+        multiplexer.out --> barrier.in;
+        barrier.out --> { @display("m=e"); } --> out;
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name))
+      (gate
+        (type)
+        (name)))
+    (submodules
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (allowunconnected)
+      (connection
+        (src
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (condition
+            (value))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (condition
+            (value))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (gate
+            (name)))))))
+
+====
+LargeNet.ned - from inet-4.4.1 (2e8 mps)
+====
+
+//
+// Copyright (C) 2003 CTIE, Monash University
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+//
+
+
+package inet.examples.ethernet.lans;
+
+import inet.linklayer.ethernet.EtherBus;
+import inet.linklayer.ethernet.EtherHub;
+import inet.node.ethernet.EtherHost;
+import inet.node.ethernet.EtherSwitch;
+import ned.DatarateChannel;
+
+
+//
+// A 100Mb/s Ethernet cable. Part of ~LargeNet.
+//
+channel cable extends DatarateChannel
+{
+    parameters:
+        delay = 0.1us;
+        datarate = 100Mbps;
+}
+
+
+//
+// Several hosts on an Ethernet hub; part of ~LargeNet.
+//
+module SmallLAN
+{
+    parameters:
+        int h; // number of hosts on the hub
+        @display("i=old/cloud");
+    gates:
+        inout ethg;
+    submodules:
+        hub: EtherHub {
+            @display("p=400,100");
+        }
+        host[h]: EtherHost {
+            @display("p=100,200,row,150");
+        }
+    connections:
+        for i=0..h-1 {
+            hub.ethg++ <--> cable <--> host[i].ethg;
+        }
+        hub.ethg++ <--> ethg;
+}
+
+
+//
+// Several hosts and an Ethernet hub on a switch; part of ~LargeNet.
+//
+module MediumLAN
+{
+    parameters:
+        int n; // number of hosts on the switch
+        int h; // number of hosts on the hub
+        @display("i=old/cloud");
+    gates:
+        inout ethg;
+    submodules:
+        switch: EtherSwitch {
+            @display("p=625,100");
+        }
+        host[n]: EtherHost {
+            @display("p=100,200,row,150");
+        }
+        hub: EtherHub {
+            @display("p=625,300");
+        }
+        hhost[h]: EtherHost {
+            @display("p=325,400,row,150");
+        }
+    connections:
+        for i=0..n-1 {
+            switch.ethg++ <--> cable <--> host[i].ethg;
+        }
+
+        switch.ethg++ <--> ethg;
+
+        for i=0..h-1 {
+            hub.ethg++ <--> cable <--> hhost[i].ethg;
+        }
+
+        switch.ethg++ <--> cable <--> hub.ethg++;
+
+}
+
+
+//
+// Several hosts and an Ethernet hub on a switch. One port of the hub
+// connect to a 10Base2 segment. Part of ~LargeNet.
+//
+module LargeLAN
+{
+    parameters:
+        int n; // number of hosts on the switch
+        int h; // number of hosts on the hub
+        int b; // number of hosts on the bus
+        @display("i=old/cloud");
+    gates:
+        inout ethg;
+    types:
+        channel cabletobus extends DatarateChannel
+        {
+            parameters:
+                delay = 0s;
+                datarate = 10Mbps;
+        }
+    submodules:
+        switch: EtherSwitch {
+            @display("p=450,100");
+        }
+        host[n]: EtherHost {
+            @display("p=100,200,row,100");
+        }
+        hub: EtherHub {
+            @display("p=900,100");
+        }
+        hhost[h]: EtherHost {
+            @display("p=1050,100,col,100");
+        }
+        bus: EtherBus {
+            parameters:
+                positions = "5 10 15"; // every 5 meters
+                propagationSpeed = 2e8 mps;  // 1us = 200m
+                @display("b=800,5;o=#408060;p=450,300");
+        }
+        bhost[b]: EtherHost {
+            parameters:
+                @display("p=100,400,row,100");
+        }
+    connections:
+        for i=0..n-1 {
+            switch.ethg++ <--> cable <--> host[i].ethg;
+        }
+
+        switch.ethg++ <--> ethg;
+
+        for i=0..h-1 {
+            hub.ethg++ <--> cabletobus <--> hhost[i].ethg;
+        }
+
+        switch.ethg++ <--> cabletobus <--> hub.ethg++;
+
+        for i=0..b-1 {
+            bus.ethg++ <--> cabletobus <--> bhost[i].ethg;
+        }
+
+        bus.ethg++ <--> cabletobus <--> hub.ethg++;
+}
+
+//
+// A large Ethernet LAN -- see model description
+// <a href="largenet.html">here</a>.
+//
+network LargeNet
+{
+    parameters:
+        int n;   // length of the "backbone" (n>5!)
+        int bbs; // number of small LANs on "backbone" switches
+        int bbm; // number of medium LANs on "backbone" switches
+        int bbl; // number of large LANs on "backbone" switches
+        int as;  // number of small LANs on switch A
+        int am;  // number of medium LANs on switch A
+        int al;  // number of large LANs on switch A
+        int bs;  // number of small LANs on switch B
+        int bm;  // number of medium LANs on switch B
+        int bl;  // number of large LANs on switch B
+        int cs;  // number of small LANs on switch C
+        int cm;  // number of medium LANs on switch C
+        int cl;  // number of large LANs on switch C
+        int ds;  // number of small LANs on switch D
+        int dm;  // number of medium LANs on switch D
+        int dl;  // number of large LANs on switch D
+    types:
+        channel cabletoserver extends DatarateChannel
+        {
+            parameters:
+                delay = 0s;
+                datarate = 1Gbps;
+        }
+    submodules:
+        switchBB[n]: EtherSwitch {
+            @display("p=200,180,row,200");
+        }
+        slanBB[n*bbs]: SmallLAN {
+            @display("p=100,130,row,200");
+        }
+        mlanBB[n*bbm]: MediumLAN {
+            @display("p=200,80,row,200");
+        }
+        llanBB[n*bbl]: LargeLAN {
+            @display("p=200,280,row,200");
+        }
+        switchA: EtherSwitch {
+            @display("p=400,580");
+        }
+        serverA: EtherHost {
+            @display("p=550,580");
+        }
+        slanA[as]: SmallLAN {
+            @display("p=250,580");
+        }
+        mlanA[am]: MediumLAN {
+            @display("p=325,680");
+        }
+        llanA[al]: LargeLAN {
+            @display("p=475,680");
+        }
+        switchB: EtherSwitch {
+            @display("p=700,380");
+        }
+        serverB: EtherHost {
+            @display("p=850,380");
+        }
+        slanB[bs]: SmallLAN {
+            @display("p=550,380");
+        }
+        mlanB[bm]: MediumLAN {
+            @display("p=625,480");
+        }
+        llanB[bl]: LargeLAN {
+            @display("p=775,480");
+        }
+        switchC: EtherSwitch {
+            @display("p=1000,580");
+        }
+        serverC: EtherHost {
+            @display("p=1150,580");
+        }
+        slanC[cs]: SmallLAN {
+            @display("p=850,580");
+        }
+        mlanC[cm]: MediumLAN {
+            @display("p=925,680");
+        }
+        llanC[cl]: LargeLAN {
+            @display("p=1075,680");
+        }
+        switchD: EtherSwitch {
+            @display("p=1300,380");
+        }
+        serverD: EtherHost {
+            @display("p=1450,380");
+        }
+        slanD[ds]: SmallLAN {
+            @display("p=1150,380");
+        }
+        mlanD[dm]: MediumLAN {
+            @display("p=1225,480");
+        }
+        llanD[dl]: LargeLAN {
+            @display("p=1375,480");
+        }
+    connections:
+        // "backbone" switches
+        for k=0..n-1, for i=0..bbs-1 {
+            switchBB[k].ethg++ <--> cable <--> slanBB[k*bbs+i].ethg;
+        }
+        for k=0..n-1, for i=0..bbm-1 {
+            switchBB[k].ethg++ <--> cable <--> mlanBB[k*bbm+i].ethg;
+        }
+        for k=0..n-1, for i=0..bbl-1 {
+            switchBB[k].ethg++ <--> cable <--> llanBB[k*bbl+i].ethg;
+        }
+        for k=0..n-2 {
+            switchBB[k].ethg++ <--> cable <--> switchBB[k+1].ethg++;
+        }
+
+        // switch A
+        for i=0..as-1 {
+            switchA.ethg++ <--> cable <--> slanA[i].ethg;
+        }
+        for i=0..am-1 {
+            switchA.ethg++ <--> cable <--> mlanA[i].ethg;
+        }
+        for i=0..al-1 {
+            switchA.ethg++ <--> cable <--> llanA[i].ethg;
+        }
+        switchA.ethg++ <--> cabletoserver <--> serverA.ethg;
+
+        // switch B
+        for i=0..bs-1 {
+            switchB.ethg++ <--> cable <--> slanB[i].ethg;
+        }
+        for i=0..bm-1 {
+            switchB.ethg++ <--> cable <--> mlanB[i].ethg;
+        }
+        for i=0..bl-1 {
+            switchB.ethg++ <--> cable <--> llanB[i].ethg;
+        }
+        switchB.ethg++ <--> cabletoserver <--> serverB.ethg;
+
+        // switch C
+        for i=0..cs-1 {
+            switchC.ethg++ <--> cable <--> slanC[i].ethg;
+        }
+        for i=0..cm-1 {
+            switchC.ethg++ <--> cable <--> mlanC[i].ethg;
+        }
+        for i=0..cl-1 {
+            switchC.ethg++ <--> cable <--> llanC[i].ethg;
+        }
+        switchC.ethg++ <--> cabletoserver <--> serverC.ethg;
+
+        // switch D
+        for i=0..ds-1 {
+            switchD.ethg++ <--> cable <--> slanD[i].ethg;
+        }
+        for i=0..dm-1 {
+            switchD.ethg++ <--> cable <--> mlanD[i].ethg;
+        }
+        for i=0..dl-1 {
+            switchD.ethg++ <--> cable <--> llanD[i].ethg;
+        }
+        switchD.ethg++ <--> cabletoserver <--> serverD.ethg;
+
+        // connect switches
+        switchA.ethg++ <--> cable <--> switchB.ethg++;
+        switchB.ethg++ <--> cable <--> switchC.ethg++;
+        switchC.ethg++ <--> cable <--> switchD.ethg++;
+        switchB.ethg++ <--> cable <--> switchBB[4].ethg++;
+
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (channel
+    (name)
+    (extends)
+    (parameters
+      (parameter
+        (name)
+        (value))
+      (parameter
+        (name)
+        (value))))
+  (comment)
+  (module
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name)))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (dest
+          (gate
+            (name))))))
+  (comment)
+  (module
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name)))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (dest
+          (gate
+            (name))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))))
+  (comment)
+  (module
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name)))
+    (types
+      (channel
+        (name)
+        (extends)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value)))))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (comment)
+          (parameter
+            (name)
+            (value))
+          (comment)
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (dest
+          (gate
+            (name))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))))
+  (comment)
+  (network
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment))
+    (types
+      (channel
+        (name)
+        (extends)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value)))))
+    (submodules
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (vector
+          (size))
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name)
+            (index))
+          (gate
+            (name)
+            (plusplus)))))))
+
+====
+MultiDomainGptp.ned (submodules)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.linklayer.ieee8021as;
+
+import inet.linklayer.contract.IGptp;
+import inet.queueing.classifier.PacketClassifier;
+import inet.queueing.common.PacketMultiplexer;
+
+//
+// This module combines multiple ~Gptp modules, one per time domain into a multi
+// time domain time synchronization module. Each gPTP time domain is automatically
+// configured to use the corresponding subclock of the clock passed into this
+// module.
+//
+// @see ~MultiClock
+//
+module MultiDomainGptp like IGptp
+{
+    parameters:
+        string clockModule; // Relative module path of the multi clock
+        string interfaceTableModule; // Relative module path of the interface table
+        int numDomains; // Number of time synchronization domains
+        string gptpNodeType; // @enum("GptpNodeType"): MASTER_NODE, BRIDGE_NODE, SLAVE_NODE
+        @display("i=block/app");
+    gates:
+        input socketIn;
+        output socketOut;
+    submodules:
+        domain[numDomains]: <default("Gptp")> like IGptp {
+            gptpNodeType = default(parent.gptpNodeType);
+            clockModule = default(absPath(parent.clockModule) + ".clock[" + string(this.index) + "]");
+            interfaceTableModule = default(absPath(parent.interfaceTableModule));
+            domainNumber = default(this.index);
+            @display("p=150,150,row,150");
+        }
+        multiplexer: PacketMultiplexer {
+            @display("p=150,350");
+        }
+        classifier: PacketClassifier {
+            classifierClass = default("inet::GptpDomainNumberClassifier");
+            @display("p=300,350");
+        }
+    connections:
+        for i=0..numDomains-1
+        {
+            domain[i].socketOut --> multiplexer.in++;
+            classifier.out++ --> domain[i].socketIn;
+        }
+
+        socketIn --> { @display("m=s"); } --> classifier.in;
+        multiplexer.out --> { @display("m=s"); } --> socketOut;
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name))
+      (gate
+        (type)
+        (name)))
+    (submodules
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus))))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (gate
+            (name)))))))
+
+====
+ArpTest.ned (types)
+====
+
+//
+// Copyright (C) 2006 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+package inet.examples.ethernet.arptest;
+
+import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
+import inet.node.ethernet.EthernetSwitch;
+import inet.node.inet.Router;
+import inet.node.inet.StandardHost;
+import ned.DatarateChannel;
+
+
+network ARPTest
+{
+    types:
+        channel fiberline extends DatarateChannel
+        {
+            delay = 1us;
+            datarate = 512Mbps;
+        }
+        channel ethline extends DatarateChannel
+        {
+            delay = 50ns;
+            datarate = 100Mbps;
+        }
+    submodules:
+        client: StandardHost {
+            @display("p=250,100;i=device/laptop");
+        }
+        host1: StandardHost {
+            @display("p=250,200;i=device/pc");
+        }
+        host2: StandardHost {
+            @display("p=250,300;i=device/pc");
+        }
+        switch: EthernetSwitch {
+            @display("p=400,200");
+        }
+        net: Router {
+            @display("p=700,200");
+        }
+        router: Router {
+            @display("p=550,200");
+        }
+        server: StandardHost {
+            @display("p=850,200;i=device/server");
+        }
+        configurator: Ipv4NetworkConfigurator {
+            @display("p=100,100;is=s");
+        }
+    connections:
+        client.ethg++ <--> ethline <--> switch.ethg++;
+        switch.ethg++ <--> ethline <--> host1.ethg++;
+        switch.ethg++ <--> ethline <--> host2.ethg++;
+        router.ethg++ <--> ethline <--> switch.ethg++;
+        router.pppg++ <--> fiberline <--> net.pppg++;
+        server.pppg++ <--> fiberline <--> net.pppg++;
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (network
+    (name)
+    (types
+      (channel
+        (name)
+        (extends)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))))
+      (channel
+        (name)
+        (extends)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value)))))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))))))
+
+====
+ExtUpperIeee80211Interface.ned (extends, likename)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.emulation.linklayer.ieee80211;
+
+import inet.emulation.common.ExtInterface;
+import inet.emulation.linklayer.ethernet.ExtEthernetTapDevice;
+import inet.linklayer.common.IIeee8021dQosClassifier;
+import inet.linklayer.contract.IWirelessInterface;
+import inet.linklayer.ieee80211.IIeee80211Mac;
+import inet.linklayer.ieee80211.llc.IIeee80211Llc;
+import inet.linklayer.ieee80211.mgmt.IIeee80211Agent;
+import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
+import inet.linklayer.ieee80211.mib.Ieee80211Mib;
+import inet.physicallayer.wireless.common.contract.packetlevel.IRadio;
+
+//
+// This module provides an IEEE 802.11 network interface suitable for emulation.
+// The upper part of the network interface is realized in the real world using
+// a real TAP device of the host computer which is running the simulation.
+//
+module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
+{
+    parameters:
+        string energySourceModule = default("");
+        string opMode @enum("a","b","g(erp)","g(mixed)","n(mixed-2.4Ghz)","p","ac") = default("g(mixed)");
+        double bitrate @unit(bps) = default(-1bps);
+        **.opMode = this.opMode;
+        **.bitrate = this.bitrate;
+        mac.modeSet = default(this.opMode);
+        mac.*.rateSelection.dataFrameBitrate = default(this.bitrate);
+        radio.signalAnalogRepresentation = default("scalar");
+        *.macModule = default(absPath(".mac"));
+        *.mibModule = default(absPath(".mib"));
+        *.interfaceTableModule = default(absPath(this.interfaceTableModule));
+        *.energySourceModule = default(absPath(this.energySourceModule));
+    gates:
+        input radioIn @labels(IWirelessSignal); // To receive signals
+    submodules:
+        mib: Ieee80211Mib {
+            parameters:
+                @display("p=100,300;is=s");
+        }
+        tap: ExtEthernetTapDevice {
+            parameters:
+                @display("p=300,100");
+        }
+        llc: <default("Ieee80211Portal")> like IIeee80211Llc {
+            parameters:
+                @display("p=300,200");
+        }
+        classifier: <default("OmittedIeee8021dQosClassifier")> like IIeee8021dQosClassifier {
+            parameters:
+                @display("p=500,150");
+        }
+        agent: <default("Ieee80211AgentSta")> like IIeee80211Agent if typename != "" {
+            parameters:
+                @display("p=700,300");
+        }
+        mgmt: <default("Ieee80211MgmtSta")> like IIeee80211Mgmt {
+            parameters:
+                @display("p=500,300");
+        }
+        mac: <default("Ieee80211Mac")> like IIeee80211Mac {
+            parameters:
+                @display("p=300,300");
+        }
+        radio: <default("Ieee80211Radio")> like IRadio {
+            parameters:
+                @display("p=300,400");
+        }
+    connections allowunconnected:
+        radioIn --> { @display("m=s"); } --> radio.radioIn;
+        radio.upperLayerIn <-- mac.lowerLayerOut;
+        radio.upperLayerOut --> mac.lowerLayerIn;
+
+        mac.mgmtOut --> mgmt.macIn;
+        mac.mgmtIn <-- mgmt.macOut;
+
+        mgmt.agentOut --> agent.mgmtIn if exists(agent);
+        mgmt.agentIn <-- agent.mgmtOut if exists(agent);
+
+        llc.upperLayerOut --> { @display("m=n"); } --> tap.lowerLayerIn;
+        llc.upperLayerIn <-- { @display("m=n"); } <-- classifier.out;
+
+        llc.lowerLayerOut --> mac.upperLayerIn;
+        llc.lowerLayerIn <-- mac.upperLayerOut;
+
+        classifier.in <-- { @display("m=n"); } <-- tap.lowerLayerOut;
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (extends)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value))
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value))
+      (parameter
+        (pattern)
+        (value)))
+    (gates
+      (gate
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (comment)))
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (condition
+          (value))
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (allowunconnected)
+      (connection
+        (src
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)))
+        (condition
+          (value
+            (operator))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)))
+        (condition
+          (value
+            (operator))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)))))))
+
+====
+CellInfo.ned - from Simu5G (quantity)
+====
+
+//
+//                  Simu5G
+//
+// Authors: Giovanni Nardini, Giovanni Stea, Antonio Virdis (University of Pisa)
+//
+// This file is part of a software released under the license included in file
+// "license.pdf". Please read LICENSE and README files before using it.
+// The above files and the present reference are part of the software itself,
+// and cannot be removed from it.
+//
+
+
+package simu5g.common.cellInfo;
+
+simple CellInfo {
+    parameters:
+        @display("i=block/control");
+
+        @class("CellInfo");
+        //#
+        //# General properties
+        //#
+
+        double constraintAreaMinX @unit(m) = default(-1m/0); // min x position of the constraint area, unconstrained by
+        double constraintAreaMinY @unit(m) = default(-1m/0); // min y position of the constraint area, unconstrained by
+        double constraintAreaMaxX @unit(m) = default(1m/0); // max x position of the constraint area, unconstrained by d
+        double constraintAreaMaxY @unit(m) = default(1m/0); // max y position of the constraint area, unconstrained by d
+
+        // speed for CircleMobility and ConstSpeedSpeedMobility
+        double speed @unit(mps) = default(0mps);
+
+        // position update interval for CircleMobility and ConstSpeedMobility
+        double positionUpdateInterval @unit(s) = default(0.001s);
+
+        // broadcast messages interval (used for handover or das)
+        double broadcastMessageInterval @unit(s) = default(1s);
+
+        // eNodeB type (MICRO / MACRO) - valid only for eNodeBs
+        bool microCell = default(false);
+
+        //#
+        //# Remote Units (DAS)
+        //#
+        // number of remote Units
+        int numRus = default(0);
+
+        // distance range of remote units
+        int ruRange = default(0);
+
+        // ru starting angle (only graphical meaning since rus are virtuals)
+        double ruStartingAngle @unit(deg) = default(0deg);
+
+        // CSV string supplying TX power for i-th ru (integer values)
+        string ruTxPower = default("0;");
+
+        // cws for each antenna, note that first position refers to the MACRO
+        string antennaCws = default("1;");
+
+        //#
+        //# Physical layer properties
+        //#
+
+        // number of sub-carriers per RB, DL
+        int rbyDl = default(12);
+
+        // number of sub-carriers per RB, UL
+        int rbyUl = default(12);
+
+        // number of OFDM symbols per slot, DL
+        int rbxDl = default(7);
+
+        // number of OFDM symbols per slot, UL
+        int rbxUl = default(7);
+
+        // number of pilot REs per RB, DL
+        int rbPilotDl = default(3);
+
+        // number of pilot REs per RB, UL
+        int rbPilotUl = default(0);
+
+        // number of signaling symbols for RB, DL
+        int signalDl = default(1);
+
+        // number of signaling symbols for RB, UL
+        int signalUl = default(1);
+
+        // number of preferred bands to use (meaningful only in PREFERRED mode)
+        int numPreferredBands = default(1);
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (simple
+    (name)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value)))))
+
+====
+TraCIScreenRecorder.ned - from Veins (default(.1s))
+====
+
+//
+// Copyright (C) 2006-2014 Christoph Sommer <sommer@ccs-labs.org>
+//
+// Documentation for these modules is at http://veins.car2x.org/
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+package org.car2x.veins.modules.mobility.traci;
+
+//
+// Simple support module to take (a series of) screenshots of a simulation running in the TraCI server.
+//
+// Note that the TraCI server needs to be run in GUI mode and support taking screenshots for this to work.
+//
+// The screenshots can then be converted to a video using something along the lines of
+// mencoder 'mf://results/screenshot-*.png' -mf w=800:h=600:fps=25:type=png -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -oac copy -o output.avi
+//
+// See the Veins website <a href="http://veins.car2x.org/"> for a tutorial, documentation, and publications </a>.
+//
+// @author Christoph Sommer
+//
+// @see TraCIScenarioManager
+//
+simple TraCIScreenRecorder
+{
+    parameters:
+        @display("i=block/downarrow");
+        @class(veins::TraCIScreenRecorder);
+        string dirname = default("");  // directory name for screenshots (leave blank to use ${resultdir})
+        string filenameTemplate = default("");  // file name for screenshots in printf syntax; the %f parameter is set to the current simulation time (leave blank to use screenshot-${runid}-@%08.2f.png)
+        string viewName = default("View #0");  // which TraCI server view to choose
+        double start @unit("s") = default(0s);  // when to take the first screenshot
+        double interval @unit("s") = default(.1s);  // how often to take a screenshot
+        double stop @unit("s") = default(-1s);  // when to take the last screenshot (-1: never)
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (comment)
+  (simple
+    (name)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment))))
+
+====
+xml
+====
+
+module Something {
+	something = default(xml('<foo="bar">'));
+	something = default(xml("<foo='bar'>"));
+}
+
+---
+
+(nedfile
+  (module
+    (name)
+    (parameters
+      (parameter
+        (name)
+        (value))
+      (parameter
+        (name)
+        (value)))))
+
+====
+PcpTrafficClassClassifier (array)
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+package inet.linklayer.ieee8021q;
+
+import inet.queueing.base.PacketClassifierBase;
+import inet.queueing.contract.IPacketClassifier;
+
+//
+// This module classifies packets based on the attached PCP value [0, 7]. The
+// PCP is determined by a `PcpReq` or a `PcpInd` or both. The output gate index is
+// the value found in the mapping matrix using the PCP value as the row index
+// and the number of connected consumers (traffic categories) as the column
+// index.
+//
+module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassifier
+{
+    parameters:
+        string mode @enum("req", "ind", "both") = default("both");
+        // IEEE Standard for Local and Metropolitan Area Networks, Bridges and Bridged Networks
+        // Table 8-5—Recommended priority to traffic class mappings
+        object mapping = default([[0, 0, 0, 0, 0, 1, 1, 1],   // BE best effort
+                                  [0, 0, 0, 0, 0, 0, 0, 0],   // BK background
+                                  [0, 0, 0, 1, 1, 2, 2, 2],   // EE excellent effort
+                                  [0, 0, 0, 1, 1, 2, 3, 3],   // CA critical applications
+                                  [0, 1, 1, 2, 2, 3, 4, 4],   // VI video
+                                  [0, 1, 1, 2, 2, 3, 4, 5],   // VO voice
+                                  [0, 1, 2, 3, 3, 4, 5, 6],   // IC internetwork control
+                                  [0, 1, 2, 3, 4, 5, 6, 7]]); // NC network control
+        int defaultGateIndex = default(0); // Default gate index if no PCP found
+        @class(PcpTrafficClassClassifier);
+}
+
+---
+
+(nedfile
+  (comment)
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (extends)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value
+          (array
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array)
+            (inline_comment)
+            (array))))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))))
+
+====
+everything
+====
+
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
+{
+    parameters:
+        @display("i=block/rxtx");
+}
+
+network TsnNetworkBase extends WiredNetworkBase like SomeNetwork
+{
+    parameters:
+        **.clock.defaultOverdueClockEventHandlingMode = default("execute");
+    submodules:
+        gateScheduleConfigurator: <default("")> like IGateScheduleConfigurator if typename != "" {
+            @display("p=100,500;is=s");
+        }
+        streamRedundancyConfigurator: <default("")> like INetworkConfigurator if typename != "" {
+            @display("p=100,600;is=s");
+        }
+        failureProtectionConfigurator: <default("")> like INetworkConfigurator if typename != "" {
+            @display("p=100,700;is=s");
+        }
+}
+
+simple CellInfo extends Z like X, Y {
+    parameters:
+        @display("i=block/control");
+
+        @class("CellInfo");
+        //#
+        //# General properties
+        //#
+
+        @statistic[radioMode](title="Radio mode"; source=radioModeChanged; record=count,vector; interpolationmode=sample-hold);
+        @statistic[receptionState]("Radio reception state"; source=receptionStateChanged; record=count,vector; interpolationmode=sample-hold);
+        @statistic[transmissionState](title="Radio transmission state"; source=transmissionStateChanged; record=count,vector; interpolationmode=sample-hold);
+
+        @statistic[minSnir](title="Min SNIR"; source=minimumSnir(packetSentToUpper, a=5); record=histogram);
+        @statistic[packetErrorRate](title="Packet error rate"; source=packetErrorRate(packetSentToUpper); record=histogram);
+        @statistic[bitErrorRate](title="Bit error rate"; source=bitErrorRate(packetSentToUpper); record=histogram);
+        @statistic[symbolErrorRate](title="Symbol error rate"; source=symbolErrorRate(packetSentToUpper); record=histogram);
+
+        double constraintAreaMinX @unit(x=m) = default(-1m/0); // min x position of the constraint area, unconstrained by
+        double constraintAreaMinY @unit(m) = default(-1m/0); // min y position of the constraint area, unconstrained by
+        double constraintAreaMaxX @unit(m) = default(1m/0); // max x position of the constraint area, unconstrained by d
+        double constraintAreaMaxY @unit(m) = default(1m/0); // max y position of the constraint area, unconstrained by d
+
+        // speed for CircleMobility and ConstSpeedSpeedMobility
+        double speed @unit(mps) = default(0mps);
+
+        // position update interval for CircleMobility and ConstSpeedMobility
+        double positionUpdateInterval @unit(s) = default(.001s);
+
+        // broadcast messages interval (used for handover or das)
+        double broadcastMessageInterval @unit(s) = default(1s);
+
+        // eNodeB type (MICRO / MACRO) - valid only for eNodeBs
+        bool microCell = default(false);
+
+        //#
+        //# Remote Units (DAS)
+        //#
+        // number of remote Units
+        int numRus = default(0);
+
+        // distance range of remote units
+        int ruRange = default(0);
+
+        // ru starting angle (only graphical meaning since rus are virtuals)
+        double ruStartingAngle @unit(deg) = default(0deg);
+
+        // CSV string supplying TX power for i-th ru (integer values)
+        string ruTxPower = default("0;");
+
+        // cws for each antenna, note that first position refers to the MACRO
+        string antennaCws = default("1;");
+
+        //#
+        //# Physical layer properties
+        //#
+
+        // number of preferred bands to use (meaningful only in PREFERRED mode)
+        int numPreferredBands = default(1);
+}
+
+
+package inet.linklayer.ieee8021as;
+
+import inet.linklayer.contract.IGptp;
+import inet.queueing.classifier.PacketClassifier;
+import inet.queueing.common.PacketMultiplexer;
+
+//
+// This module combines multiple ~Gptp modules, one per time domain into a multi
+// time domain time synchronization module. Each gPTP time domain is automatically
+// configured to use the corresponding subclock of the clock passed into this
+// module.
+//
+// @see ~MultiClock
+//
+module MultiDomainGptp extends Somethingh like IGptp
+{
+    parameters:
+        string clockModule; // Relative module path of the multi clock
+        string interfaceTableModule; // Relative module path of the interface table
+        int numDomains; // Number of time synchronization domains
+        string gptpNodeType; // @enum("GptpNodeType"): MASTER_NODE, BRIDGE_NODE, SLAVE_NODE
+        @display("i=block/app");
+    gates:
+        input socketIn[4];
+        output socketOut[];
+    types:
+    	simple SomeType {
+        	@display("something");
+            int a = 5;
+        }
+    submodules:
+        domain[numDomains]: <default("Gptp")> like IGptp {
+            gptpNodeType = default(parent.gptpNodeType);
+            clockModule = default(absPath(parent.clockModule) + ".clock[" + string(this.index) + "]");
+            interfaceTableModule = default(absPath(parent.interfaceTableModule));
+            domainNumber = default(this.index);
+            @display("p=150,150,row,150");
+        }
+        multiplexer: PacketMultiplexer {
+            @display("p=150,350");
+        }
+        classifier: PacketClassifier {
+            classifierClass = default("inet::GptpDomainNumberClassifier");
+            @display("p=300,350");
+        }
+    connections allowunconnected:
+        for i=0..numDomains-1
+        {
+            domain[i].socketOut --> multiplexer.in++;
+            classifier.out++ --> domain[i].socketIn;
+        }
+
+        if i>3
+        {
+            domain[i].socketOut --> multiplexer.in++;
+            classifier.out++ --> domain[i].socketIn;
+        }
+
+        in --> { @display("m=w"); } --> classifier.in;
+        for i=0..numStreams-1 {
+            classifier.out++ --> streamFilter[i].in;
+        }
+        for i=0..numStreams-1, for j=0..numGates-1 {
+            streamFilter[i].out --> sm[j].in++ if streamFilterTable.get(i).get("gate") == j;
+        }
+        for i=0..numGates-1 {
+            sm[i].out --> gateFilter[i].in;
+            gateFilter[i].out --> gate[i].in;
+            gate[i].out --> gc[i].in;
+        }
+        for i=0..numGates-1, for j=0..numMeters-1 {
+            gc[i].out++ --> gm[j].in++ if findArrayObjectElement(streamFilterTable, "gate", i, "meter", j) != null;
+        }
+        for i=0..numMeters-1 {
+            gm[i].out --> meter[i].in;
+            meter[i].out --> flowFilter[i].in;
+            flowFilter[i].out --> multiplexer.in++;
+        }
+        multiplexer.out --> barrier.in;
+        barrier.out --> { @display("m=e"); } --> out;
+
+        socketIn++ --> some: EthernetSomeType { @display("m=s"); } --> classifier.in if i>3;
+        multiplexer[6].out$o[4] --> some2: <liketype> like ISomething { @display("m=s"); } --> socketOut$i for i=0..numDomains-1;
+}
+
+---
+
+(nedfile
+  (comment)
+  (moduleinterface
+    (extends)
+    (extends)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))))
+  (network
+    (name)
+    (extends)
+    (implements)
+    (parameters
+      (parameter
+        (pattern)
+        (value)))
+    (submodules
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (condition
+          (value))
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (condition
+          (value))
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (like_expr)
+        (like_type)
+        (condition
+          (value))
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))))
+  (simple
+    (name)
+    (extends)
+    (implements)
+    (implements)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (property
+        (name)
+        (tag
+          (value_list)))
+      (comment)
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (property
+        (name)
+        (index)
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list))
+        (tag
+          (name)
+          (value_list)))
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (name)
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value))))
+  (package
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (comment)
+  (module
+    (name)
+    (extends)
+    (implements)
+    (parameters
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (parameter
+        (type)
+        (name))
+      (comment)
+      (property
+        (name)
+        (tag
+          (value_list))))
+    (gates
+      (gate
+        (type)
+        (name)
+        (vector
+          (size)))
+      (gate
+        (type)
+        (name)
+        (vector)))
+    (types
+      (simple
+        (name)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))
+          (parameter
+            (type)
+            (name)
+            (value)))))
+    (submodules
+      (submodule
+        (name)
+        (vector
+          (size))
+        (like_expr)
+        (like_type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (property
+            (name)
+            (tag
+              (value_list)))))
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (parameter
+            (name)
+            (value))
+          (property
+            (name)
+            (tag
+              (value_list))))))
+    (connections
+      (allowunconnected)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus))))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (condition
+          (value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus))))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (condition
+            (value))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)
+              (plusplus)))
+          (condition
+            (value))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name))))
+        (connection
+          (src
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))
+          (arrow)
+          (dest
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (gate
+            (name))))
+      (connection
+        (src
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (type)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)))
+        (condition
+          (value)))
+      (connection
+        (src
+          (module
+            (name)
+            (index))
+          (gate
+            (name)
+            (subgate)
+            (index)))
+        (arrow)
+        (name)
+        (like_expr)
+        (like_type)
+        (property
+          (name)
+          (tag
+            (value_list)))
+        (arrow)
+        (dest
+          (gate
+            (name)
+            (subgate)))
+        (loop
+          (param_name)
+          (from_value)
+          (to_value))))))
