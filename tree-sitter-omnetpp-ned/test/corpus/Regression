@@ -1,5 +1,5 @@
 ==================
-IRadioVisualizer.ned (module interface)
+IRadioVisualizer.ned & ILinkLayer.ned (module interface)
 ==================
 
 //
@@ -23,6 +23,12 @@ moduleinterface IRadioVisualizer extends IVisualizer
         @display("i=block/app");
 }
 
+moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
+{
+    parameters:
+        @display("i=block/rxtx");
+}
+
 
 ---
 
@@ -31,11 +37,16 @@ moduleinterface IRadioVisualizer extends IVisualizer
   (package
     (name))
   (comment)
-  (module_interface
-    (moduleinterfaceheader
-      (interfaceinheritance
-        (extendss
-          (extends))))
+  (moduleinterface
+    (extends)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))))
+  (moduleinterface
+    (extends)
+    (extends)
     (parameters
       (property
         (name)
@@ -141,8 +152,8 @@ channel Eth400G extends EthernetLink
     (name))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (type)
@@ -157,64 +168,64 @@ channel Eth400G extends EthernetLink
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
         (value))))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
@@ -960,8 +971,7 @@ moduleinterface IHook
   (package
     (name))
   (comment)
-  (module_interface
-    (moduleinterfaceheader)
+  (moduleinterface
     (parameters
       (property
         (name)
@@ -3443,8 +3453,8 @@ network LargeNet
     (name))
   (comment)
   (channel
-    (channelheader
-      (extends))
+    (name)
+    (extends)
     (parameters
       (parameter
         (name)
@@ -3673,8 +3683,8 @@ network LargeNet
         (name)))
     (types
       (channel
-        (channelheader
-          (extends))
+        (name)
+        (extends)
         (parameters
           (parameter
             (name)
@@ -3922,8 +3932,8 @@ network LargeNet
       (comment))
     (types
       (channel
-        (channelheader
-          (extends))
+        (name)
+        (extends)
         (parameters
           (parameter
             (name)
@@ -4942,8 +4952,8 @@ network ARPTest
     (name)
     (types
       (channel
-        (channelheader
-          (extends))
+        (name)
+        (extends)
         (parameters
           (parameter
             (name)
@@ -4952,8 +4962,8 @@ network ARPTest
             (name)
             (value))))
       (channel
-        (channelheader
-          (extends))
+        (name)
+        (extends)
         (parameters
           (parameter
             (name)
@@ -6054,6 +6064,12 @@ everything
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
+moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
+{
+    parameters:
+        @display("i=block/rxtx");
+}
+
 network TsnNetworkBase extends WiredNetworkBase like SomeNetwork
 {
     parameters:
@@ -6221,6 +6237,14 @@ module MultiDomainGptp extends Somethingh like IGptp
 
 (nedfile
   (comment)
+  (moduleinterface
+    (extends)
+    (extends)
+    (parameters
+      (property
+        (name)
+        (tag
+          (value_list)))))
   (network
     (name)
     (extends)

@@ -77,9 +77,10 @@ module.exports = grammar({
 
     fileproperty: ($) => seq($._property_namevalue, ";"),
 
-    channel: ($) => seq($.channelheader, "{", optional($.parameters), "}"),
+    channel: ($) => seq($._channelheader, "{", optional($.parameters), "}"),
 
-    channelheader: ($) => seq("channel", $._NAME, optional($._inheritance)),
+    _channelheader: ($) =>
+      seq("channel", alias($._NAME, $.name), optional($._inheritance)),
 
     _inheritance: ($) =>
       choice(
@@ -103,7 +104,7 @@ module.exports = grammar({
 
     _interfaceinheritance: ($) => seq("extends", $._extendnames),
 
-    _extendnames: ($) => seq($.extends, repeat(seq(",", $.extends))), // TODO is that needed?
+    _extendnames: ($) => seq($.extends, repeat(seq(",", $.extends))),
 
     simple: ($) =>
       seq(
@@ -266,8 +267,6 @@ module.exports = grammar({
       prec.right(
         choice(
           seq("@", alias($._PROPNAME, $.name)),
-          // seq('@', $._PROPNAME, '[', $._dottedname, ']'),
-          // seq('@', $._PROPNAME, '[', $._INTCONSTANT, ']'),
           seq(
             "@",
             alias($._PROPNAME, $.name),
@@ -326,12 +325,12 @@ module.exports = grammar({
 
     _gate_typenamesize: ($) =>
       choice(
-        seq($._gatetype, alias($._NAME, $.name)), // gatetype NAME
-        seq($._gatetype, alias($._NAME, $.name), alias("[]", $.vector)), // gatetype NAME '[' ']'
-        seq($._gatetype, alias($._NAME, $.name), alias($.sizevector, $.vector)), // gatetype NAME vector
-        alias($._NAME, $.name), // NAME
-        seq(alias($._NAME, $.name), "[", "]"), // NAME '[' ']'
-        seq(alias($._NAME, $.name), alias($.sizevector, $.vector)), // NAME vector
+        seq($._gatetype, alias($._NAME, $.name)),
+        seq($._gatetype, alias($._NAME, $.name), alias("[]", $.vector)),
+        seq($._gatetype, alias($._NAME, $.name), alias($.sizevector, $.vector)),
+        alias($._NAME, $.name),
+        seq(alias($._NAME, $.name), "[", "]"),
+        seq(alias($._NAME, $.name), alias($.sizevector, $.vector)),
       ),
 
     _gatetype: ($) => alias(choice("input", "output", "inout"), $.type),
@@ -676,8 +675,6 @@ module.exports = grammar({
       prec(
         20,
         choice(
-          // 'index',
-          // 'typename',
           seq($._qname, ".", "index"),
           seq($._qname, ".", "typename"),
           seq("exists", "(", $._qname, ")"),
@@ -722,8 +719,8 @@ module.exports = grammar({
         "inf",
         "nan",
         $._intconstant_ext,
-        seq(".", $._INTCONSTANT),
-      ), // last one is a kludge for parsing default(.1s);
+        seq(".", $._INTCONSTANT), // kludge for parsing default(.1s);
+      ),
 
     _NAME: ($) => /[_a-zA-Z][_a-zA-Z0-9]*/,
     _PROPNAME: ($) => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
