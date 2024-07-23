@@ -39,7 +39,7 @@ packet IPPacket {
         (name))
       (property
         (name)
-        (property_key))
+        (tag))
       (field
         (type)
         (name))
@@ -76,35 +76,35 @@ packet IPPacket {
         (name)
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key)))
+          (tag)))
       (field
         (type)
         (name)
         (vector)
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key)))
+          (tag)))
       (field
         (type)
         (name)
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key)))
+          (tag)))
       (field
         (type)
         (name)
@@ -112,10 +112,10 @@ packet IPPacket {
           (size))
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key))
+          (tag))
         (property
           (name)
-          (property_key))))))
+          (tag))))))

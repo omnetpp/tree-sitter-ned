@@ -72,20 +72,19 @@ class TcpConnection extends cObject
 ---
 
 (msg_file
-  (comment
-    (content))
+  (comment)
   (import
-    (importspec))
+    (name))
   (import
-    (importspec))
+    (name))
   (import
-    (importspec))
+    (name))
   (import
-    (importspec))
+    (name))
   (import
-    (importspec))
+    (name))
   (import
-    (importspec))
+    (name))
   (cplusplus
     (body))
   (namespace
@@ -109,7 +108,7 @@ class TcpConnection extends cObject
         (name))
       (property
         (name)
-        (property_key))
+        (tag))
       (field
         (type)
         (name))))
@@ -121,7 +120,7 @@ class TcpConnection extends cObject
         (name))
       (property
         (name)
-        (property_key))
+        (tag))
       (field
         (type)
         (name))))
@@ -133,31 +132,28 @@ class TcpConnection extends cObject
         (name))
       (property
         (name)
-        (property_key))
+        (tag))
       (field
         (type)
         (name))
-      (comment
-        (content))
+      (comment)
       (field
         (type)
         (name))
-      (comment
-        (content))
-      (comment
-        (content))
+      (comment)
+      (comment)
       (field
         (type)
         (name)
         (property
           (name)
-          (property_key)))
+          (tag)))
       (field
         (type)
         (name)
         (property
           (name)
-          (property_key)))
+          (tag)))
       (field
         (type)
         (name))
@@ -167,8 +163,7 @@ class TcpConnection extends cObject
       (field
         (type)
         (name))
-      (comment
-        (content))
+      (comment)
       (field
         (type)
         (name))

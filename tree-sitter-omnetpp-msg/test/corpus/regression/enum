@@ -25,22 +25,18 @@ enum GptpNodeType
 
 (msg_file
   (enum
-    (comment
-      (content))
+    (comment)
     (name)
     (body
       (field
         (name)
         (value))
-      (comment
-        (content))
+      (comment)
       (field
         (name)
         (value))
-      (comment
-        (content))
-      (comment
-        (content))))
+      (comment)
+      (comment)))
   (enum
     (name)
     (body
