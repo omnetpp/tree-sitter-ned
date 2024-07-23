@@ -1,1 +1,1 @@
-../smoke_test.sh msg ~/inet/src/inet "$@"
+../smoke_test.sh msg ~/inet/src/inet ~/inet ~/opp_env_workspace/simu5g-1.2.2/ ~/opp_env_workspace_standalone/core4inet-240124/ ~/opp_env_workspace_standalone_2/veins-5.0/ ~/opp_env_workspace_standalone_2/veins_vlc-1.0/ "$@"
