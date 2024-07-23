@@ -1,0 +1,14 @@
+==================
+namespace
+==================
+
+namespace inet::tcp;
+namespace inet;
+
+---
+
+(msg_file
+    (namespace
+        (name))
+    (namespace
+        (name)))

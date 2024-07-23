@@ -1,0 +1,23 @@
+==================
+import
+==================
+
+import inet.clock.common.ClockEvent;
+import inet.clock.contract.ClockTime;
+import inet.common.TagBase;
+import inet.common.packet.chunk.Chunk;
+import inet.common.packet.Packet;
+
+---
+
+(msg_file
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name))
+  (import
+    (name)))

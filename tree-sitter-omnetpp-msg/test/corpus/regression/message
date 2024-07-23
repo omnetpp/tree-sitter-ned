@@ -1,0 +1,60 @@
+==================
+message
+==================
+
+message GptpReqAnswerEvent extends ClockEvent
+{
+    int portId;
+    clocktime_t ingressTimestamp;
+    PortIdentity sourcePortIdentity;
+    uint16_t sequenceId;
+}
+
+message ClockEvent
+{
+    @customize;
+    IClock *clock;
+    bool relative = false;
+    clocktime_t arrivalClockTime = -1;
+    OverdueClockEventHandlingMode overdueClockEventHandlingMode = UNSPECIFIED;
+}
+
+---
+
+(msg_file
+  (message
+    (name)
+    (extends)
+    (body
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))))
+  (message
+    (name)
+    (body
+      (property
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)
+        (value))
+      (field
+        (type)
+        (name)
+        (value))
+      (field
+        (type)
+        (name)
+        (value)))))

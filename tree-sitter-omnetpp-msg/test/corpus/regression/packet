@@ -1,0 +1,121 @@
+==================
+packet
+==================
+
+packet WirelessSignal extends Signal
+{
+    @existingClass;
+    @descriptor(readonly);
+    const ITransmission *transmission;
+    const IArrival *arrival;
+    const IListening *listening;
+    const IReception *reception;
+    abstract bool urgentBit;
+    const int foo = 24;
+    IPAddress sourceAddress;
+    IPAddress route[];
+    const cModule *contextModule;
+}
+
+packet IPPacket {
+    int ttl @getter(getTTL) @setter(setTTL);
+    Option options[] @sizeGetter(getNumOptions)
+                     @sizeSetter(setNumOptions)
+                     @sizetype(short);
+    Option options @sizeGetter(getNumOptions)
+                     @sizeSetter(setNumOptions)
+                     @sizetype(short);
+    Option options[4] @sizeGetter(getNumOptions)
+                     @sizeSetter(setNumOptions)
+                     @sizetype(short);
+}
+
+---
+
+(msg_file
+  (packet
+    (body
+      (property
+        (name))
+      (property
+        (name)
+        (tag))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)
+        (value))
+      (field
+        (type)
+        (name))
+      (field
+        (type)
+        (name)
+        (vector))
+      (field
+        (type)
+        (name))))
+  (packet
+    (body
+      (field
+        (type)
+        (name)
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag)))
+      (field
+        (type)
+        (name)
+        (vector)
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag)))
+      (field
+        (type)
+        (name)
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag)))
+      (field
+        (type)
+        (name)
+        (vector
+          (size))
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag))
+        (property
+          (name)
+          (tag))))))
