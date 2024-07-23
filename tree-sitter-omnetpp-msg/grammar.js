@@ -41,13 +41,7 @@ module.exports = grammar({
 
     comment: ($) => prec.right(repeat1($._commentline)),
 
-    _commentline: (_) =>
-      token(
-        choice(
-          seq("//", /(\\+(.|\r?\n)|[^\\\n])*/),
-          seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"), // TODO is that needed in msg files?
-        ),
-      ),
+    _commentline: (_) => token(seq("//", /(\\+(.|\r?\n)|[^\\\n])*/)),
 
     namespace: ($) => seq("namespace", optional(alias($._qname, $.name)), ";"),
 
