@@ -38,7 +38,10 @@
   "tree-sitter": [
     {
       "scope": "source.ned",
-      "injection-regex": "^ned$"
+      "injection-regex": "^ned$",
+      "file-types": [
+        "ned"
+      ]
     }
   ]
 }
