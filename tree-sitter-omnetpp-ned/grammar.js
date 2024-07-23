@@ -346,7 +346,7 @@ module.exports = grammar({
         $.channel_interface,
         $.simple,
         $.module,
-        $.network, // TODO is this needed here? not in DTD
+        $.network,
         $.moduleinterface,
         ";",
       ),
