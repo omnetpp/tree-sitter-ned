@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-omnetpp-ned",
+  "name": "omnetpp-ned",
   "version": "0.1.0",
   "description": "tree-sitter parser for the NED language",
   "main": "grammar.js",
@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-addon-api": "^7.1.0",
-    "node-gyp-build": "^4.8.0"
+    "node-gyp-build": "^4.8.0",
+    "node-addon-api": "^7.1.0"
   },
   "peerDependencies": {
     "tree-sitter": "^0.21.0"
@@ -24,8 +24,8 @@
     }
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.22.6",
-    "prebuildify": "^6.0.0"
+    "prebuildify": "^6.0.0",
+    "tree-sitter-cli": "^0.22.6"
   },
   "files": [
     "grammar.js",
@@ -43,5 +43,20 @@
         "ned"
       ]
     }
-  ]
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnetpp/tree-sitter-ned.git"
+  },
+  "keywords": [
+    "omnetpp",
+    "ned"
+  ],
+  "bugs": {
+    "url": "https://github.com/omnetpp/tree-sitter-ned/issues"
+  },
+  "homepage": "https://github.com/omnetpp/tree-sitter-ned#readme"
 }
