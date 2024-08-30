@@ -1159,6 +1159,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
   [sym__STRINGCONSTANT] = {
     .visible = false,
     .named = true,
+    .supertype = true,
   },
   [sym__XMLCONSTANT] = {
     .visible = false,

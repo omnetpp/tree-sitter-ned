@@ -5,6 +5,8 @@ module.exports = grammar({
 
   conflicts: ($) => [[$._dottedname, $._modulepart]],
 
+  supertypes: ($) => [$._STRINGCONSTANT],
+
   rules: {
     nedfile: ($) =>
       prec.right(

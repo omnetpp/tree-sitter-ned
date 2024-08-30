@@ -8,6 +8,10 @@
       "required": false,
       "types": [
         {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
+        {
           "type": "array",
           "named": true
         },
@@ -262,6 +266,10 @@
       "required": false,
       "types": [
         {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
+        {
           "type": "array",
           "named": true
         },
@@ -363,6 +371,10 @@
       "required": false,
       "types": [
         {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
+        {
           "type": "array",
           "named": true
         },
@@ -408,7 +420,17 @@
   {
     "type": "key",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "keyvalue",
@@ -418,6 +440,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
         {
           "type": "array",
           "named": true
@@ -460,6 +486,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
         {
           "type": "array",
           "named": true
@@ -576,7 +606,17 @@
   {
     "type": "name",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "nedfile",
@@ -699,6 +739,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
         {
           "type": "array",
           "named": true
@@ -857,7 +901,17 @@
   {
     "type": "property_decl_key",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "property_decl_keys",
@@ -913,6 +967,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
         {
           "type": "array",
           "named": true
@@ -1042,6 +1100,10 @@
       "required": false,
       "types": [
         {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
+        {
           "type": "array",
           "named": true
         },
@@ -1109,6 +1171,10 @@
       "required": false,
       "types": [
         {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        },
+        {
           "type": "array",
           "named": true
         },
@@ -1126,7 +1192,17 @@
   {
     "type": "value_list",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_STRINGCONSTANT",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "vector",

@@ -4614,5 +4614,7 @@
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [
+    "_STRINGCONSTANT"
+  ]
 }
