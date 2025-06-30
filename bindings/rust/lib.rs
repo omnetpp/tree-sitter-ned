@@ -17,7 +17,7 @@
 //! [Parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
 //! [tree-sitter]: https://tree-sitter.github.io/
 
-use tree_sitter::Language;
+use tree_sitter_language::LanguageFn;
 
 extern "C" {
     fn tree_sitter_ned() -> Language;
@@ -29,6 +29,8 @@ extern "C" {
 pub fn language() -> Language {
     unsafe { tree_sitter_ned() }
 }
+
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_ned) };
 
 /// The content of the [`node-types.json`][] file for this grammar.
 ///
