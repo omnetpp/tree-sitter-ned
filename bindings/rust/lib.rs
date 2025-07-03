@@ -5,6 +5,8 @@
 //!
 //! ```
 //! let code = r#"
+//! network TestNetwork {
+//! }
 //! "#;
 //! let mut parser = tree_sitter::Parser::new();
 //! parser.set_language(&tree_sitter_ned::language()).expect("Error loading Ned grammar");
