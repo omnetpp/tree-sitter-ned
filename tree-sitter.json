@@ -2,7 +2,7 @@
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
-      "name": "omnetpp_ned",
+      "name": "omnetpp-ned",
       "camelcase": "OmnetppNed",
       "title": "omnetpp-ned",
       "scope": "source.ned",
@@ -10,13 +10,13 @@
         "ned"
       ],
       "injection-regex": "^ned$",
-      "class-name": "TreeSitterOmnetppNed"
+      "class-name": "TreeSitterNed"
     }
   ],
   "metadata": {
     "version": "0.0.4",
     "license": "MIT",
-    "description": "OMNeT++ NED",
+    "description": "Tree-sitter parser for the OMNeT++ NED language",
     "authors": [
       {
         "name": "Gyorgy Szaszko",
