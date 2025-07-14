@@ -14,7 +14,7 @@
     }
   ],
   "metadata": {
-    "version": "0.0.4",
+    "version": "0.0.5",
     "license": "MIT",
     "description": "Tree-sitter parser for the OMNeT++ NED language",
     "authors": [
