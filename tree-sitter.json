@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "omnetpp_ned",
+      "camelcase": "OmnetppNed",
+      "title": "omnetpp-ned",
+      "scope": "source.ned",
+      "file-types": [
+        "ned"
+      ],
+      "injection-regex": "^ned$",
+      "class-name": "TreeSitterOmnetppNed"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.4",
+    "license": "MIT",
+    "description": "OMNeT++ NED",
+    "authors": [
+      {
+        "name": "Gyorgy Szaszko",
+        "email": "adam.szaszko@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/omnetpp/tree-sitter-ned"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
