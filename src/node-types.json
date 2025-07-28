@@ -556,7 +556,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "extends",
@@ -564,6 +564,10 @@
         },
         {
           "type": "gates",
+          "named": true
+        },
+        {
+          "type": "name",
           "named": true
         },
         {
