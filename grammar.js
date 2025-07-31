@@ -259,8 +259,8 @@ module.exports = grammar({
 
     _property_namevalue: ($) =>
       choice(
-        $._property_name,
-        prec.right(seq($._property_name, "(", optional($._property_tags), ")")),
+        field("property_signature", $._property_name),
+        prec.right(seq(field("property_signature", $._property_name), "(", optional($._property_tags), ")")),
       ),
 
     _property_name: ($) =>

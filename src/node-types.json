@@ -385,19 +385,38 @@
   {
     "type": "inline_properties",
     "named": true,
-    "fields": {},
+    "fields": {
+      "property_signature": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "@",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "index",
-          "named": true
-        },
-        {
-          "type": "name",
-          "named": true
-        },
         {
           "type": "tag",
           "named": true
@@ -811,19 +830,38 @@
   {
     "type": "property",
     "named": true,
-    "fields": {},
+    "fields": {
+      "property_signature": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "@",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "index",
-          "named": true
-        },
-        {
-          "type": "name",
-          "named": true
-        },
         {
           "type": "tag",
           "named": true

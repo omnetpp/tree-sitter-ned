@@ -1552,8 +1552,12 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_property_name"
+          "type": "FIELD",
+          "name": "property_signature",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_property_name"
+          }
         },
         {
           "type": "PREC_RIGHT",
@@ -1562,8 +1566,12 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "_property_name"
+                "type": "FIELD",
+                "name": "property_signature",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_property_name"
+                }
               },
               {
                 "type": "STRING",
