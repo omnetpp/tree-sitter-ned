@@ -216,7 +216,7 @@ module.exports = grammar({
         ),
       ),
 
-    inline_properties: ($) => repeat1($._property_namevalue),
+    inline_properties: ($) => repeat1($._inline_property_namevalue),
 
     _parampattern: ($) => $.pattern,
 
@@ -261,6 +261,12 @@ module.exports = grammar({
       choice(
         field("property_signature", $._property_name),
         prec.right(seq(field("property_signature", $._property_name), "(", optional($._property_tags), ")")),
+      ),
+
+    _inline_property_namevalue: ($) =>
+      choice(
+        $._property_name,
+        prec.right(seq($._property_name, "(", optional($._property_tags), ")")),
       ),
 
     _property_name: ($) =>
