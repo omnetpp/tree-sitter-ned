@@ -190,9 +190,9 @@ module.exports = grammar({
         seq(
           optional("volatile"),
           alias($.paramtype, $.type),
-          alias($._NAME, $.name),
+          field("parameter_signature", alias($._NAME, $.name)),
         ),
-        alias($._NAME, $.name),
+        field("parameter_signature", alias($._NAME, $.name)),
       ),
 
     _parampattern_value: ($) =>
@@ -218,7 +218,7 @@ module.exports = grammar({
 
     inline_properties: ($) => repeat1($._inline_property_namevalue),
 
-    _parampattern: ($) => $.pattern,
+    _parampattern: ($) => field("parameter_signature", $.pattern),
 
     pattern: ($) =>
       seq(

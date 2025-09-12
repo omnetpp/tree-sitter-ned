@@ -38,6 +38,7 @@ moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
     (name))
   (comment)
   (moduleinterface
+    (name)
     (extends)
     (parameters
       (property
@@ -45,6 +46,7 @@ moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
         (tag
           (value_list)))))
   (moduleinterface
+    (name)
     (extends)
     (extends)
     (parameters
@@ -972,6 +974,7 @@ moduleinterface IHook
     (name))
   (comment)
   (moduleinterface
+    (name)
     (parameters
       (property
         (name)
@@ -6238,6 +6241,7 @@ module MultiDomainGptp extends Somethingh like IGptp
 (nedfile
   (comment)
   (moduleinterface
+    (name)
     (extends)
     (extends)
     (parameters

@@ -1195,24 +1195,32 @@
               "value": "type"
             },
             {
-              "type": "ALIAS",
+              "type": "FIELD",
+              "name": "parameter_signature",
               "content": {
-                "type": "SYMBOL",
-                "name": "_NAME"
-              },
-              "named": true,
-              "value": "name"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_NAME"
+                },
+                "named": true,
+                "value": "name"
+              }
             }
           ]
         },
         {
-          "type": "ALIAS",
+          "type": "FIELD",
+          "name": "parameter_signature",
           "content": {
-            "type": "SYMBOL",
-            "name": "_NAME"
-          },
-          "named": true,
-          "value": "name"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_NAME"
+            },
+            "named": true,
+            "value": "name"
+          }
         }
       ]
     },
@@ -1325,12 +1333,16 @@
       "type": "REPEAT1",
       "content": {
         "type": "SYMBOL",
-        "name": "_property_namevalue"
+        "name": "_inline_property_namevalue"
       }
     },
     "_parampattern": {
-      "type": "SYMBOL",
-      "name": "pattern"
+      "type": "FIELD",
+      "name": "parameter_signature",
+      "content": {
+        "type": "SYMBOL",
+        "name": "pattern"
+      }
     },
     "pattern": {
       "type": "SEQ",
@@ -1572,6 +1584,48 @@
                   "type": "SYMBOL",
                   "name": "_property_name"
                 }
+              },
+              {
+                "type": "STRING",
+                "value": "("
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_property_tags"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "STRING",
+                "value": ")"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "_inline_property_namevalue": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_property_name"
+        },
+        {
+          "type": "PREC_RIGHT",
+          "value": 0,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_property_name"
               },
               {
                 "type": "STRING",
