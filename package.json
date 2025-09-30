@@ -1,6 +1,6 @@
 {
   "name": "omnetpp-ned",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Tree-sitter parser for the OMNeT++ NED language",
   "main": "grammar.js",
   "types": "bindings/node",
