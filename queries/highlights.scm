@@ -13,7 +13,7 @@
 "package" @keyword
 "extends" @keyword
 "channel" @keyword
-;"parameters" @keyword
+"parameters" @keyword
 "connections" @keyword
 "gates" @keyword
 "submodules" @keyword
