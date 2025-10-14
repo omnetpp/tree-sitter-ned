@@ -380,6 +380,7 @@
   {
     "type": "inline_comment",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
@@ -1451,7 +1452,7 @@
     "named": true
   },
   {
-    "type": "parameters:",
+    "type": "parameters",
     "named": false
   },
   {
