@@ -1023,7 +1023,11 @@
           "members": [
             {
               "type": "STRING",
-              "value": "parameters:"
+              "value": "parameters"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
             },
             {
               "type": "SYMBOL",
@@ -1032,8 +1036,17 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "parameters:"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "parameters"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
         }
       ]
     },

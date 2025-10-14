@@ -161,7 +161,7 @@ module.exports = grammar({
       seq("moduleinterface", alias($._NAME, $.name), optional($._interfaceinheritance)),
 
     parameters: ($) =>
-      choice($._params, seq("parameters:", $._params), "parameters:"),
+      choice($._params, seq("parameters", ":", $._params), seq("parameters", ":")),
 
     _params: ($) => repeat1($._paramsitem),
 
