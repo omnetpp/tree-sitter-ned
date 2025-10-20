@@ -18,6 +18,7 @@
 "gates" @keyword
 "submodules" @keyword
 "like" @keyword
+"parent" @keyword
 (comment) @comment
 ; (importspec) @value
 (import (name) @value)
