@@ -380,6 +380,7 @@
   {
     "type": "inline_comment",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {

@@ -16,7 +16,7 @@
     "node-addon-api": "^7.1.0"
   },
   "peerDependencies": {
-    "tree-sitter": "^0.21.0"
+    "tree-sitter": "^0.25.10"
   },
   "peerDependenciesMeta": {
     "tree_sitter": {
