@@ -568,7 +568,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "channelinterfaceheader"
+          "name": "_channelinterfaceheader"
         },
         {
           "type": "STRING",
@@ -592,7 +592,7 @@
         }
       ]
     },
-    "channelinterfaceheader": {
+    "_channelinterfaceheader": {
       "type": "SEQ",
       "members": [
         {
@@ -600,8 +600,13 @@
           "value": "channelinterface"
         },
         {
-          "type": "SYMBOL",
-          "name": "_NAME"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_NAME"
+          },
+          "named": true,
+          "value": "name"
         },
         {
           "type": "CHOICE",

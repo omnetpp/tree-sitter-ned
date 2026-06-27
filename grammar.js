@@ -97,10 +97,14 @@ module.exports = grammar({
     _likename: ($) => alias($._dottedname, $.implements),
 
     channel_interface: ($) =>
-      seq($.channelinterfaceheader, "{", optional($.parameters), "}"),
+      seq($._channelinterfaceheader, "{", optional($.parameters), "}"),
 
-    channelinterfaceheader: ($) =>
-      seq("channelinterface", $._NAME, optional($._interfaceinheritance)),
+    _channelinterfaceheader: ($) =>
+      seq(
+        "channelinterface",
+        alias($._NAME, $.name),
+        optional($._interfaceinheritance),
+      ),
 
     _interfaceinheritance: ($) => seq("extends", $._extendnames),
 
@@ -158,7 +162,10 @@ module.exports = grammar({
       ),
 
     _moduleinterfaceheader: ($) =>
-      seq("moduleinterface", alias($._NAME, $.name), optional($._interfaceinheritance)),
+      seq(
+        "moduleinterface", alias($._NAME, $.name),
+        optional($._interfaceinheritance),
+      ),
 
     parameters: ($) =>
       choice($._params, seq("parameters", ":", $._params), seq("parameters", ":")),

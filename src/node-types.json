@@ -63,26 +63,15 @@
       "required": true,
       "types": [
         {
-          "type": "channelinterfaceheader",
+          "type": "extends",
+          "named": true
+        },
+        {
+          "type": "name",
           "named": true
         },
         {
           "type": "parameters",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "channelinterfaceheader",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "extends",
           "named": true
         }
       ]
