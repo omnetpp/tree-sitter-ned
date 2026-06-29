@@ -1,17 +1,45 @@
+// Expression operator precedence (low binds loosest), mirroring the
+// %left/%right declarations in the authoritative NED-2 grammar (ned2.y).
+const PREC = {
+  TERNARY: 1, // ?:   (right)
+  OR: 2, //       ||   (left)
+  XOR: 3, //      ##   (left)
+  AND: 4, //      &&   (left)
+  EQ: 5, //       == != (left)
+  REL: 6, //      < > <= >= (left)
+  SPACESHIP: 7, //<=>  (left)
+  MATCH: 8, //    =~   (left)
+  BITOR: 9, //    |    (left)
+  BITXOR: 10, //  #    (left)
+  BITAND: 11, //  &    (left)
+  SHIFT: 12, //   << >> (left)
+  ADD: 13, //     + -  (left)
+  MUL: 14, //     * / % (left)
+  POW: 15, //     ^    (right)
+  UNARY: 16, //   - ~ ! (right)
+  MEMBER: 17, //  .    (left)
+};
+
 module.exports = grammar({
   name: "ned",
 
-  extras: ($) => [/\s/, $.inline_comment],
+  // Comments and blank lines may appear anywhere, so `comment` lives in
+  // `extras` (one node per `//` line) instead of being threaded through
+  // individual rules. `﻿` lets a leading UTF-8 BOM be skipped (ned2.lex
+  // ignores it).
+  extras: ($) => [/\s/, /﻿/, $.comment],
+
+  // Identifier token, so reserved words (module, const, this, ...) are split
+  // from plain names and never matched as a prefix of a longer identifier.
+  word: ($) => $._NAME,
 
   conflicts: ($) => [[$._dottedname, $._modulepart]],
 
   rules: {
     nedfile: ($) =>
       prec.right(
-        repeat1(
+        repeat(
           choice(
-            $.comment,
-            $._EMPTYLINE,
             $.package,
             $.import,
             $.property_decl,
@@ -27,11 +55,8 @@ module.exports = grammar({
         ),
       ),
 
-    comment: ($) => prec.right(repeat1($._commentline)),
-
-    _commentline: ($) => token(seq("//", /(\\+(.|\r?\n)|[^\\\n])*/)),
-
-    inline_comment: ($) => $._commentline,
+    // a single `//` comment line; `\`-continuation extends it to the next line
+    comment: ($) => token(seq("//", /(\\+(.|\r?\n)|[^\\\n])*/)),
 
     package: ($) => seq("package", alias($._dottedname, $.name), ";"),
 
@@ -66,8 +91,8 @@ module.exports = grammar({
 
     property_decl_header: ($) =>
       choice(
-        seq("property", "@", $._NAME, "[", "]"),
-        seq("property", "@", $._NAME),
+        seq("property", "@", field("name", alias($._NAME, $.name)), "[", "]"),
+        seq("property", "@", field("name", alias($._NAME, $.name))),
       ),
 
     property_decl_keys: ($) =>
@@ -80,35 +105,30 @@ module.exports = grammar({
     channel: ($) => seq($._channelheader, "{", optional($.parameters), "}"),
 
     _channelheader: ($) =>
-      seq("channel", alias($._NAME, $.name), optional($._inheritance)),
+      seq("channel", field("name", alias($._NAME, $.name)), optional($._inheritance)),
 
     _inheritance: ($) =>
       choice(
-        "extends",
         seq("like", $._likenames),
-        seq("extends", $.extends),
-        seq("extends", $.extends, "like", $._likenames),
+        seq("extends", field("extends", $.extends)),
+        seq("extends", field("extends", $.extends), "like", $._likenames),
       ),
 
     extends: ($) => $._dottedname,
 
     _likenames: ($) => seq($._likename, repeat(seq(",", $._likename))),
 
-    _likename: ($) => alias($._dottedname, $.implements),
+    _likename: ($) => field("implements", alias($._dottedname, $.implements)),
 
     channel_interface: ($) =>
       seq($._channelinterfaceheader, "{", optional($.parameters), "}"),
 
     _channelinterfaceheader: ($) =>
-      seq(
-        "channelinterface",
-        alias($._NAME, $.name),
-        optional($._interfaceinheritance),
-      ),
+      seq("channelinterface", field("name", alias($._NAME, $.name)), optional($._interfaceinheritance)),
 
     _interfaceinheritance: ($) => seq("extends", $._extendnames),
 
-    _extendnames: ($) => seq($.extends, repeat(seq(",", $.extends))),
+    _extendnames: ($) => seq(field("extends", $.extends), repeat(seq(",", field("extends", $.extends)))),
 
     simple: ($) =>
       seq(
@@ -120,7 +140,7 @@ module.exports = grammar({
       ),
 
     _simplemoduleheader: ($) =>
-      seq("simple", alias($._NAME, $.name), optional($._inheritance)),
+      seq("simple", field("name", alias($._NAME, $.name)), optional($._inheritance)),
 
     module: ($) =>
       seq(
@@ -135,7 +155,7 @@ module.exports = grammar({
       ),
 
     _compoundmoduleheader: ($) =>
-      seq("module", alias($._NAME, $.name), optional($._inheritance)),
+      seq("module", field("name", alias($._NAME, $.name)), optional($._inheritance)),
 
     network: ($) =>
       seq(
@@ -150,7 +170,7 @@ module.exports = grammar({
       ),
 
     _networkheader: ($) =>
-      seq("network", alias($._NAME, $.name), optional($._inheritance)),
+      seq("network", field("name", alias($._NAME, $.name)), optional($._inheritance)),
 
     moduleinterface: ($) =>
       seq(
@@ -162,20 +182,17 @@ module.exports = grammar({
       ),
 
     _moduleinterfaceheader: ($) =>
-      seq(
-        "moduleinterface", alias($._NAME, $.name),
-        optional($._interfaceinheritance),
-      ),
+      seq("moduleinterface", field("name", alias($._NAME, $.name)), optional($._interfaceinheritance)),
 
     parameters: ($) =>
-      choice($._params, seq("parameters", ":", $._params), seq("parameters", ":")),
+    choice($._params, seq("parameters", ":", $._params), seq("parameters", ":")),
 
     _params: ($) => repeat1($._paramsitem),
 
     _paramsitem: ($) =>
       prec.right(
         10,
-        seq(choice($.parameter, $.property), ";", optional($.comment)),
+        seq(choice($.parameter, $.property), ";"),
       ),
 
     parameter: ($) => choice($._param_typenamevalue, $._parampattern_value),
@@ -187,7 +204,7 @@ module.exports = grammar({
           $._param_typename,
           optional($.inline_properties),
           "=",
-          alias($.paramvalue, $.value),
+          field("value", alias($.paramvalue, $.value)),
           optional($.inline_properties),
         ),
       ),
@@ -195,8 +212,8 @@ module.exports = grammar({
     _param_typename: ($) =>
       choice(
         seq(
-          optional("volatile"),
-          alias($.paramtype, $.type),
+          optional(field("volatile", "volatile")),
+          field("type", alias($.paramtype, $.type)),
           field("parameter_signature", alias($._NAME, $.name)),
         ),
         field("parameter_signature", alias($._NAME, $.name)),
@@ -207,7 +224,7 @@ module.exports = grammar({
         $._parampattern,
         optional($.inline_properties),
         "=",
-        alias($.paramvalue, $.value),
+        field("value", alias($.paramvalue, $.value)),
       ),
 
     paramtype: ($) =>
@@ -320,7 +337,6 @@ module.exports = grammar({
           choice(
             $._COMMONCHAR,
             $._STRINGCONSTANT,
-            $._XMLCONSTANT,
             seq("(", $._property_literal, ")"),
           ),
         ),
@@ -333,20 +349,19 @@ module.exports = grammar({
         $._gate_typenamesize,
         optional($.inline_properties),
         ";",
-        optional($.comment),
       ),
 
     _gate_typenamesize: ($) =>
       choice(
-        seq($._gatetype, alias($._NAME, $.name)),
-        seq($._gatetype, alias($._NAME, $.name), alias("[]", $.vector)),
-        seq($._gatetype, alias($._NAME, $.name), alias($.sizevector, $.vector)),
-        alias($._NAME, $.name),
-        seq(alias($._NAME, $.name), "[", "]"),
-        seq(alias($._NAME, $.name), alias($.sizevector, $.vector)),
+        seq($._gatetype, field("name", alias($._NAME, $.name))),
+        seq($._gatetype, field("name", alias($._NAME, $.name)), field("vector", alias("[]", $.vector))),
+        seq($._gatetype, field("name", alias($._NAME, $.name)), field("vector", alias($.sizevector, $.vector))),
+        field("name", alias($._NAME, $.name)),
+        seq(field("name", alias($._NAME, $.name)), "[", "]"),
+        seq(field("name", alias($._NAME, $.name)), field("vector", alias($.sizevector, $.vector))),
       ),
 
-    _gatetype: ($) => alias(choice("input", "output", "inout"), $.type),
+    _gatetype: ($) => field("direction", alias(choice("input", "output", "inout"), $.type)),
 
     types: ($) => seq("types", ":", repeat($._localtypes)),
 
@@ -368,7 +383,7 @@ module.exports = grammar({
       seq(
         "submodules",
         ":",
-        prec.right(repeat(choice($.submodule, $.comment))),
+        prec.right(repeat($.submodule)),
       ),
 
     submodule: ($) =>
@@ -392,16 +407,16 @@ module.exports = grammar({
           seq(
             $._submodulename,
             ":",
-            alias($._dottedname, $.type),
-            optional($.condition),
+            field("type", alias($._dottedname, $.type)),
+            optional(field("condition", $.condition)),
           ),
           seq(
             $._submodulename,
             ":",
-            alias($.likeexpr, $.like_expr),
+            field("like_expr", alias($.likeexpr, $.like_expr)),
             "like",
-            alias($._dottedname, $.like_type),
-            optional($.condition),
+            field("like_type", alias($._dottedname, $.like_type)),
+            optional(field("condition", $.condition)),
           ),
         ),
       ),
@@ -409,8 +424,8 @@ module.exports = grammar({
     _submodulename: ($) =>
       prec.right(
         choice(
-          alias($._NAME, $.name),
-          seq(alias($._NAME, $.name), alias($.sizevector, $.vector)),
+          field("name", alias($._NAME, $.name)),
+          seq(field("name", alias($._NAME, $.name)), field("vector", alias($.sizevector, $.vector))),
         ),
       ),
 
@@ -433,7 +448,6 @@ module.exports = grammar({
               $._loop_or_condition,
               alias($.ifblock, $.connection_group),
               alias($.forblock, $.connection_group),
-              $.comment,
             ),
           ),
         ),
@@ -443,18 +457,18 @@ module.exports = grammar({
       prec.right(
         choice(
           seq(
-            alias($.connectionname, $.src),
-            $.arrow,
-            alias($.connectionname, $.dest),
+            field("src", alias($.connectionname, $.src)),
+            field("arrow", $.arrow),
+            field("dest", alias($.connectionname, $.dest)),
             optional($._loops_and_conditions),
             ";",
           ),
           seq(
-            alias($.connectionname, $.src),
-            $.arrow,
+            field("src", alias($.connectionname, $.src)),
+            field("arrow", $.arrow),
             $._channelspec,
-            $.arrow,
-            alias($.connectionname, $.dest),
+            field("arrow", $.arrow),
+            field("dest", alias($.connectionname, $.dest)),
             optional($._loops_and_conditions),
             ";",
           ),
@@ -482,11 +496,8 @@ module.exports = grammar({
     gatepart: ($) =>
       seq(
         alias($._NAME, $.name),
-        optional($._indexvector),
-        choice(
-          seq(optional($.subgate), alias(optional("++"), $.plusplus)),
-          seq(optional($.subgate), $._indexvector),
-        ),
+        optional($.subgate),
+        optional(choice($._indexvector, alias("++", $.plusplus))),
       ),
 
     _loops_and_conditions: ($) =>
@@ -497,11 +508,11 @@ module.exports = grammar({
     loop: ($) =>
       seq(
         "for",
-        alias($._NAME, $.param_name),
+        field("param_name", alias($._NAME, $.param_name)),
         "=",
-        alias($._expression, $.from_value),
+        field("from_value", alias($._expression, $.from_value)),
         "..",
-        alias($._expression, $.to_value),
+        field("to_value", alias($._expression, $.to_value)),
       ),
 
     subgate: ($) => choice("$i", "$o"),
@@ -531,13 +542,13 @@ module.exports = grammar({
     condition: ($) => seq("if", alias($._expression, $.value)),
 
     ifblock: ($) =>
-      seq($.condition, "{", repeat(choice($.connection, $.comment)), "}"),
+      seq($.condition, "{", repeat($.connection), "}"),
 
     forblock: ($) =>
       seq(
         seq($.loop, repeat(seq(",", $.loop))),
         "{",
-        repeat(choice($.connection, $.comment)),
+        repeat($.connection),
         "}",
         optional(";"),
       ),
@@ -546,53 +557,93 @@ module.exports = grammar({
 
     _indexvector: ($) => seq("[", alias($._expression, $.index), "]"),
 
+    // Operator precedence and associativity mirror the authoritative NED-2
+    // grammar (src/nedxml/ned2.y): low number = binds loosest.
     _expression: ($) =>
+      choice(
+        $._simple_expr,
+        $.call,
+        $.member_call,
+        $.object,
+        $.array,
+        $.parenthesized_expression,
+        $.unary_expression,
+        $.binary_expression,
+        $.conditional_expression,
+      ),
+
+    parenthesized_expression: ($) => seq("(", $._expression, ")"),
+
+    // method call on an expression, e.g. `this.getParentModule().foo()`
+    member_call: ($) =>
+      prec.left(PREC.MEMBER, seq($._expression, ".", $.call)),
+
+    unary_expression: ($) =>
       prec.right(
-        10,
-        choice(
-          $._simple_expr,
-          $._functioncall,
-          seq($._expression, ".", $._functioncall),
-          $.object,
-          $.array,
-          seq("(", $._expression, ")"),
+        PREC.UNARY,
+        seq(field("operator", choice("-", "!", "~")), field("operand", $._expression)),
+      ),
 
-          seq($._expression, "+", $._expression),
-          seq($._expression, "-", $._expression),
-          seq($._expression, "*", $._expression),
-          seq($._expression, "/", $._expression),
-          seq($._expression, "%", $._expression),
-          seq($._expression, "^", $._expression),
-          seq("-", $._expression),
+    binary_expression: ($) => {
+      const table = [
+        ["+", PREC.ADD],
+        ["-", PREC.ADD],
+        ["*", PREC.MUL],
+        ["/", PREC.MUL],
+        ["%", PREC.MUL],
+        ["==", PREC.EQ],
+        ["!=", PREC.EQ],
+        [">", PREC.REL],
+        [">=", PREC.REL],
+        ["<", PREC.REL],
+        ["<=", PREC.REL],
+        ["<=>", PREC.SPACESHIP],
+        ["=~", PREC.MATCH],
+        ["&&", PREC.AND],
+        ["||", PREC.OR],
+        ["##", PREC.XOR],
+        ["&", PREC.BITAND],
+        ["|", PREC.BITOR],
+        ["#", PREC.BITXOR],
+        ["<<", PREC.SHIFT],
+        [">>", PREC.SHIFT],
+      ];
+      return choice(
+        ...table.map(([op, p]) =>
+          prec.left(
+            p,
+            seq(
+              field("left", $._expression),
+              field("operator", op),
+              field("right", $._expression),
+            ),
+          ),
+        ),
+        // exponentiation is right-associative
+        prec.right(
+          PREC.POW,
+          seq(
+            field("left", $._expression),
+            field("operator", "^"),
+            field("right", $._expression),
+          ),
+        ),
+      );
+    },
 
-          seq($._expression, "==", $._expression),
-          seq($._expression, "!=", $._expression),
-          seq($._expression, ">", $._expression),
-          seq($._expression, ">=", $._expression),
-          seq($._expression, "<", $._expression),
-          seq($._expression, "<=", $._expression),
-          seq($._expression, "<=>", $._expression),
-          seq($._expression, "match", $._expression),
-
-          seq($._expression, "&&", $._expression),
-          seq($._expression, "||", $._expression),
-          seq($._expression, "^^", $._expression),
-
-          seq("!", $._expression),
-
-          seq($._expression, "&", $._expression),
-          seq($._expression, "|", $._expression),
-          seq($._expression, "#", $._expression),
-
-          seq("~", $._expression),
-          seq($._expression, "<<", $._expression),
-          seq($._expression, ">>", $._expression),
-
-          seq($._expression, "?", $._expression, ":", $._expression),
+    conditional_expression: ($) =>
+      prec.right(
+        PREC.TERNARY,
+        seq(
+          field("condition", $._expression),
+          "?",
+          field("consequence", $._expression),
+          ":",
+          field("alternative", $._expression),
         ),
       ),
 
-    _functioncall: ($) => seq($._funcname, "(", optional($._exprlist), ")"),
+    call: ($) => seq($._funcname, "(", optional($._exprlist), ")"),
 
     array: ($) =>
       choice(
@@ -643,10 +694,10 @@ module.exports = grammar({
         $._NAME,
         $._INTCONSTANT,
         $._REALCONSTANT,
-        $._quantity,
+        $.quantity,
         seq("-", $._INTCONSTANT),
         seq("-", $._REALCONSTANT),
-        seq("-", $._quantity),
+        seq("-", $.quantity),
         "nan",
         "inf",
         seq("-", "inf"),
@@ -688,6 +739,8 @@ module.exports = grammar({
       prec(
         20,
         choice(
+          "index",
+          "typename",
           seq($._qname, ".", "index"),
           seq($._qname, ".", "typename"),
           seq("exists", "(", $._qname, ")"),
@@ -697,52 +750,45 @@ module.exports = grammar({
 
     _literal: ($) =>
       choice(
-        $._STRINGCONSTANT,
-        $._XMLCONSTANT,
-        $._boolliteral,
+        alias($._STRINGCONSTANT, $.string),
+        alias($._boolliteral, $.boolean),
         $._numliteral,
-        $._otherliteral,
+        alias($._otherliteral, $.constant),
       ),
 
     _boolliteral: ($) => choice("true", "false"),
 
     _numliteral: ($) =>
-      choice($._INTCONSTANT, $._realconstant_ext, $._quantity),
+      choice(
+        alias($._INTCONSTANT, $.number),
+        alias($._realconstant_ext, $.number),
+        $.quantity,
+      ),
 
     _otherliteral: ($) => choice("undefined", "nullptr", "null"),
 
-    _quantity: ($) =>
+    quantity: ($) =>
       prec(
         10,
         choice(
-          seq($._quantity, $._INTCONSTANT, $._NAME),
-          seq($._quantity, $._realconstant_ext, $._NAME),
-          seq($._quantity, $._intconstant_ext, $._NAME),
+          seq($.quantity, $._INTCONSTANT, $._NAME),
+          seq($.quantity, $._realconstant_ext, $._NAME),
           seq($._INTCONSTANT, $._NAME),
           seq($._realconstant_ext, $._NAME),
-          seq($._intconstant_ext, $._NAME),
         ),
       ),
 
-    _intconstant_ext: ($) => /[0-9]+e[0-9]*/,
-
-    _realconstant_ext: ($) =>
-      choice(
-        $._REALCONSTANT,
-        "inf",
-        "nan",
-        $._intconstant_ext,
-        seq(".", $._INTCONSTANT), // kludge for parsing default(.1s);
-      ),
+    _realconstant_ext: ($) => choice($._REALCONSTANT, "inf", "nan"),
 
     _NAME: ($) => /[_a-zA-Z][_a-zA-Z0-9]*/,
     _PROPNAME: ($) => /[a-zA-Z_][a-zA-Z0-9_:.-]*/,
-    _PROPINDEX: ($) => /[a-zA-Z_][a-zA-Z0-9_*?{}:.-]*/,
-    _INTCONSTANT: ($) => /\d+/,
-    _REALCONSTANT: ($) => /\d+\.\d+/,
-    _STRINGCONSTANT: ($) => /"([^"\\]|\\.)*"/,
-    _XMLCONSTANT: ($) => /"[^"]*"|'[^']*'/,
-    _EMPTYLINE: ($) => /\r?\n\s*\r?\n\s*/,
+    _PROPINDEX: ($) => /[a-zA-Z0-9_*?{}:.-]+/,
+    _INTCONSTANT: ($) => /\d+|0[xX][0-9a-fA-F]+/,
+    _REALCONSTANT: ($) => /(\d+[eE][+-]?\d+)|(\d*\.\d+([eE][+-]?\d+)?)/,
+    // Both `"..."` and `'...'` are string constants in NED, with `\`-escapes
+    // and `\`-newline line continuation (see ned2.lex stringliteral states).
+    _STRINGCONSTANT: ($) =>
+      choice(/"([^"\\]|\\(.|\r?\n))*"/, /'([^'\\]|\\(.|\r?\n))*'/),
     _COMMONCHAR: ($) => /[^"]/,
   },
 });

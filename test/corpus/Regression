@@ -34,8 +34,17 @@ moduleinterface ILinkLayer extends ILinkLayerUpper, ILinkLayerLower
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (moduleinterface
     (name)
@@ -148,10 +157,17 @@ channel Eth400G extends EthernetLink
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -164,10 +180,17 @@ channel Eth400G extends EthernetLink
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (parameter
         (name)
-        (value))))
+        (value
+          (call
+            (binary_expression
+              (number))
+            (string))))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -175,7 +198,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -183,7 +209,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -191,7 +220,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -199,7 +231,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -207,7 +242,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -215,7 +253,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -223,7 +264,10 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (channel
     (name)
@@ -231,7 +275,8 @@ channel Eth400G extends EthernetLink
     (parameters
       (parameter
         (name)
-        (value)))))
+        (value
+          (quantity))))))
 
 ====
 FlowMeasurementRecorder.ned (properties)
@@ -337,12 +382,27 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (simple
     (name)
@@ -352,7 +412,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
@@ -361,7 +422,8 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
@@ -370,26 +432,39 @@ simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (unary_expression
+            (quantity))))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (boolean)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (binary_expression
+            (binary_expression
+              (binary_expression
+                (string)
+                (call
+                  (string)))
+              (call))
+            (string))))
       (property
         (name)
         (tag
@@ -970,8 +1045,14 @@ moduleinterface IHook
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
+  (comment)
+  (comment)
   (comment)
   (moduleinterface
     (name)
@@ -1181,6 +1262,10 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -1238,6 +1323,12 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
   (import
     (name))
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (module
     (name)
     (implements)
@@ -1249,122 +1340,153 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (parameter
         (pattern)
-        (value))
+        (value
+          (string)))
       (parameter
         (pattern)
-        (value))
+        (value
+          (string)))
       (parameter
         (pattern)
-        (value)))
+        (value
+          (call
+            (string)))))
     (submodules
       (submodule
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1375,7 +1497,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1386,7 +1509,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1397,7 +1521,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1408,7 +1533,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1419,7 +1545,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1430,7 +1557,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1441,7 +1569,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1452,7 +1581,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1463,7 +1593,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1474,7 +1605,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1485,7 +1617,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1496,7 +1629,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1507,7 +1641,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1518,7 +1653,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1529,7 +1665,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1540,7 +1677,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1551,7 +1689,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1562,7 +1701,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1573,7 +1713,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1584,7 +1725,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1595,7 +1737,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1606,7 +1749,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1617,7 +1761,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1628,7 +1773,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1639,7 +1785,8 @@ module IntegratedMultiCanvasVisualizer like IIntegratedVisualizer
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -1814,10 +1961,107 @@ module EthernetMac like IEtherMac
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (module
     (name)
@@ -1830,25 +2074,31 @@ module EthernetMac like IEtherMac
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (boolean)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (boolean)))
+      (comment)
       (comment)
       (parameter
         (type)
         (name))
       (comment)
+      (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (boolean)))
       (comment)
       (parameter
         (type)
@@ -1857,7 +2107,8 @@ module EthernetMac like IEtherMac
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (parameter
         (type)
         (name)
@@ -1874,7 +2125,9 @@ module EthernetMac like IEtherMac
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (unary_expression
+            (quantity))))
       (comment)
       (parameter
         (type)
@@ -1883,7 +2136,8 @@ module EthernetMac like IEtherMac
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (property
         (name)
@@ -2175,24 +2429,24 @@ module EthernetMac like IEtherMac
         (inline_properties
           (name)
           (tag
-            (value_list)))
-        (comment))
+            (value_list))))
+      (comment)
       (gate
         (type)
         (name)
         (inline_properties
           (name)
           (tag
-            (value_list)))
-        (comment))
+            (value_list))))
+      (comment)
       (gate
         (type)
         (name)
         (inline_properties
           (name)
           (tag
-            (value_list)))
-        (comment)))))
+            (value_list)))))
+    (comment)))
 
 ====
 EarthCloud.ned (network, connections)
@@ -2284,6 +2538,10 @@ network EarthCloud
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -2342,9 +2600,12 @@ network EarthCloud
       (connection_group
         (loop
           (param_name)
-          (from_value)
+          (from_value
+            (number))
           (to_value
-            (operator)))
+            (binary_expression
+              (operator)
+              (number))))
         (connection
           (src
             (gate
@@ -2376,8 +2637,11 @@ network EarthCloud
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -2478,10 +2742,12 @@ network EarthCloud
         (arrow)
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (arrow)
         (dest
           (module
@@ -2499,10 +2765,12 @@ network EarthCloud
         (arrow)
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (arrow)
         (dest
           (module
@@ -2520,10 +2788,12 @@ network EarthCloud
         (arrow)
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (arrow)
         (dest
           (module
@@ -2541,10 +2811,12 @@ network EarthCloud
         (arrow)
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (arrow)
         (dest
           (module
@@ -2562,10 +2834,12 @@ network EarthCloud
         (arrow)
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (arrow)
         (dest
           (module
@@ -2583,10 +2857,12 @@ network EarthCloud
         (arrow)
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (parameter
           (name)
-          (value))
+          (value
+            (quantity)))
         (arrow)
         (dest
           (module
@@ -2706,6 +2982,10 @@ module Ieee8021qFilter like IPacketFilter
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -2720,6 +3000,16 @@ module Ieee8021qFilter like IPacketFilter
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (module
     (name)
@@ -2755,7 +3045,8 @@ module Ieee8021qFilter like IPacketFilter
     (submodules
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -2766,15 +3057,22 @@ module Ieee8021qFilter like IPacketFilter
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (boolean)))
           (parameter
             (name)
-            (value))
+            (value
+              (member_call
+                (call
+                  (operator))
+                (call
+                  (string)))))
           (property
             (name)
             (tag
@@ -2787,7 +3085,8 @@ module Ieee8021qFilter like IPacketFilter
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (property
             (name)
             (tag
@@ -2796,7 +3095,8 @@ module Ieee8021qFilter like IPacketFilter
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -2807,7 +3107,8 @@ module Ieee8021qFilter like IPacketFilter
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -2818,12 +3119,14 @@ module Ieee8021qFilter like IPacketFilter
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (property
             (name)
             (tag
@@ -2836,7 +3139,8 @@ module Ieee8021qFilter like IPacketFilter
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (property
             (name)
             (tag
@@ -2845,7 +3149,8 @@ module Ieee8021qFilter like IPacketFilter
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -2856,12 +3161,14 @@ module Ieee8021qFilter like IPacketFilter
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (property
             (name)
             (tag
@@ -2902,8 +3209,11 @@ module Ieee8021qFilter like IPacketFilter
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -2921,12 +3231,18 @@ module Ieee8021qFilter like IPacketFilter
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -2943,12 +3259,20 @@ module Ieee8021qFilter like IPacketFilter
               (name)
               (plusplus)))
           (condition
-            (value))))
+            (value
+              (binary_expression
+                (member_call
+                  (call)
+                  (call
+                    (string))))))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -2994,12 +3318,18 @@ module Ieee8021qFilter like IPacketFilter
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3017,12 +3347,20 @@ module Ieee8021qFilter like IPacketFilter
               (name)
               (plusplus)))
           (condition
-            (value))))
+            (value
+              (binary_expression
+                (call
+                  (string)
+                  (string))
+                (constant))))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3442,6 +3780,22 @@ network LargeNet
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -3455,16 +3809,22 @@ network LargeNet
   (import
     (name))
   (comment)
+  (comment)
+  (comment)
   (channel
     (name)
     (extends)
     (parameters
       (parameter
         (name)
-        (value))
+        (value
+          (quantity)))
       (parameter
         (name)
-        (value))))
+        (value
+          (quantity)))))
+  (comment)
+  (comment)
   (comment)
   (module
     (name)
@@ -3504,8 +3864,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3534,6 +3897,8 @@ network LargeNet
           (gate
             (name))))))
   (comment)
+  (comment)
+  (comment)
   (module
     (name)
     (parameters
@@ -3594,8 +3959,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3626,8 +3994,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3661,6 +4032,9 @@ network LargeNet
             (name)
             (plusplus))))))
   (comment)
+  (comment)
+  (comment)
+  (comment)
   (module
     (name)
     (parameters
@@ -3691,10 +4065,12 @@ network LargeNet
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (quantity)))
           (parameter
             (name)
-            (value)))))
+            (value
+              (quantity))))))
     (submodules
       (submodule
         (name)
@@ -3738,11 +4114,13 @@ network LargeNet
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (comment)
           (parameter
             (name)
-            (value))
+            (value
+              (quantity)))
           (comment)
           (property
             (name)
@@ -3762,8 +4140,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3794,8 +4175,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3831,8 +4215,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -3865,6 +4252,9 @@ network LargeNet
           (gate
             (name)
             (plusplus))))))
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (network
     (name)
@@ -3931,8 +4321,8 @@ network LargeNet
       (comment)
       (parameter
         (type)
-        (name))
-      (comment))
+        (name)))
+    (comment)
     (types
       (channel
         (name)
@@ -3940,10 +4330,12 @@ network LargeNet
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (quantity)))
           (parameter
             (name)
-            (value)))))
+            (value
+              (quantity))))))
     (submodules
       (submodule
         (name)
@@ -3958,7 +4350,8 @@ network LargeNet
       (submodule
         (name)
         (vector
-          (size))
+          (size
+            (binary_expression)))
         (type)
         (parameters
           (property
@@ -3968,7 +4361,8 @@ network LargeNet
       (submodule
         (name)
         (vector
-          (size))
+          (size
+            (binary_expression)))
         (type)
         (parameters
           (property
@@ -3978,7 +4372,8 @@ network LargeNet
       (submodule
         (name)
         (vector
-          (size))
+          (size
+            (binary_expression)))
         (type)
         (parameters
           (property
@@ -4174,12 +4569,18 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4194,18 +4595,26 @@ network LargeNet
           (dest
             (module
               (name)
-              (index))
+              (index
+                (binary_expression
+                  (binary_expression))))
             (gate
               (name)))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4220,18 +4629,26 @@ network LargeNet
           (dest
             (module
               (name)
-              (index))
+              (index
+                (binary_expression
+                  (binary_expression))))
             (gate
               (name)))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4246,14 +4663,19 @@ network LargeNet
           (dest
             (module
               (name)
-              (index))
+              (index
+                (binary_expression
+                  (binary_expression))))
             (gate
               (name)))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4268,7 +4690,9 @@ network LargeNet
           (dest
             (module
               (name)
-              (index))
+              (index
+                (binary_expression
+                  (number))))
             (gate
               (name)
               (plusplus)))))
@@ -4276,8 +4700,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4297,8 +4724,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4318,87 +4748,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (module
-              (name))
-            (gate
-              (name)
-              (plusplus)))
-          (arrow)
-          (name)
-          (arrow)
-          (dest
-            (module
-              (name)
-              (index))
-            (gate
-              (name)))))
-      (connection
-        (src
-          (module
-            (name))
-          (gate
-            (name)
-            (plusplus)))
-        (arrow)
-        (name)
-        (arrow)
-        (dest
-          (module
-            (name))
-          (gate
-            (name))))
-      (comment)
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (module
-              (name))
-            (gate
-              (name)
-              (plusplus)))
-          (arrow)
-          (name)
-          (arrow)
-          (dest
-            (module
-              (name)
-              (index))
-            (gate
-              (name)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
-        (connection
-          (src
-            (module
-              (name))
-            (gate
-              (name)
-              (plusplus)))
-          (arrow)
-          (name)
-          (arrow)
-          (dest
-            (module
-              (name)
-              (index))
-            (gate
-              (name)))))
-      (connection_group
-        (loop
-          (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4434,8 +4788,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4455,8 +4812,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4476,8 +4836,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4513,8 +4876,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4534,8 +4900,11 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4555,8 +4924,99 @@ network LargeNet
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)
+            (plusplus)))
+        (arrow)
+        (name)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name))))
+      (comment)
+      (connection_group
+        (loop
+          (param_name)
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
+        (connection
+          (src
+            (module
+              (name))
+            (gate
+              (name)
+              (plusplus)))
+          (arrow)
+          (name)
+          (arrow)
+          (dest
+            (module
+              (name)
+              (index))
+            (gate
+              (name)))))
+      (connection_group
+        (loop
+          (param_name)
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4650,7 +5110,8 @@ network LargeNet
         (dest
           (module
             (name)
-            (index))
+            (index
+              (number)))
           (gate
             (name)
             (plusplus)))))))
@@ -4721,6 +5182,10 @@ module MultiDomainGptp like IGptp
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -4729,6 +5194,13 @@ module MultiDomainGptp like IGptp
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (module
     (name)
@@ -4766,7 +5238,8 @@ module MultiDomainGptp like IGptp
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (parameter
@@ -4774,10 +5247,18 @@ module MultiDomainGptp like IGptp
             (value))
           (parameter
             (name)
-            (value))
+            (value
+              (binary_expression
+                (binary_expression
+                  (binary_expression
+                    (call)
+                    (string))
+                  (call))
+                (string))))
           (parameter
             (name)
-            (value))
+            (value
+              (call)))
           (parameter
             (name)
             (value))
@@ -4799,7 +5280,8 @@ module MultiDomainGptp like IGptp
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (property
             (name)
             (tag
@@ -4808,8 +5290,11 @@ module MultiDomainGptp like IGptp
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -4939,6 +5424,10 @@ network ARPTest
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -4960,20 +5449,24 @@ network ARPTest
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (quantity)))
           (parameter
             (name)
-            (value))))
+            (value
+              (quantity)))))
       (channel
         (name)
         (extends)
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (quantity)))
           (parameter
             (name)
-            (value)))))
+            (value
+              (quantity))))))
     (submodules
       (submodule
         (name)
@@ -5240,6 +5733,10 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
@@ -5263,6 +5760,10 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
   (import
     (name))
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (module
     (name)
     (extends)
@@ -5271,7 +5772,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (parameter
         (type)
         (name)
@@ -5279,7 +5781,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (string)))
       (parameter
         (type)
         (name)
@@ -5287,7 +5790,9 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (unary_expression
+            (quantity))))
       (parameter
         (pattern)
         (value))
@@ -5302,19 +5807,26 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (value))
       (parameter
         (pattern)
-        (value))
+        (value
+          (string)))
       (parameter
         (pattern)
-        (value))
+        (value
+          (call
+            (string))))
       (parameter
         (pattern)
-        (value))
+        (value
+          (call
+            (string))))
       (parameter
         (pattern)
-        (value))
+        (value
+          (call)))
       (parameter
         (pattern)
-        (value)))
+        (value
+          (call))))
     (gates
       (gate
         (type)
@@ -5322,8 +5834,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
         (inline_properties
           (name)
           (tag
-            (value_list)))
-        (comment)))
+            (value_list)))))
+    (comment)
     (submodules
       (submodule
         (name)
@@ -5343,7 +5855,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -5352,7 +5865,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -5361,10 +5875,14 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (condition
-          (value))
+          (value
+            (binary_expression
+              (operator)
+              (string))))
         (parameters
           (property
             (name)
@@ -5372,7 +5890,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -5381,7 +5900,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -5390,7 +5910,8 @@ module ExtUpperIeee80211Interface extends ExtInterface like IWirelessInterface
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (property
@@ -5666,6 +6187,15 @@ simple CellInfo {
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (simple
@@ -5680,14 +6210,7 @@ simple CellInfo {
         (tag
           (value_list)))
       (comment)
-      (parameter
-        (type)
-        (name)
-        (inline_properties
-          (name)
-          (tag
-            (value_list)))
-        (value))
+      (comment)
       (comment)
       (parameter
         (type)
@@ -5696,7 +6219,11 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (unary_expression
+              (quantity))
+            (number))))
       (comment)
       (parameter
         (type)
@@ -5705,7 +6232,11 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (unary_expression
+              (quantity))
+            (number))))
       (comment)
       (parameter
         (type)
@@ -5714,7 +6245,10 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (quantity)
+            (number))))
       (comment)
       (parameter
         (type)
@@ -5723,7 +6257,11 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (quantity)
+            (number))))
+      (comment)
       (comment)
       (parameter
         (type)
@@ -5732,7 +6270,8 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
@@ -5741,22 +6280,8 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
-      (comment)
-      (parameter
-        (type)
-        (name)
-        (value))
-      (comment)
-      (parameter
-        (type)
-        (name)
-        (value))
-      (comment)
-      (parameter
-        (type)
-        (name)
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
@@ -5765,62 +6290,108 @@ simple CellInfo {
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (boolean)))
+      (comment)
+      (comment)
+      (comment)
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
+      (comment)
+      (comment)
+      (comment)
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value)))))
+        (value
+          (number)))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (value
+          (number))))))
 
 ====
 TraCIScreenRecorder.ned - from Veins (default(.1s))
@@ -5881,8 +6452,41 @@ simple TraCIScreenRecorder
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (simple
     (name)
@@ -5898,26 +6502,20 @@ simple TraCIScreenRecorder
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
-      (comment)
-      (parameter
-        (type)
-        (name)
-        (inline_properties
-          (name)
-          (tag
-            (value_list)))
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
@@ -5926,7 +6524,8 @@ simple TraCIScreenRecorder
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
@@ -5935,8 +6534,20 @@ simple TraCIScreenRecorder
           (name)
           (tag
             (value_list)))
-        (value))
-      (comment))))
+        (value
+          (quantity)))
+      (comment)
+      (parameter
+        (type)
+        (name)
+        (inline_properties
+          (name)
+          (tag
+            (value_list)))
+        (value
+          (unary_expression
+            (quantity)))))
+    (comment)))
 
 ====
 xml
@@ -5955,10 +6566,14 @@ module Something {
     (parameters
       (parameter
         (name)
-        (value))
+        (value
+          (call
+            (string))))
       (parameter
         (name)
-        (value)))))
+        (value
+          (call
+            (string)))))))
 
 ====
 PcpTrafficClassClassifier (array)
@@ -6005,12 +6620,22 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (package
     (name))
   (import
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (module
     (name)
@@ -6024,33 +6649,100 @@ module PcpTrafficClassClassifier extends PacketClassifierBase like IPacketClassi
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (string)))
+      (comment)
       (comment)
       (parameter
         (type)
         (name)
         (value
           (array
-            (array)
-            (inline_comment)
-            (array)
-            (inline_comment)
-            (array)
-            (inline_comment)
-            (array)
-            (inline_comment)
-            (array)
-            (inline_comment)
-            (array)
-            (inline_comment)
-            (array)
-            (inline_comment)
-            (array))))
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number))
+            (comment)
+            (array
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)
+              (number)))))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (property
         (name)
@@ -6240,6 +6932,10 @@ module MultiDomainGptp extends Somethingh like IGptp
 
 (nedfile
   (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (moduleinterface
     (name)
     (extends)
@@ -6256,14 +6952,19 @@ module MultiDomainGptp extends Somethingh like IGptp
     (parameters
       (parameter
         (pattern)
-        (value)))
+        (value
+          (string))))
     (submodules
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (condition
-          (value))
+          (value
+            (binary_expression
+              (operator)
+              (string))))
         (parameters
           (property
             (name)
@@ -6271,10 +6972,14 @@ module MultiDomainGptp extends Somethingh like IGptp
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (condition
-          (value))
+          (value
+            (binary_expression
+              (operator)
+              (string))))
         (parameters
           (property
             (name)
@@ -6282,10 +6987,14 @@ module MultiDomainGptp extends Somethingh like IGptp
               (value_list)))))
       (submodule
         (name)
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (condition
-          (value))
+          (value
+            (binary_expression
+              (operator)
+              (string))))
         (parameters
           (property
             (name)
@@ -6306,6 +7015,8 @@ module MultiDomainGptp extends Somethingh like IGptp
         (tag
           (value_list)))
       (comment)
+      (comment)
+      (comment)
       (property
         (name)
         (index)
@@ -6406,7 +7117,11 @@ module MultiDomainGptp extends Somethingh like IGptp
           (tag
             (name)
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (unary_expression
+              (quantity))
+            (number))))
       (comment)
       (parameter
         (type)
@@ -6415,7 +7130,11 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (unary_expression
+              (quantity))
+            (number))))
       (comment)
       (parameter
         (type)
@@ -6424,7 +7143,10 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (quantity)
+            (number))))
       (comment)
       (parameter
         (type)
@@ -6433,7 +7155,11 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (binary_expression
+            (quantity)
+            (number))))
+      (comment)
       (comment)
       (parameter
         (type)
@@ -6442,7 +7168,8 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
@@ -6451,7 +7178,8 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
@@ -6460,22 +7188,29 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (boolean)))
+      (comment)
+      (comment)
+      (comment)
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (number)))
       (comment)
       (parameter
         (type)
@@ -6484,22 +7219,29 @@ module MultiDomainGptp extends Somethingh like IGptp
           (name)
           (tag
             (value_list)))
-        (value))
+        (value
+          (quantity)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
       (comment)
       (parameter
         (type)
         (name)
-        (value))
+        (value
+          (string)))
+      (comment)
+      (comment)
+      (comment)
       (comment)
       (parameter
         (type)
         (name)
-        (value))))
+        (value
+          (number)))))
   (package
     (name))
   (import
@@ -6508,6 +7250,13 @@ module MultiDomainGptp extends Somethingh like IGptp
     (name))
   (import
     (name))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
   (comment)
   (module
     (name)
@@ -6539,7 +7288,8 @@ module MultiDomainGptp extends Somethingh like IGptp
         (type)
         (name)
         (vector
-          (size)))
+          (size
+            (number))))
       (gate
         (type)
         (name)
@@ -6555,13 +7305,15 @@ module MultiDomainGptp extends Somethingh like IGptp
           (parameter
             (type)
             (name)
-            (value)))))
+            (value
+              (number))))))
     (submodules
       (submodule
         (name)
         (vector
           (size))
-        (like_expr)
+        (like_expr
+          (string))
         (like_type)
         (parameters
           (parameter
@@ -6569,10 +7321,18 @@ module MultiDomainGptp extends Somethingh like IGptp
             (value))
           (parameter
             (name)
-            (value))
+            (value
+              (binary_expression
+                (binary_expression
+                  (binary_expression
+                    (call)
+                    (string))
+                  (call))
+                (string))))
           (parameter
             (name)
-            (value))
+            (value
+              (call)))
           (parameter
             (name)
             (value))
@@ -6594,7 +7354,8 @@ module MultiDomainGptp extends Somethingh like IGptp
         (parameters
           (parameter
             (name)
-            (value))
+            (value
+              (string)))
           (property
             (name)
             (tag
@@ -6604,8 +7365,11 @@ module MultiDomainGptp extends Somethingh like IGptp
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6636,7 +7400,9 @@ module MultiDomainGptp extends Somethingh like IGptp
               (name)))))
       (connection_group
         (condition
-          (value))
+          (value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6683,8 +7449,11 @@ module MultiDomainGptp extends Somethingh like IGptp
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6702,12 +7471,18 @@ module MultiDomainGptp extends Somethingh like IGptp
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6724,12 +7499,20 @@ module MultiDomainGptp extends Somethingh like IGptp
               (name)
               (plusplus)))
           (condition
-            (value))))
+            (value
+              (binary_expression
+                (member_call
+                  (call)
+                  (call
+                    (string))))))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6775,12 +7558,18 @@ module MultiDomainGptp extends Somethingh like IGptp
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6798,12 +7587,20 @@ module MultiDomainGptp extends Somethingh like IGptp
               (name)
               (plusplus)))
           (condition
-            (value))))
+            (value
+              (binary_expression
+                (call
+                  (string)
+                  (string))
+                (constant))))))
       (connection_group
         (loop
           (param_name)
-          (from_value)
-          (to_value))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))
         (connection
           (src
             (module
@@ -6892,16 +7689,20 @@ module MultiDomainGptp extends Somethingh like IGptp
           (gate
             (name)))
         (condition
-          (value)))
+          (value
+            (binary_expression
+              (number)))))
       (connection
         (src
           (module
             (name)
-            (index))
+            (index
+              (number)))
           (gate
             (name)
             (subgate)
-            (index)))
+            (index
+              (number))))
         (arrow)
         (name)
         (like_expr)
@@ -6917,5 +7718,8 @@ module MultiDomainGptp extends Somethingh like IGptp
             (subgate)))
         (loop
           (param_name)
-          (from_value)
-          (to_value))))))
+          (from_value
+            (number))
+          (to_value
+            (binary_expression
+              (number))))))))

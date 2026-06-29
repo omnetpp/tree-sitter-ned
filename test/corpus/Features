@@ -1,0 +1,349 @@
+==================
+operators: ## (xor) and =~ (match)
+==================
+
+simple S {
+  parameters:
+    bool a = x ## y;
+    bool b = name =~ "pattern*";
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (binary_expression)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (binary_expression
+            (string)))))))
+
+==================
+numbers: hex, exponent reals and exponent quantities
+==================
+
+simple S {
+  parameters:
+    int    h = 0xFF;
+    int    h2 = 0Xa1b2;
+    double r1 = 2.5e8;
+    double r2 = 1E10;
+    double r3 = 1.5e-3;
+    double r4 = .1;
+    double q = 1.5e-3s;
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (number)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (quantity))))))
+
+==================
+operators: bare index and typename
+==================
+
+simple S {
+  parameters:
+    int    i = index;
+    string t = typename;
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (operator)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (operator))))))
+
+==================
+precedence: a + b * c (multiplication binds tighter)
+==================
+
+simple S {
+  parameters:
+    double v = a + b * c;
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (binary_expression
+            (binary_expression)))))))
+
+==================
+precedence: ternary and chained logical operators
+==================
+
+simple S {
+  parameters:
+    int  v = a ? b : c ? d : e;
+    bool w = p && q || r ## s;
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (conditional_expression
+            (conditional_expression))))
+      (parameter
+        (type)
+        (name)
+        (value
+          (binary_expression
+            (binary_expression)
+            (binary_expression)))))))
+
+==================
+precedence: unary minus and right-associative power
+==================
+
+simple S {
+  parameters:
+    double v = -2 ^ 2 ^ 3;
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (binary_expression
+            (unary_expression
+              (number))
+            (binary_expression
+              (number)
+              (number))))))))
+
+==================
+comment-only file
+==================
+
+// just a comment
+// and another line
+
+---
+
+(nedfile
+  (comment)
+  (comment))
+
+==================
+multi-line (backslash-continued) string literal
+==================
+
+simple S {
+  parameters:
+    string s = "line one \
+line two";
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (string))))))
+
+==================
+single-quoted string literal
+==================
+
+simple S {
+  parameters:
+    string s = 'single quoted';
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (string))))))
+
+==================
+expressions: this/parent qnames, sizeof and exists
+==================
+
+module M {
+  parameters:
+    int n = sizeof(this.g);
+    bool e = exists(parent.sub);
+    int p = parent.foo.bar;
+}
+
+---
+
+(nedfile
+  (module
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (operator)))
+      (parameter
+        (type)
+        (name)
+        (value
+          (operator)))
+      (parameter
+        (type)
+        (name)
+        (value)))))
+
+==================
+channel interface definition
+==================
+
+channelinterface IChan {
+    parameters:
+        double delay;
+}
+
+---
+
+(nedfile
+  (channel_interface
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)))))
+
+==================
+property declaration
+==================
+
+property @customProp[](a;b);
+property @marker;
+
+---
+
+(nedfile
+  (property_decl
+    (property_decl_header
+      (name))
+    (property_decl_keys
+      (property_decl_key)
+      (property_decl_key)))
+  (property_decl
+    (property_decl_header
+      (name))))
+
+==================
+connections: allowunconnected and inline channel "like"
+==================
+
+network N {
+    connections allowunconnected:
+        a.out --> <"Eth"> like IChannel --> b.in;
+}
+
+---
+
+(nedfile
+  (network
+    (name)
+    (connections
+      (allowunconnected)
+      (connection
+        (src
+          (module
+            (name))
+          (gate
+            (name)))
+        (arrow)
+        (like_expr
+          (string))
+        (like_type)
+        (arrow)
+        (dest
+          (module
+            (name))
+          (gate
+            (name)))))))
