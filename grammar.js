@@ -645,11 +645,13 @@ module.exports = grammar({
 
     call: ($) => seq($._funcname, "(", optional($._exprlist), ")"),
 
+    // not via the prec.right `_exprlist`: it would shift a trailing `,` and then
+    // demand another element
     array: ($) =>
-      choice(
-        seq("[", "]"),
-        seq("[", $._exprlist, "]"),
-        seq("[", $._exprlist, ",", "]"),
+      seq(
+        "[",
+        optional(seq($._expression, repeat(seq(",", $._expression)), optional(","))),
+        "]",
       ),
 
     object: ($) =>
@@ -684,7 +686,7 @@ module.exports = grammar({
     _exprlist: ($) =>
       prec.right(seq($._expression, repeat(seq(",", $._expression)))),
 
-    keyvaluelist: ($) => seq($.keyvalue, repeat1(seq(",", $.keyvalue))),
+    keyvaluelist: ($) => seq($.keyvalue, repeat(seq(",", $.keyvalue)), optional(",")),
 
     keyvalue: ($) => seq($.key, ":", $._expression),
 

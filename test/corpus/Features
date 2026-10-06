@@ -347,3 +347,79 @@ network N {
             (name))
           (gate
             (name)))))))
+
+==================
+object and array literals: single key-value pair, trailing commas, multi-line
+==================
+
+simple S {
+  parameters:
+    object a = {"k": "v"};
+    object b = {k: 1,};
+    object c = {
+        "outer": {"inner": [1, 2,]},
+    };
+}
+
+module M {
+  submodules:
+    d: S {
+      parameters:
+        a = {"ethernetmac": "ethIf"};
+    }
+}
+
+---
+
+(nedfile
+  (simple
+    (name)
+    (parameters
+      (parameter
+        (type)
+        (name)
+        (value
+          (object
+            (keyvaluelist
+              (keyvalue
+                (key)
+                (string))))))
+      (parameter
+        (type)
+        (name)
+        (value
+          (object
+            (keyvaluelist
+              (keyvalue
+                (key)
+                (number))))))
+      (parameter
+        (type)
+        (name)
+        (value
+          (object
+            (keyvaluelist
+              (keyvalue
+                (key)
+                (object
+                  (keyvaluelist
+                    (keyvalue
+                      (key)
+                      (array
+                        (number)
+                        (number))))))))))))
+  (module
+    (name)
+    (submodules
+      (submodule
+        (name)
+        (type)
+        (parameters
+          (parameter
+            (name)
+            (value
+              (object
+                (keyvaluelist
+                  (keyvalue
+                    (key)
+                    (string)))))))))))
